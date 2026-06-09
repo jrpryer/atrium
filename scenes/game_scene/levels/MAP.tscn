@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://c1a0o5rf5xbrb"]
+
+[ext_resource type="Shader" uid="uid://bnvh3mybuefem" path="res://resources/shaders/water.gdshader" id="1_xjvbc"]
+[ext_resource type="Material" uid="uid://gxo2u0cg6b0i" path="res://resources/shaders/toonWater.tres" id="2_51xy8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_51xy8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_51xy8"]
+render_priority = 0
+shader = ExtResource("1_xjvbc")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/deep_water = Color(0, 0, 0, 1)
+shader_parameter/roughness = 0.1
+shader_parameter/metallic = 0.0
+shader_parameter/speed = 0.02
+shader_parameter/beer_law_factor = 2.0
+shader_parameter/_distance = 50.0
+shader_parameter/edge_color = Color(0, 0, 0, 1)
+shader_parameter/edge_scale = 0.1
+shader_parameter/near = 0.1
+shader_parameter/far = 100.0
+shader_parameter/wave_direction = Vector2(2, 0)
+shader_parameter/wave_direction2 = Vector2(0, 1)
+shader_parameter/time_scale = 0.025
+shader_parameter/height_scale = 0.15
+shader_parameter/noise_scale = 10.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_hwbog"]
+
+[node name="Map" type="Node3D" unique_id=1043469690]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1516740413]
+transform = Transform3D(3.003531, 0, 0, 0, 0.2925915, 0, 0, 0, 0.74333155, 0, 0, 0)
+mesh = SubResource("BoxMesh_51xy8")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1526746895]
+transform = Transform3D(3.003531, 0, 0, 0, 0.2925915, 0, 0, 0, 0.74333155, 0, 0, 1.5458931)
+mesh = SubResource("BoxMesh_51xy8")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=1693263966]
+transform = Transform3D(0.62782335, 0, 0, 0, 0.638816, 0, 0, 0, 2.2291265, 1.7943552, 0.13851947, 0.76889396)
+mesh = SubResource("BoxMesh_51xy8")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=1358772437]
+transform = Transform3D(0.036385417, 0.030692017, 0, -0.015986476, 0.06985542, 0, 0, 0, 0.12545069, 1.4895395, 0.24517788, 0.76889396)
+mesh = SubResource("BoxMesh_51xy8")
+
+[node name="Water" type="MeshInstance3D" parent="." unique_id=1974607847]
+transform = Transform3D(5.3311415, 0, 0, 0, 0.25030428, 0, 0, 0, 6.428474, 0.50532913, -0.0025153756, 0.77704054)
+material_override = SubResource("ShaderMaterial_51xy8")
+gi_mode = 2
+gi_lightmap_texel_scale = 1.6377
+mesh = SubResource("BoxMesh_hwbog")
+surface_material_override/0 = ExtResource("2_51xy8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=958669472]
+transform = Transform3D(1, 0, 0, 0, -0.595468, 0.8033792, 0, -0.8033792, -0.595468, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=71981400]
+transform = Transform3D(1, 0, 0, 0, 0.7699344, 0.63812304, 0, -0.63812304, 0.7699344, 0, 1.1227334, 1.3826791)
