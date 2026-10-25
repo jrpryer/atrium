@@ -1,0 +1,67 @@
+{
+  "locales": [
+    {
+      "id": "library",
+      "order": 1,
+      "name": "The Library",
+      "description": "A tall, narrow house of grey stone with a green door and a lamp that never quite goes out. Inside: shelves to the rafters, most of them empty, and a pile.",
+      "lockedDescription": "",
+      "unlockWhen": "start",
+      "intro": "Two elderly women look up from behind a mountain of books. The taller one, Ada Quire, has a pencil behind each ear. The shorter, Mab, has biscuit crumbs on her cardigan.\n\n“You're the new Keeper? Wonderful,” says Mab. “The shelves fell down in the spring. We put them back up. We did not put the books back up.”\n\n“Tag a shelf with its genre,” says Ada, “then shelve. Oldest nearest the lamp. Read anything you like, but put it back where it belongs.”\n\nSomething pale is tucked between two atlases near the bottom of the pile. It isn't a book.",
+      "fallback": {
+        "shelve": "No shelf will take it. It's not a book, and the shelves know it.",
+        "compare": "You hold it up against the page. Nothing on this page speaks to it."
+      }
+    },
+    {
+      "id": "apothecary",
+      "order": 2,
+      "name": "The Apothecary",
+      "description": "A low shop with a bowed window full of jars, half its shutters down. Steam curls from the chimney when Tamsin remembers to light the burner.",
+      "lockedDescription": "",
+      "unlockWhen": "start",
+      "intro": "Tamsin Pell wipes her hands on her apron. “Corran — my old master — started every apprentice on water, ash, and patience. You'll start the same. Put things on the bench, pick a tool or don't, and see what comes of it. Nothing on these shelves ever runs out, so don't be shy.”\n\nShe taps a cracked leather book on the counter. “And that's the Old Formulary. Half of it's recipes. The other half's riddles.”",
+      "fallback": {
+        "work": "Nothing happens that you didn't expect.",
+        "work:weighing-scales": "The scales settle. It weighs about what you'd guess.",
+        "work:bunsen-burner": "It warms in the flame, and cools again on the bench. Nothing more.",
+        "work:mortar-and-pestle": "You set the pestle to it and stop before anything gives. Better not, not like this.",
+        "work:loupe": "Under the loupe it's exactly itself, only larger.",
+        "work:spirit-still": "The still burbles. Nothing comes over that wasn't there already.",
+        "derive": ""
+      }
+    },
+    {
+      "id": "pools",
+      "order": 3,
+      "name": "The Spirit Pools",
+      "description": "Three pools beneath the falls, one sunny, one shaded by the tree's roots, one small and still. Steam rises from the Stillkeepers' lodge again.",
+      "lockedDescription": "The Stillkeepers' lodge is shuttered. Beneath the falls the pools are clouded and very still, as if waiting for someone to notice them.",
+      "unlockWhen": {
+        "any": [
+          { "beat": "unkept-vow" },
+          { "all": [ { "counter": "library.shelved", "atLeast": 15 }, { "counter": "apothecary.discovered", "atLeast": 8 } ] }
+        ]
+      },
+      "unlockText": "Smoke rises from the Stillkeepers' lodge again. A druid in a patched green coat is standing knee-deep in the Sunward Basin, frowning at the silt.",
+      "intro": "“Brother Alder,” says the druid, wading out to shake your hand with a wet one. “The pools have been sulking for thirty years. Nothing's died — nothing dies in a Stillkeeper's pool — but nothing's been happy, either.”\n\nHe shows you the two breaths of water: Light and Dark, Hot and Cold. Every creature has a place it can bear and a narrower place it thrives. “Keep them fed, keep the water clear, keep them where they like it, and they'll breed. Lay a thing in the water and the water changes. Leave it long enough, and the thing changes too.”\n\n“Start with the Sunward Basin,” he says. “It's silted to the knees.”",
+      "fallback": {
+        "place": "It settles on the bottom. The water takes no particular notice.",
+        "transform": ""
+      }
+    },
+    {
+      "id": "sanctum",
+      "order": 4,
+      "name": "The Sanctum",
+      "description": "The Keeper's lodge: a round stone room with a journal desk, an old brass Balance above a sealed reliquary, an assembly bench, and a chalk circle in the floor.",
+      "lockedDescription": "",
+      "unlockWhen": "start",
+      "intro": "The Keeper's lodge smells of cold candles and cedar. There is a desk with a journal on it (yours now), a magnifying glass on a chain, an assembly bench, and an old brass Balance standing over a reliquary sealed with a riddle. Someone has drawn a circle in chalk on the floor. Decoration, probably.\n\nThe charter hangs on the wall, its seal pressed into red wax: the falls, the tree, and four lamps.\n\nThis is where you'll think. Bring what you find here, look closely, and when your notes are full enough, write down what you believe a thing truly is.",
+      "fallback": {
+        "inspect": "Under the glass, it is exactly itself.",
+        "seal": "The Balance doesn't stir."
+      }
+    }
+  ]
+}

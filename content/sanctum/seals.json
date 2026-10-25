@@ -1,0 +1,13 @@
+{
+  "seals": [
+    {
+      "id": "stillkeepers-balance",
+      "name": "the Stillkeepers' Balance",
+      "locale": "sanctum",
+      "inscription": "Engraved around the brass base: “Lay upon me a thing of shadow and of flame, and I will open.”",
+      "requiresTraits": ["shadow", "flame"],
+      "solvedText": "The Balance dips under shadow and flame together, and holds level. Somewhere beneath the floor a catch gives, and the reliquary under the Balance swings open on a breath of old cedar.",
+      "refuseText": "The Balance doesn't stir."
+    }
+  ]
+}

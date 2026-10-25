@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Standalone terminal front end. Presentation only: every rule lives in Atrium.Core. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Atrium.Terminal</RootNamespace>
+    <AssemblyName>Atrium</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Atrium.Core\Atrium.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\content\**\*" LinkBase="content" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

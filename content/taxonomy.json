@@ -1,0 +1,88 @@
+// The shared ontology (invariant 11). Every locale reads a different axis of this one taxonomy.
+{
+  "taxonomy": {
+    "facets": [
+      { "id": "what", "label": "What it is", "prompt": "What is this, truly?" },
+      { "id": "origin", "label": "Where it came from", "prompt": "Where did it begin?" },
+      { "id": "holds", "label": "What it holds", "prompt": "What does it carry with it?" }
+    ],
+
+    "terms": [
+      { "id": "specimen", "facet": "what", "label": "a botanist's specimen", "gloss": "Pressed and kept for study." },
+      { "id": "keepsake", "facet": "what", "label": "a keepsake", "gloss": "Kept close to remember someone by." },
+      { "id": "vow-token", "facet": "what", "label": "a vow-token", "gloss": "A pilgrim's token, worn while a vow is open." },
+      { "id": "tithe-nail", "facet": "what", "label": "a tithe-nail", "gloss": "Gold beaten round an iron nail, driven into a waystation tree." },
+      { "id": "river-gold", "facet": "what", "label": "river gold", "gloss": "Gold washed down by water." },
+      { "id": "false-gold", "facet": "what", "label": "counterfeit gilt", "gloss": "Base metal dressed up as gold." },
+      { "id": "smoke-pearl", "facet": "what", "label": "a smoke-pearl", "gloss": "A pearl grown round a swallowed flame." },
+      { "id": "jet-bead", "facet": "what", "label": "a mourning bead", "gloss": "Black jet, worn for grief." },
+      { "id": "river-pearl", "facet": "what", "label": "a river pearl", "gloss": "Grown by a mussel in these waters." },
+      { "id": "lampstone", "facet": "what", "label": "a lampstone", "gloss": "A stone that drinks sunlight and gives it back." },
+      { "id": "amber", "facet": "what", "label": "amber", "gloss": "Old tree-resin turned to stone." },
+      { "id": "salamander-egg", "facet": "what", "label": "a salamander's egg", "gloss": "Cold and patient until sun wakes it." },
+      { "id": "sluice-key", "facet": "what", "label": "a sluice-key", "gloss": "Opens one of the great sluices." },
+      { "id": "reliquary-key", "facet": "what", "label": "a reliquary key", "gloss": "Keeps something closed that should stay closed." },
+
+      { "id": "high-hallows", "facet": "origin", "label": "the High Hallows", "gloss": "The shrines above the Crown." },
+      { "id": "the-crown", "facet": "origin", "label": "the Crown", "gloss": "The topmost tier of Stairfall." },
+      { "id": "the-gallery", "facet": "origin", "label": "the Gallery markets", "gloss": "Glassworks, gem-sellers, botanists." },
+      { "id": "the-ribs", "facet": "origin", "label": "the cisterns of the Ribs", "gloss": "Where the lamp-divers work." },
+      { "id": "the-hem", "facet": "origin", "label": "the Hem", "gloss": "Gardens, small trades, red clay." },
+      { "id": "atrium-waters", "facet": "origin", "label": "the Atrium's own waters", "gloss": "The pools beneath the falls." },
+      { "id": "old-stoic", "facet": "origin", "label": "Old Stoic", "gloss": "The great tree of the Atrium." },
+      { "id": "gallery-reach", "facet": "origin", "label": "the Gallery Reach", "gloss": "The waterworks that feed the falls." },
+
+      { "id": "a-record", "facet": "holds", "label": "a record of where it grew", "gloss": "Kept for knowledge." },
+      { "id": "a-memory", "facet": "holds", "label": "a memory", "gloss": "Kept for someone's sake." },
+      { "id": "a-vow", "facet": "holds", "label": "a vow", "gloss": "A promise still open." },
+      { "id": "a-promise", "facet": "holds", "label": "a promise to return", "gloss": "Held by something until its maker comes back." },
+      { "id": "stored-sunlight", "facet": "holds", "label": "stored sunlight", "gloss": "Light kept for later." },
+      { "id": "a-deception", "facet": "holds", "label": "a deception", "gloss": "Something pretending to be what it isn't." },
+      { "id": "sealed-flame", "facet": "holds", "label": "a sealed flame", "gloss": "Fire, kept from the air." },
+      { "id": "grief", "facet": "holds", "label": "grief", "gloss": "Worn so others know." },
+      { "id": "the-dark", "facet": "holds", "label": "the dark", "gloss": "Shade, gathered close." },
+      { "id": "a-sleeping-life", "facet": "holds", "label": "a sleeping life", "gloss": "Something alive, waiting." },
+      { "id": "the-old-course", "facet": "holds", "label": "the falls' old course", "gloss": "The way the water used to run." },
+      { "id": "a-secret", "facet": "holds", "label": "a secret", "gloss": "Locked away on purpose." }
+    ],
+
+    "genres": [
+      { "id": "horticulture", "label": "Horticulture", "sigil": "a sprouting seed", "color": "green" },
+      { "id": "history", "label": "History", "sigil": "an hourglass on its side", "color": "oxblood" },
+      { "id": "husbandry", "label": "Husbandry", "sigil": "a fish in a cupped hand", "color": "blue" },
+      { "id": "mysticism", "label": "Mysticism", "sigil": "an eye within a ring", "color": "violet" },
+      { "id": "mathematics", "label": "Mathematics", "sigil": "a compass over a square", "color": "ochre" }
+    ],
+
+    "traits": [
+      { "id": "wet", "label": "wet" }, { "id": "cold", "label": "cold" }, { "id": "warm", "label": "warm" },
+      { "id": "ashen", "label": "ashen" }, { "id": "slow", "label": "slow" }, { "id": "still", "label": "still" },
+      { "id": "biting", "label": "biting" }, { "id": "earthy", "label": "earthy" }, { "id": "green", "label": "green" },
+      { "id": "binding", "label": "binding" }, { "id": "oily", "label": "oily" }, { "id": "vessel", "label": "a vessel" },
+      { "id": "gritty", "label": "gritty" }, { "id": "glass", "label": "glass" }, { "id": "dark-ink", "label": "dark ink" },
+      { "id": "clean", "label": "clean" }, { "id": "salt", "label": "salt" }, { "id": "waxen", "label": "waxen" },
+      { "id": "food", "label": "food" },
+      { "id": "sunlit-metal", "label": "the sun's own metal", "gloss": "Blessed gold." },
+      { "id": "glittering", "label": "glittering" }, { "id": "heavy", "label": "heavy" },
+      { "id": "true-wealth", "label": "true wealth, glittering and rare" },
+      { "id": "charter-oil", "label": "gilded lamp-oil" },
+      { "id": "shadow", "label": "shadow" }, { "id": "flame", "label": "flame" },
+      { "id": "sealed-flame", "label": "a flame sealed away" }, { "id": "lustrous", "label": "lustrous" },
+      { "id": "cold-stone", "label": "cold as a well-stone" }, { "id": "kindled", "label": "kindled" },
+      { "id": "silver", "label": "silver" }, { "id": "iron", "label": "iron" }, { "id": "votive", "label": "votive" }
+    ],
+
+    "axes": [
+      { "id": "light", "label": "Light ↔ Dark", "negativeLabel": "Dark", "positiveLabel": "Light", "min": -5, "max": 5 },
+      { "id": "heat", "label": "Hot ↔ Cold", "negativeLabel": "Cold", "positiveLabel": "Hot", "min": -5, "max": 5 }
+    ],
+
+    "capabilities": [
+      { "id": "library.read-faded", "label": "reading lamplit ink in the Library" },
+      { "id": "pools.sieve", "label": "sieving the pools' silt for minerals" },
+      { "id": "pools.focus-light", "label": "a sun-lens to brighten a pool" },
+      { "id": "apothecary.distill", "label": "distilling at the Apothecary" },
+      { "id": "sanctum.reconstitute", "label": "reconstitution at the Circle" }
+    ]
+  }
+}

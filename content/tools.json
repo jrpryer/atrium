@@ -1,0 +1,70 @@
+// Tools. "fixed" tools are fixtures of a locale, available while "availableWhen" holds.
+// "assembled" tools are built at the Sanctum from components; they exist as items and can carry an essence.
+{
+  "tools": [
+    { "id": "mortar-and-pestle", "name": "Mortar & Pestle", "locale": "apothecary", "kind": "fixed", "verb": "grind",
+      "description": "Heavy grey stone, worn smooth by Corran's grandmother's grandmother." },
+    { "id": "bunsen-burner", "name": "Bunsen Burner", "locale": "apothecary", "kind": "fixed", "verb": "warm",
+      "description": "A brass burner with a blue, patient flame." },
+    { "id": "weighing-scales", "name": "Weighing Scales", "locale": "apothecary", "kind": "fixed", "verb": "weigh",
+      "description": "Assayer's scales with a set of tiny brass weights, each one named." },
+    { "id": "loupe", "name": "Magnifying Glass", "locale": "apothecary", "kind": "fixed", "verb": "peer at",
+      "description": "Tamsin's loupe, for reading labels and judging crystals." },
+    { "id": "spirit-still", "name": "Stillkeeper's Still", "locale": "apothecary", "kind": "fixed", "verb": "distil",
+      "availableWhen": { "capability": "apothecary.distill" },
+      "description": "A coil of lamp-glass on a clay stand, installed on the end of Tamsin's bench." },
+
+    { "id": "magnifying-glass", "name": "Magnifying Glass", "locale": "sanctum", "kind": "fixed", "verb": "examine",
+      "description": "The Keeper's glass, on a long brass chain. It makes small things patient enough to be read." },
+    { "id": "reconstitution-circle", "name": "Reconstitution Circle", "locale": "sanctum", "kind": "fixed", "verb": "restore",
+      "availableWhen": { "counter": "essence.remnants-created", "atLeast": 1 },
+      "grants": ["sanctum.reconstitute"],
+      "description": "A chalk circle in the Sanctum floor. Set a remnant in it and what it came from is made whole again." },
+
+    { "id": "lamplighters-lantern", "name": "Lamplighter's Lantern", "locale": "sanctum", "kind": "assembled",
+      "availableWhen": { "counter": "library.read:the-lamps-of-the-charter", "atLeast": 1 },
+      "components": [
+        { "item": "lamp-glass", "label": "lamp glass for the chimney" },
+        { "trait": "charter-oil", "label": "gilded lamp-oil" }
+      ],
+      "grants": ["library.read-faded"],
+      "traits": ["kindled"],
+      "assembleText": "You set the lamp glass in the old frame and pour in the gilded oil. When you light the wick it burns low and honeyed, and in its light the grain of the desk shows every line.",
+      "description": "A brass lantern burning gilded oil. By its honeyed light, lamplit ink can be read.",
+      "inertName": "Dark Lantern",
+      "inertDescription": "The lantern's oil has gone dull and ordinary. It gives a plain yellow light now, no good for lamplit ink. It would need gilded oil again."
+    },
+    { "id": "stillkeepers-sieve", "name": "Stillkeeper's Sieve", "locale": "sanctum", "kind": "assembled",
+      "availableWhen": { "locale": "pools" },
+      "components": [
+        { "item": "reed-twine", "label": "reed twine for the mesh" },
+        { "item": "fired-clay", "label": "a fired-clay rim" }
+      ],
+      "grants": ["pools.sieve"],
+      "assembleText": "You knot the twine into a fine mesh and set it in the clay rim. Brother Alder, when he sees it, says it's the best sieve since Sister Wend's.",
+      "description": "A reed-mesh sieve in a clay rim. Cleansing with it turns up whatever the silt has been keeping."
+    },
+    { "id": "sun-lens", "name": "Sun-Lens", "locale": "sanctum", "kind": "assembled",
+      "availableWhen": { "beat": "lamps-relit" },
+      "components": [
+        { "item": "lamp-glass", "label": "lamp glass to grind into a lens" },
+        { "item": "fired-clay", "label": "a fired-clay ring" }
+      ],
+      "grants": ["pools.focus-light"],
+      "poolEnergy": { "light": 2, "heat": 1 },
+      "assembleText": "You grind the glass into a lens the way the lampstone taught you light likes to be held, and set it in a clay ring. Laid in a pool, it gathers the sun.",
+      "description": "A lens of lamp glass in a clay ring. Lay it in a pool to brighten and warm the water."
+    },
+    { "id": "still-kit", "name": "Still Kit", "locale": "sanctum", "kind": "assembled",
+      "availableWhen": { "beat": "smoke-pearl" },
+      "components": [
+        { "item": "lamp-glass", "label": "lamp glass for the coil" },
+        { "item": "reed-twine", "label": "reed twine to bind it" },
+        { "item": "cold-brine", "label": "cold brine for the condenser" }
+      ],
+      "grants": ["apothecary.distill"],
+      "assembleText": "Following the sketch Brother Alder left in your journal, you coil the glass, bind it, and pack the condenser with cold brine. Tamsin clears a space on her bench before you've even finished.",
+      "description": "The parts of a Stillkeeper's still. While you have it, Tamsin's bench can distil."
+    }
+  ]
+}

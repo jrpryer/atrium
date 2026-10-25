@@ -1,0 +1,104 @@
+// Clue-object 1: the opening mystery. Teaches synthesis across Library, Apothecary and Sanctum.
+// Library alone suggests a botanist's specimen; the Sanctum alone suggests a Hem keepsake.
+{
+  "object": {
+    "id": "pressed-leaf",
+    "name": "the pressed leaf",
+    "baseForm": "pressed-leaf",
+    "summary": "A pale leaf, sealed flat, found filed between two atlases in the Library's pile.",
+    "arrival": {
+      "when": "start",
+      "location": "library.pile",
+      "text": "Something pale is tucked between two atlases near the bottom of the Library's pile: a pressed leaf, sealed flat. It isn't a book."
+    },
+    "forms": [
+      { "id": "pressed-leaf", "name": "Pressed Leaf", "kind": "clueForm", "traits": ["votive"],
+        "description": "A pale, slender leaf, sealed flat under something clear and hard. Its veins catch the light like threads of poured silver.",
+        "responses": {
+          "apothecary.work:mortar-and-pestle": "You lift the pestle and set it down again. Whatever this is, someone kept it carefully. You won't be the one to grind it."
+        } }
+    ],
+
+    "readings": [
+      { "id": "leaf.misfiled", "locale": "library",
+        "trigger": { "verb": "shelve" },
+        "text": "No shelf will take it: each one gives the faint, polite resistance of a book in the wrong section. Pressed into the corner of the seal is a tiny sigil you don't recognise — a closed hand around a flame. The Library keeps no such category.",
+        "funnelHint": "See whether any shelf will have it." },
+
+      { "id": "leaf.lantern-birch", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "trees-of-the-upper-tiers", "page": 1 },
+        "text": "It matches the illustration exactly: the pale slender blade, the veins like poured silver. A Lantern Birch leaf. They grow only in the High Hallows and won't root below the Crown — though the Gallery botanists press them by the drawerful for their herbaria.",
+        "grants": ["specimen", "high-hallows", "a-record"],
+        "funnelHint": "A book about trees might know this leaf." },
+
+      { "id": "leaf.votive", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "signs-and-sigils-of-stairfall", "page": 2 },
+        "requires": "reading:leaf.misfiled",
+        "text": "There it is: the closed hand around a flame. The sign of things given to be kept — offerings, tokens, vows. Shrines mark such things, and keep them. Libraries, the author adds with some satisfaction, never shelve them.",
+        "grants": ["vow-token"],
+        "funnelHint": "That sigil in the corner — somebody must have written about sigils." },
+
+      { "id": "leaf.herbarium", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "on-the-keeping-of-herbaria", "page": 1 },
+        "requires": "reading:leaf.wax",
+        "text": "Dr. Lisle is very firm: a specimen is pressed flat between clean papers and labelled with its place and date. It is never sealed in wax, which spoils it; and it is never strung on a cord or worn. Whoever sealed this leaf wasn't keeping a specimen." },
+
+      { "id": "leaf.wax", "locale": "apothecary",
+        "trigger": { "verb": "work", "tool": "weighing-scales" },
+        "text": "The scales dip further than a leaf has any right to. Something coats it: under the lamp it shines, thin as breath — wax, the hard clear kind that shrines burn, not the soft yellow tallow of kitchen candles.",
+        "funnelHint": "The scales might have an opinion about the leaf." },
+
+      { "id": "leaf.spring", "locale": "apothecary",
+        "trigger": { "verb": "work", "with": ["spring-water"] },
+        "text": "You let it soak a moment. The wax softens at the edges, and the water takes on a smell you know from nowhere in the Atrium: cold stone, snowmelt, high springs. This leaf grew on mountain water.",
+        "funnelHint": "What happens if it soaks?" },
+
+      { "id": "leaf.script", "locale": "apothecary",
+        "trigger": { "verb": "work", "tool": "bunsen-burner" },
+        "text": "You warm it gently over the flame. The wax clears like a window, and beneath it, in brown ink so small it might be another vein, someone has written: “When the falls run silver, I will return.”",
+        "grants": ["a-vow"],
+        "funnelHint": "Gentle heat might clear that seal." },
+
+      { "id": "leaf.pinholes", "locale": "sanctum",
+        "trigger": { "verb": "inspect", "tool": "magnifying-glass" },
+        "text": "Under the glass: two neat holes near the stem where a cord once ran, and the stem itself worn smooth, as if it had been turned over and over in someone's fingers. A smear of red clay is pressed into the wax — the red clay of the Hem, that gets on everything.",
+        "grants": ["keepsake", "the-hem", "a-memory"],
+        "funnelHint": "Look at it closely, under the glass." },
+
+      { "id": "leaf.water", "locale": "pools",
+        "trigger": { "verb": "place" },
+        "text": "In the water the silver veins brighten, the way frost brightens in a thaw. Brother Alder raises his eyebrows. “That's grown on high water, that has. Hallows water.”" },
+
+      { "id": "leaf.pilgrims-hand", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "the-waterworks-of-stairfall", "page": 3 },
+        "text": "You hold the leaf beside the lamplit marginalia. The same brown ink. The same small, careful hand, the same tilt to the Ws. Whoever wrote “I will come home” in the margin of a waterworks manual also wrote “I will return” beneath the wax." }
+    ],
+
+    "claims": [
+      { "id": "leaf.true", "kind": "true",
+        "designation": { "what": "vow-token", "origin": "high-hallows", "holds": "a-vow" },
+        "requires": { "all": [ "reading:leaf.lantern-birch", "reading:leaf.votive", "reading:leaf.script" ] } },
+
+      { "id": "leaf.specimen", "kind": "plausibleWrong",
+        "designation": { "what": "specimen", "origin": "high-hallows", "holds": "a-record" },
+        "requires": { "all": [ "reading:leaf.lantern-birch", "reading:leaf.wax" ] },
+        "nearMiss": "A botanist's pressing would be flat between clean papers with a label. The scales say this one is sealed in shrine-wax, and no herbarium does that, because wax spoils a specimen. Someone kept this leaf for a different reason." },
+
+      { "id": "leaf.keepsake", "kind": "plausibleWrong",
+        "designation": { "what": "keepsake", "origin": "the-hem", "holds": "a-memory" },
+        "requires": { "all": [ "reading:leaf.pinholes", "reading:leaf.lantern-birch" ] },
+        "nearMiss": "It was worn on a cord and turned over in someone's fingers, but Lantern Birches won't grow below the Crown. The red clay sits on top of the wax, not under it, so the leaf only passed through the Hem on its way down." },
+
+      { "id": "leaf.hem-vow", "kind": "plausibleWrong",
+        "designation": { "what": "vow-token", "origin": "the-hem", "holds": "a-vow" },
+        "requires": { "all": [ "reading:leaf.votive", "reading:leaf.pinholes", "reading:leaf.wax" ] },
+        "nearMiss": "A vow made in the Hem would be sealed with Hem tallow, which is soft and yellow. This is hard, clear shrine-wax, the kind burned much higher up the Stair. The red clay only shows where its wearer walked." }
+    ],
+
+    "resolution": {
+      "title": "The Unkept Vow",
+      "text": "A vow-token. Some pilgrim sealed a Lantern Birch leaf in shrine-wax at the High Hallows, wrote a vow beneath it, and wore it on a cord all the way down the Long Stair: “When the falls run silver, I will return.”\n\nThe falls haven't run silver in a hundred years. Mab Quire goes very quiet when you show her, and then very loud. “A token found is a vow still open,” she says. “Somebody never came back for it.”\n\nYou scrape the faintest edge of shrine-wax from the seal for Tamsin, who has never had any, and keep the leaf safe.",
+      "payload": { "ingredients": ["shrine-wax"] }
+    }
+  }
+}

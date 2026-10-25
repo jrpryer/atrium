@@ -1,0 +1,113 @@
+// Clue-object 4: "blessed by the sun" — the Pools' timed transformation (AGENTS §2.2 worked example).
+// Needs a bright, warm pool, the whole gold nugget (sunlit metal) and two Yellow-backed Snails: 300 ticks.
+// Sun-Spotted Goldfish in the pool cut it to 220. If the nugget is crushed, the Circle can restore it —
+// which dims whatever its gold went into. The blessing, once done, is the stone's for good.
+{
+  "object": {
+    "id": "cold-sunstone",
+    "name": "the cold stone",
+    "baseForm": "cold-sunstone",
+    "summary": "A pale oval stone from Tamsin's hearth that has never once been warm.",
+    "arrival": {
+      "when": "beat:gilded-nails",
+      "location": "satchel",
+      "text": "Tamsin Pell crosses the courtyard with something wrapped in a dishcloth. “If the old tree's been holding gold all this time, it can hold this as well. Corran found it in the cold hearth the winter I came to him. Forty winters it's sat by the fire and never once warmed. Take it, will you? It gives me the shivers.”\n\nA smooth, pale, oval stone, cold as a well."
+    },
+    "forms": [
+      { "id": "cold-sunstone", "name": "Cold Stone", "kind": "clueForm",
+        "traits": ["cold-stone"],
+        "description": "A smooth, pale oval stone, a little translucent at the edges, cold as the bottom of a well." },
+      { "id": "waking-sunstone", "name": "Waking Sunstone", "kind": "clueForm",
+        "traits": ["kindled"], "poolEnergy": { "light": 2, "heat": 2 },
+        "description": "The pale stone, warm now and faintly glowing, humming like a hive in summer. It gives the sun back a little at a time." }
+    ],
+
+    "readings": [
+      { "id": "sunstone.wont-warm", "locale": "apothecary",
+        "trigger": { "verb": "work", "tool": "bunsen-burner" },
+        "form": "cold-sunstone",
+        "text": "You hold it in the burner's flame until your fingers ache. It stays cold as a well-stone, and smells of nothing at all. Fire isn't what it wants.",
+        "funnelHint": "See what heat does to it." },
+
+      { "id": "sunstone.pumice", "locale": "apothecary",
+        "trigger": { "verb": "work", "tool": "weighing-scales" },
+        "form": "cold-sunstone",
+        "text": "It weighs almost nothing, less than pumice the same size. Something this light ought to float." },
+
+      { "id": "sunstone.egg", "locale": "pools",
+        "trigger": { "verb": "place" },
+        "form": "cold-sunstone",
+        "text": "Whatever snails are nearby find it at once and gather on it, the way they'd gather on an egg. It's smooth and oval and as cold as river stone. Brother Alder peers at it. “Cold as that? It wants sun. Proper sun: a bright, warm pool, and something of the sun's own metal lying beside it, and snails to keep it company.”",
+        "grants": ["salamander-egg", "atrium-waters", "a-sleeping-life"],
+        "funnelHint": "See what the water makes of it." },
+
+      { "id": "sunstone.blessed", "locale": "pools",
+        "trigger": { "verb": "transform", "transform": "sunstone-blessing" },
+        "text": "It drank the sun. It's warm all through now, and when you close your hands round it, light leaks between your fingers. It keeps the light and gives it back slowly.",
+        "grants": ["stored-sunlight"] },
+
+      { "id": "sunstone.amber", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "amber-and-its-imitations", "page": 1 },
+        "form": "cold-sunstone",
+        "text": "Pale, a little translucent at the edges, light as pumice. It could be amber, the old tree-resin the Gallery's gem-sellers keep in velvet trays, sometimes with an insect asleep inside.",
+        "grants": ["amber", "the-gallery", "a-sleeping-life"] },
+
+      { "id": "sunstone.bestiary", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "a-keepers-bestiary", "page": 1 },
+        "text": "Salamander eggs, Tobiah Wick writes, are smooth and oval and cold as river stone until they are laid in sunlit water. Snails gather on them while they warm.",
+        "grants": ["salamander-egg"] },
+
+      { "id": "sunstone.lampstone", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "the-lamps-of-the-charter", "page": 1 },
+        "text": "The lampstone: a smooth oval, pale as milk-glass, and cold. It was carried down from the Crown each midsummer to kindle the charter-lamps of the lower tiers. It drank the sun at the top of the city and gave it back at the bottom. Brannoc Vell says you'll know the true stone by the charter-seal cut into its base.",
+        "grants": ["lampstone", "stored-sunlight"],
+        "funnelHint": "There's a book about the old lamps." },
+
+      { "id": "sunstone.shelf", "locale": "library",
+        "trigger": { "verb": "shelve", "shelf": "history" },
+        "text": "The History shelf warms very slightly toward it, as if remembering some old civic duty." },
+
+      { "id": "sunstone.seal", "locale": "sanctum",
+        "trigger": { "verb": "inspect", "tool": "magnifying-glass" },
+        "text": "Cut into the base, worn almost smooth: a tiny seal. The falls, the tree, and four lamps. It's the same seal pressed into the charter on your wall, the Crown's own.",
+        "grants": ["the-crown"],
+        "funnelHint": "Look at it closely, under the glass." }
+    ],
+
+    "claims": [
+      { "id": "sunstone.true", "kind": "true",
+        "designation": { "what": "lampstone", "origin": "the-crown", "holds": "stored-sunlight" },
+        "requires": { "all": [ "reading:sunstone.lampstone", "reading:sunstone.seal", "reading:sunstone.blessed" ] } },
+
+      { "id": "sunstone.amber", "kind": "plausibleWrong",
+        "designation": { "what": "amber", "origin": "the-gallery", "holds": "a-sleeping-life" },
+        "requires": { "all": [ "reading:sunstone.amber", "reading:sunstone.wont-warm" ] },
+        "nearMiss": "Amber warms in the hand almost at once and smells of resin near a flame. This sat in the burner's flame until your fingers ached and stayed cold, and it smelled of nothing." },
+
+      { "id": "sunstone.egg", "kind": "plausibleWrong",
+        "designation": { "what": "salamander-egg", "origin": "atrium-waters", "holds": "a-sleeping-life" },
+        "requires": { "all": [ "reading:sunstone.egg", "reading:sunstone.seal" ] },
+        "nearMiss": "Eggs don't have seals. Someone carved the falls, the tree and four lamps into the base of this, small and careful: the Crown's charter-seal." }
+    ],
+
+    "resolution": {
+      "title": "The Lamps Relit",
+      "text": "The lampstone. Every midsummer it was carried down from the Crown to kindle the charter-lamps of the lower tiers, until one year nobody carried it, and it ended up cold in an apothecary's hearth.\n\nAt dusk you hold it up to the lamp over the Library door. The old wick catches by itself. Then the lamp over the Apothecary catches, then the one over the Pools, then the one over your own door, by some arrangement older than anyone can explain. Ada Quire writes the time down. Mab cries a bit.\n\nThe charter said keep the lamps in oil. Now there's something to keep.",
+      "payload": { "minerals": ["sun-mote-aura"] }
+    }
+  },
+
+  "poolTransforms": [
+    { "id": "sunstone-blessing", "name": "Blessed by the Sun", "target": "cold-sunstone",
+      "requires": {
+        "light": [4, 5], "heat": [2, 5],
+        "reagentTraits": ["sunlit-metal"],
+        "lifeforms": [ { "lifeform": "yellow-backed-snail", "min": 2 } ]
+      },
+      "ticks": 300,
+      "modifiers": [ { "lifeform": "sun-spotted-goldfish", "min": 1, "deltaTicks": -80 } ],
+      "transformInto": "waking-sunstone",
+      "progressText": "The stone is drinking the light. The snails keep it company.",
+      "text": "In the bright, warm water, beside the gilded nail, with the snails grazing round it, the cold stone begins, slowly, to glow. By the time the shadows have crossed the pool it is warm in your hand and humming faintly, like a hive in summer." }
+  ]
+}

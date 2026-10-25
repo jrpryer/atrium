@@ -1,0 +1,123 @@
+// Clue-object 3: containment versus catalysis.
+// In the Shade Pool its darkness lets Grey Guppies breed Shadow Guppies (catalysis: the guppies keep).
+// Crushed into a waxed pouch it becomes Smoke-In-A-Bag (containment), which opens the Balance (catalysis: stays open).
+// Restoring the pearl from its husk makes only the bag inert.
+{
+  "object": {
+    "id": "black-pearl",
+    "name": "the black pearl",
+    "baseForm": "black-pearl",
+    "summary": "A warm black pearl hidden in the hollow of a returned book.",
+    "arrival": {
+      "when": { "counter": "library.read:the-ledger-of-tides", "atLeast": 1 },
+      "location": "satchel",
+      "text": "In the hollow of the Ledger of Tides, wrapped in oilcloth, lies a black pearl the size of a thumbnail. It is warm. You put it in your satchel before you've quite decided to."
+    },
+    "forms": [
+      { "id": "black-pearl", "name": "Black Pearl", "kind": "clueForm",
+        "traits": ["shadow", "sealed-flame", "lustrous"], "poolEnergy": { "light": -3, "heat": 0 },
+        "description": "A black pearl the size of a thumbnail, perfectly smooth. It is warm, which pearls are not." },
+      { "id": "smoke-in-a-bag", "name": "Smoke-In-A-Bag", "kind": "clueForm",
+        "traits": ["shadow", "flame"], "poolEnergy": { "light": -1, "heat": 1 },
+        "description": "A waxed reed pouch, drawn tight, that bulges with slow grey smoke. It is warm, and darker than it should be, and it weighs exactly as much as a held breath.",
+        "inertName": "Bag of Grey Smoke", "inertDescription": "Ordinary smoke now, thinning already. The warmth has gone out of it." },
+      { "id": "pearl-husk", "name": "Pearl Husk", "kind": "remnant",
+        "description": "The dull outer half of the pearl, hollow as an eggshell. Set in the Reconstitution Circle, it would remember what it held." }
+    ],
+    "derivations": [
+      { "id": "crush-pearl", "locale": "apothecary", "tool": "mortar-and-pestle", "input": "black-pearl",
+        "with": ["waxed-reed-pouch"], "produces": "smoke-in-a-bag", "remnant": "pearl-husk",
+        "confirm": "The pearl will crack, and whatever is inside will go into the pouch. Its outer half will be left behind as a remnant (the Circle could make the pearl whole again).",
+        "text": "The skin parts at last, and out pours a slow grey smoke that will not disperse, straight into the waxed pouch. You draw the cord tight. The pearl's dull outer half rolls on the bench, hollow as an eggshell.",
+        "formulary": {
+          "title": "On Smoke (Corran's hand)",
+          "text": "Flame wants a jar. Smoke wants a bag — woven tight, and waxed with the best wax you can beg, borrow or scrape. Grind firmly. Don't breathe in.",
+          "availableWhen": "arrived:black-pearl"
+        } }
+    ],
+
+    "readings": [
+      { "id": "pearl.darkens", "locale": "pools",
+        "trigger": { "verb": "place" },
+        "form": "black-pearl",
+        "text": "The water darkens around the pearl like ink spreading. It sits among the stones as if it had grown there, a pearl of these waters. And yet the cold, small things don't flee it. They drift close, as if it were a hearth.",
+        "grants": ["river-pearl", "atrium-waters", "the-dark"],
+        "funnelHint": "See what the water makes of it." },
+
+      { "id": "pearl.light", "locale": "apothecary",
+        "trigger": { "verb": "work", "tool": "weighing-scales" },
+        "form": "black-pearl",
+        "text": "Lighter than a pearl ought to be, as if some of it were air." },
+
+      { "id": "pearl.warm", "locale": "apothecary",
+        "trigger": { "verb": "work", "tool": "mortar-and-pestle" },
+        "form": "black-pearl",
+        "text": "The pestle comes down and the pearl's skin gives — and something inside pushes back, warm as a held breath. You stop. Whatever is in there will need something to hold it before you go further.",
+        "grants": ["sealed-flame"],
+        "funnelHint": "What's under that skin?" },
+
+      { "id": "pearl.crushed", "locale": "apothecary",
+        "trigger": { "verb": "derive", "derivation": "crush-pearl" },
+        "text": "Smoke that will not disperse, from a pearl that was warm at its heart. There was a flame in there, once, kept from the air.",
+        "grants": ["sealed-flame"] },
+
+      { "id": "pearl.seamless", "locale": "sanctum",
+        "trigger": { "verb": "inspect", "tool": "magnifying-glass" },
+        "form": "black-pearl",
+        "text": "Black and seamless, without a drill-hole anywhere. When you tilt it to the lamp, deep inside, there's a point of dull orange, like an ember seen through smoke.",
+        "funnelHint": "Look at it closely, under the glass." },
+
+      { "id": "pearl.balance", "locale": "sanctum",
+        "trigger": { "verb": "seal", "seal": "stillkeepers-balance" },
+        "form": "black-pearl",
+        "text": "The Balance tips toward shadow, and holds there, trembling, as if waiting for the other half of its riddle. The flame it wants is in the pearl somewhere, sealed away where the Balance can't weigh it.",
+        "grants": ["sealed-flame"] },
+
+      { "id": "pearl.smoke-pearl", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "the-lamp-divers-of-the-ribs", "page": 1 },
+        "text": "Sefton Hale describes it exactly. When a lamp-diver's lamp gutters in the cisterns of the Ribs, a cistern-mussel may swallow the flame and wrap it in nacre for years. The result is black, seamless, warm at its heart and lighter than it looks: a smoke-pearl.",
+        "grants": ["smoke-pearl", "the-ribs"],
+        "funnelHint": "Some book will mention black pearls." },
+
+      { "id": "pearl.jet", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "mourning-customs-of-the-hem", "page": 1 },
+        "text": "Black, polished, warm to the touch: it could be one of the jet beads the Hem's mourners wear for grief, strung on black cord.",
+        "grants": ["jet-bead", "the-hem", "grief"] },
+
+      { "id": "pearl.shelf", "locale": "library",
+        "trigger": { "verb": "shelve", "shelf": "history" },
+        "text": "The History shelf won't take it, but it seems almost to lean toward it, as though it belonged to some story the shelf already holds." }
+    ],
+
+    "claims": [
+      { "id": "pearl.true", "kind": "true",
+        "designation": { "what": "smoke-pearl", "origin": "the-ribs", "holds": "sealed-flame" },
+        "requires": { "all": [
+          "reading:pearl.smoke-pearl",
+          "reading:pearl.seamless",
+          { "any": [ "reading:pearl.warm", "reading:pearl.balance", "reading:pearl.crushed" ] }
+        ] } },
+
+      { "id": "pearl.jet", "kind": "plausibleWrong",
+        "designation": { "what": "jet-bead", "origin": "the-hem", "holds": "grief" },
+        "requires": { "all": [ "reading:pearl.jet", "reading:pearl.seamless" ] },
+        "nearMiss": "A mourning bead is drilled through for its cord, and jet is stone, warm on the surface and cold underneath. Under your glass this was seamless, with no hole anywhere, and all its warmth is inside." },
+
+      { "id": "pearl.river", "kind": "plausibleWrong",
+        "designation": { "what": "river-pearl", "origin": "atrium-waters", "holds": "the-dark" },
+        "requires": { "all": [ "reading:pearl.darkens", { "any": [ "reading:pearl.warm", "reading:pearl.balance", "reading:pearl.light" ] } ] },
+        "nearMiss": "Brother Alder says the Atrium's mussels died out when the falls stopped shining, and their pearls were small and grey. This one is black, lighter than it looks, and something warm pushes back from inside it. It didn't grow here." }
+    ],
+
+    "catalysis": [
+      { "from": "black-pearl", "outcome": "lifeform:shadow-guppy", "note": "Its darkness can bring a Shadow Guppy out of a Grey Guppy brood." },
+      { "from": "smoke-in-a-bag", "outcome": "seal:stillkeepers-balance", "note": "Shadow and flame together move the Balance." }
+    ],
+
+    "resolution": {
+      "title": "The Smoke-Pearl",
+      "text": "A smoke-pearl. A lamp-diver's lamp guttered in a cistern of the Ribs; a mussel swallowed the flame and kept it, year after year, wrapped in black.\n\nSomeone carried it all the way down the Stair and hid it in a hollow book, “for safekeeping — not for the reliquary, not yet.” Not yet, as though they always meant it for the reliquary in the end.\n\nBrother Alder, when you tell him, goes and gets a pencil and draws something in the back of your journal: a coil of glass, a condenser, a stand. “A still,” he says. “Stillkeepers' still. If you're going to start opening things, you'll want to be able to take them apart properly.”",
+      "payload": {}
+    }
+  }
+}

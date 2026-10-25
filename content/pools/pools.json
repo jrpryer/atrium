@@ -1,0 +1,71 @@
+// The Spirit Pools. Energy runs -5..+5 on both axes (see taxonomy.json). Tick costs are data, never code.
+{
+  "pools": [
+    {
+      "id": "sunward-basin",
+      "name": "the Sunward Basin",
+      "description": "The widest pool, right under the falls' spray, where the morning sun lands first. Old Stoic's lowest branch leans over it.",
+      "baseEnergy": { "light": 1, "heat": 1 },
+      "capacity": 8,
+      "startingClarity": 15,
+      "startingStock": [
+        { "lifeform": "spotted-spinner", "sex": "female" },
+        { "lifeform": "spotted-spinner", "sex": "male" },
+        { "lifeform": "yellow-backed-snail", "count": 2 }
+      ],
+      "siltFinds": [
+        { "item": "sun-grit", "capability": "pools.sieve", "minCleanses": 2,
+          "text": "The sieve comes up glittering: a palmful of warm golden grit the falls have been dropping here for years." }
+      ]
+    },
+    {
+      "id": "shade-pool",
+      "name": "the Shade Pool",
+      "description": "A deep, cool pool among Old Stoic's roots, where the light comes down green and tired.",
+      "baseEnergy": { "light": -2, "heat": -1 },
+      "capacity": 8,
+      "startingClarity": 45,
+      "startingStock": [
+        { "lifeform": "grey-guppy", "sex": "female" },
+        { "lifeform": "grey-guppy", "sex": "male" },
+        { "lifeform": "hush-moss" }
+      ],
+      "siltFinds": [
+        { "item": "shade-salt", "capability": "pools.sieve", "minCleanses": 1,
+          "text": "Caught in the sieve's mesh: blue-grey crystals that feel cold even through your gloves." }
+      ]
+    },
+    {
+      "id": "spawning-pond",
+      "name": "the Spawning Pond",
+      "description": "A small, perfectly still pond ringed with flat stones. The Stillkeepers lay minerals and auras here, and things gather themselves out of the water.",
+      "baseEnergy": { "light": 0, "heat": 0 },
+      "capacity": 6,
+      "startingClarity": 70,
+      "spawningPond": true,
+      "startingStock": [
+        { "lifeform": "lantern-reed" }
+      ]
+    }
+  ],
+
+  "items": [
+    { "id": "sun-grit", "name": "Sun-Grit", "kind": "mineral", "traits": ["warm"], "poolEnergy": { "light": 1, "heat": 1 },
+      "description": "Warm golden grit from under the falls. In the spawning pond it draws sun-motes." },
+    { "id": "shade-salt", "name": "Shade-Salt", "kind": "mineral", "traits": ["salt", "cold"], "poolEnergy": { "light": -1, "heat": -1 },
+      "description": "Blue-grey crystals from the Shade Pool's silt. In the spawning pond they draw frost-motes." },
+    { "id": "sun-mote-aura", "name": "Sun-Mote Aura", "kind": "aura", "traits": ["warm"], "poolEnergy": { "light": 1, "heat": 0 },
+      "description": "A jar of warm, bright air from under the relit lamps. Laid in the spawning pond, it draws sun-motes." },
+    { "id": "silver-silt", "name": "Silver Silt", "kind": "mineral", "traits": ["silver", "cold"], "poolEnergy": { "light": 1, "heat": -1 },
+      "description": "A pinch of the fine silver silt the falls used to carry. Nobody knows yet what it might call out of the water." }
+  ],
+
+  "spawnRules": [
+    { "id": "spawn-sun-motes", "mineral": "sun-mote-aura", "spawns": "sun-mote", "everyTicks": 90, "maxPresent": 3,
+      "text": "Over the spawning pond the air thickens, glints, and gathers itself into a small bright mote that drifts, humming, just above the water." },
+    { "id": "spawn-sun-motes-grit", "mineral": "sun-grit", "spawns": "sun-mote", "everyTicks": 150, "maxPresent": 2,
+      "text": "Above the sun-grit the water shivers, and a tiny bright mote lifts out of it." },
+    { "id": "spawn-frost-motes", "mineral": "shade-salt", "spawns": "frost-mote", "everyTicks": 120, "maxPresent": 2,
+      "text": "Frost feathers the stones around the shade-salt, and out of the cold a small blue mote unfolds." }
+  ]
+}

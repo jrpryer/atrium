@@ -1,0 +1,81 @@
+// Lifeforms: survive/thrive bands on Light (L) and Heat (H), each [min, max] on -5..+5.
+// hungerPerTick: 0 = never needs feeding. wastePerTick < 0 cleans the water.
+{
+  "lifeforms": [
+    { "id": "spotted-spinner", "name": "Spotted Spinner", "kind": "fish", "sexed": true,
+      "description": "A cheerful speckled goldfish that turns in tight little circles when it's pleased.",
+      "survive": { "light": [-1, 5], "heat": [-1, 5] }, "thrive": { "light": [0, 5], "heat": [1, 4] },
+      "hungerPerTick": 0.08, "wastePerTick": 0.03, "gestationTicks": 150, "cooldownTicks": 300 },
+
+    { "id": "blazing-glory", "name": "Blazing Glory", "kind": "fish", "sexed": true,
+      "description": "A goldfish with fins like a struck match. It sulks in anything less than very warm water.",
+      "survive": { "light": [0, 5], "heat": [1, 5] }, "thrive": { "light": [1, 5], "heat": [3, 5] },
+      "emits": { "light": 0, "heat": 1 },
+      "hungerPerTick": 0.1, "wastePerTick": 0.04, "gestationTicks": 160, "cooldownTicks": 320 },
+
+    { "id": "sun-spotted-goldfish", "name": "Sun-Spotted Goldfish", "kind": "fish", "sexed": true,
+      "description": "Gold with spots like little suns. Where it swims, the water brightens.",
+      "survive": { "light": [0, 5], "heat": [0, 5] }, "thrive": { "light": [2, 5], "heat": [2, 5] },
+      "emits": { "light": 1, "heat": 0 },
+      "hungerPerTick": 0.08, "wastePerTick": 0.03, "gestationTicks": 160, "cooldownTicks": 320 },
+
+    { "id": "yellow-backed-snail", "name": "Yellow-backed Snail", "kind": "snail", "sexed": false,
+      "description": "A slow, contented snail with a shell the colour of butter. It grazes the green off the stones and glows faintly in warm light.",
+      "survive": { "light": [-1, 5], "heat": [-2, 5] }, "thrive": { "light": [1, 5], "heat": [0, 4] },
+      "emits": { "light": 1, "heat": 0 },
+      "hungerPerTick": 0, "wastePerTick": -0.05, "gestationTicks": 400, "cooldownTicks": 900 },
+
+    { "id": "grey-guppy", "name": "Grey Guppy", "kind": "fish", "sexed": true,
+      "description": "Small, grey, hardy and forgiving. The fish every Stillkeeper learns on.",
+      "survive": { "light": [-5, 3], "heat": [-4, 3] }, "thrive": { "light": [-5, 2], "heat": [-3, 2] },
+      "hungerPerTick": 0.07, "wastePerTick": 0.03, "gestationTicks": 120, "cooldownTicks": 260 },
+
+    { "id": "shadow-guppy", "name": "Shadow Guppy", "kind": "fish", "sexed": true,
+      "description": "A guppy so dark it's mostly an outline. The water dims a little around it.",
+      "survive": { "light": [-5, 0], "heat": [-4, 2] }, "thrive": { "light": [-5, -2], "heat": [-3, 1] },
+      "emits": { "light": -1, "heat": 0 },
+      "hungerPerTick": 0.07, "wastePerTick": 0.03, "gestationTicks": 120, "cooldownTicks": 260 },
+
+    { "id": "hush-moss", "name": "Hush-Moss", "kind": "plant", "sexed": false, "breeds": false,
+      "description": "A soft dark moss that dims the water around it and keeps it clean.",
+      "survive": { "light": [-5, 2], "heat": [-5, 2] }, "thrive": { "light": [-5, 0], "heat": [-4, 1] },
+      "emits": { "light": -1, "heat": 0 },
+      "hungerPerTick": 0, "wastePerTick": -0.06 },
+
+    { "id": "lantern-reed", "name": "Lantern Reed", "kind": "plant", "sexed": false, "breeds": false,
+      "description": "A reed with a faint glow at its tip, like a candle seen through fog.",
+      "survive": { "light": [-5, 5], "heat": [-5, 5] }, "thrive": { "light": [-2, 4], "heat": [-3, 4] },
+      "emits": { "light": 1, "heat": 0 },
+      "hungerPerTick": 0, "wastePerTick": -0.04 },
+
+    { "id": "sun-mote", "name": "Sun-Mote", "kind": "mote", "sexed": false, "breeds": false,
+      "description": "A small humming fleck of light that drifts just above the water.",
+      "survive": { "light": [1, 5], "heat": [-2, 5] }, "thrive": { "light": [2, 5], "heat": [0, 5] },
+      "emits": { "light": 1, "heat": 0 },
+      "hungerPerTick": 0, "wastePerTick": 0 },
+
+    { "id": "frost-mote", "name": "Frost-Mote", "kind": "mote", "sexed": false, "breeds": false,
+      "description": "A tiny blue fleck that leaves a feather of frost wherever it touches.",
+      "survive": { "light": [-3, 3], "heat": [-5, 0] }, "thrive": { "light": [-3, 2], "heat": [-5, -2] },
+      "emits": { "light": 0, "heat": -1 },
+      "hungerPerTick": 0, "wastePerTick": 0 }
+  ],
+
+  // Breeding rules (open question 13: "ordered" rules need a mother of parentA and a father of parentB).
+  // Without a matching rule, two of the same species breed true.
+  "breeding": [
+    { "id": "heat-brings-the-blaze", "parentA": "spotted-spinner", "parentB": "spotted-spinner", "ordered": false,
+      "requires": { "heat": [4, 5] },
+      "offspring": [ { "lifeform": "blazing-glory", "weight": 2 }, { "lifeform": "spotted-spinner", "weight": 1 } ],
+      "text": "Heat brings out the blaze: one of the Spinners' new brood has fins like a struck match. A Blazing Glory!" },
+
+    { "id": "sun-spotted-cross", "parentA": "spotted-spinner", "parentB": "blazing-glory", "ordered": true,
+      "offspring": [ { "lifeform": "sun-spotted-goldfish", "weight": 2 }, { "lifeform": "spotted-spinner", "weight": 1 } ],
+      "text": "A Spinner mother and a Glory father: the brood hatches gold, spotted with little suns. Sun-Spotted Goldfish! Brother Alder whoops so loudly the snails withdraw." },
+
+    { "id": "deepest-shade", "parentA": "grey-guppy", "parentB": "grey-guppy", "ordered": false,
+      "requires": { "light": [-5, -4] },
+      "offspring": [ { "lifeform": "shadow-guppy", "weight": 2 }, { "lifeform": "grey-guppy", "weight": 1 } ],
+      "text": "In the deepest shade the guppies' brood hatches dark, so dark they're mostly outline. Shadow Guppies." }
+  ]
+}

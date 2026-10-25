@@ -1,0 +1,52 @@
+// Story beats fire once, in order, when their condition first holds. Payloads route back into the minigames.
+{
+  "beats": [
+    { "id": "unkept-vow", "order": 10, "title": "Word Down the Stair",
+      "when": "resolved:pressed-leaf",
+      "text": "News travels oddly in Stairfall: downward, mostly, like water. By evening Mab Quire has told the Apothecary, the Apothecary has told the baker from the Hem, and the baker has told, it turns out, somebody who knows somebody who used to be a Stillkeeper.\n\n“A vow-token found in the Atrium,” the message comes back. “Then someone had better keep the pools in health until it's kept.”" },
+
+    { "id": "circle-wakes", "order": 20, "title": "The Chalk Circle",
+      "when": { "counter": "essence.remnants-created", "atLeast": 1 },
+      "text": "The next time you pass the Sanctum, the chalk circle on the floor is glowing faintly, the way a hearth glows after the fire is out. You had taken it for decoration. The remnant in your satchel hums when you bring it near.\n\nNothing is lost here that can't be found again." },
+
+    { "id": "gilded-nails", "order": 30, "title": "Promises in the Bark",
+      "when": "resolved:gold-nugget",
+      "text": "Mab Quire spends the afternoon walking round Old Stoic with a ladder and a notebook. “Forty-one,” she announces at supper. “Forty-one promises, Keeper. I'm writing a book.”" },
+
+    { "id": "smoke-pearl", "order": 40, "title": "Not Yet",
+      "when": "resolved:black-pearl",
+      "text": "Brother Alder turns the scrap of note from the Ledger over in his fingers. “That's Sister Wend's hand. She hid it on purpose: not for the reliquary, not yet. She wanted whoever opens that reliquary to understand the pearl first.” He looks across at the Balance. “Shadow and flame, eh.”" },
+
+    { "id": "reliquary-opened", "order": 50, "title": "The Reliquary Opens",
+      "when": "seal:stillkeepers-balance",
+      "text": "Whatever moved the Balance moved it for good. The reliquary stands open and smells of cedar. What was waiting inside is in your satchel now." },
+
+    { "id": "lamps-relit", "order": 60, "title": "Lamps in Oil",
+      "when": "resolved:cold-sunstone",
+      "text": "That night the Atrium is lit for the first time in eighty years. People come down the last stairs from the Hem just to look. Tamsin sells out of everything. On the Stillkeepers' flat stones there's a jar of warm, bright air waiting for you, caught under the relit lamps, for the spawning pond." },
+
+    { "id": "silver-course", "order": 70, "title": "Up the Canyon",
+      "when": "resolved:sluice-key",
+      "text": "Ada Quire unrolls a map of the Gallery Reach across the Library table and weights the corners with teacups. Mab finds a book you've never seen: the duties of the sluice-wardens. Brother Alder brings a pinch of silver silt that was caught in the reliquary's velvet, “for the spawning pond, to see what it calls up.”\n\nNobody says what everyone is thinking." },
+
+    { "id": "pilgrims-hand", "order": 75, "title": "The Same Hand",
+      "when": { "any": [ "reading:key.pilgrims-hand", "reading:leaf.pilgrims-hand" ] },
+      "text": "By the lantern's honeyed light the marginalia and the vow are in the same brown ink and the same small, careful hand. I.F., the warden of Sluice III, was the pilgrim who sealed a vow under shrine-wax and wore it down the Long Stair.\n\nThey held the key to their own closed sluice, climbed to the Hallows, and promised to come home when the falls ran silver. Then the key came down without them." },
+
+    { "id": "chapter-one", "order": 100, "title": "The End of the Beginning",
+      "when": { "all": [ "resolved:pressed-leaf", "resolved:gold-nugget", "resolved:black-pearl", "resolved:cold-sunstone", "resolved:sluice-key" ] },
+      "text": "Under Old Stoic, on a warm evening, the Atrium has a picnic for no particular reason. Ada and Mab bring the good teacups. Tamsin brings everything. Brother Alder brings a Sun-Spotted Goldfish in a jar, so it won't miss anything.\n\nSomeone will have to climb to the Gallery Reach one day, with a key as long as a forearm and a vow that isn't theirs to keep. Not tonight. Tonight the lamps are lit, the stacks are mostly in order, the pools are in health, and the stillness is in very good repair.\n\n— End of Chapter One. The Atrium is yours to keep. —" },
+
+    { "id": "library-settled", "order": 200, "title": "Every Shelf in Its Place",
+      "when": { "counter": "library.settled", "atLeast": 5 },
+      "text": "Ada Quire walks the length of the Library twice, touching every spine, and says nothing at all. Mab says it's the highest praise she has ever heard her sister give." },
+
+    { "id": "apothecary-map", "order": 210, "title": "A Map in the Window",
+      "when": { "counter": "apothecary.discovered", "atLeast": 15 },
+      "text": "Tamsin pins your Discovery Map in the bowed front window, where the morning sun comes through it. Customers come in to look at it and stay to buy soap." },
+
+    { "id": "pools-thriving", "order": 220, "title": "A Brood of Broods",
+      "when": { "counter": "pools.born", "atLeast": 4 },
+      "text": "Brother Alder stands on the edge of the Sunward Basin with his hands in his pockets, watching the little ones turn circles. “Thirty years of sulking,” he says, “and look at them.”" }
+  ]
+}

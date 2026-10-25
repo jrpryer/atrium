@@ -1,0 +1,84 @@
+// Clue-object 5: the chapter's keystone. Released from the reliquary when the Balance is moved by
+// "a thing of shadow and of flame" (the Smoke-In-A-Bag). Ties the vow-token to the falls.
+{
+  "object": {
+    "id": "sluice-key",
+    "name": "the great key",
+    "baseForm": "sluice-key",
+    "summary": "A forearm-long iron key with a silver bit, from the reliquary beneath the Balance.",
+    "arrival": {
+      "when": "seal:stillkeepers-balance",
+      "location": "satchel",
+      "text": "Inside the reliquary, on faded velvet, lies a heavy iron key as long as your forearm, with a bit of bright silver. It is far too big for any lock in the Atrium."
+    },
+    "forms": [
+      { "id": "sluice-key", "name": "Great Key", "kind": "clueForm",
+        "traits": ["iron", "silver", "heavy"],
+        "description": "A heavy iron key as long as your forearm. The bow is plain and the bit is bright silver, worn smooth with turning." }
+    ],
+
+    "readings": [
+      { "id": "key.engraving", "locale": "sanctum",
+        "trigger": { "verb": "inspect", "tool": "magnifying-glass" },
+        "text": "Along the bow, in tiny capitals: SLUICE III. Beside them is stamped the Crown's mark, the falls, the tree and four lamps, as on everything the Crown ever paid for. Scratched beneath, by a less practised hand: I.F.",
+        "grants": ["sluice-key", "the-crown"],
+        "funnelHint": "Look at it closely, under the glass." },
+
+      { "id": "key.weight", "locale": "apothecary",
+        "trigger": { "verb": "work", "tool": "weighing-scales" },
+        "text": "Tamsin runs out of brass weights and has to add a flatiron. It is very heavy, a key made for turning something enormous." },
+
+      { "id": "key.silver-bit", "locale": "apothecary",
+        "trigger": { "verb": "work", "with": ["lye"] },
+        "text": "In the lye the iron bow blooms orange with rust, but the bit stays bright as a fish: silver, old silver, worn into curves by turning against something heavy and wet, over and over, for years.",
+        "funnelHint": "Something biting might show what it's made of." },
+
+      { "id": "key.current", "locale": "pools",
+        "trigger": { "verb": "place" },
+        "text": "Laid on the bottom, the key turns, slowly and deliberately, until its silver bit points up the canyon toward the falls. The water moves around it as if it remembered a current. Brother Alder takes his hat off.",
+        "grants": ["the-old-course"],
+        "funnelHint": "See what the water makes of it." },
+
+      { "id": "key.sluices", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "the-waterworks-of-stairfall", "page": 1 },
+        "text": "Oriel Banes is precise. Three great sluices at the Gallery Reach feed the Slowsilver. Each opens with a single great key with a bit of solid silver, and each key is held at the Reach by its own sluice-warden. When all three stand open, the Hallows silt comes down and the falls run silver.",
+        "grants": ["sluice-key", "gallery-reach", "the-old-course"],
+        "funnelHint": "Someone will have written down how the falls are fed." },
+
+      { "id": "key.reliquary", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "locks-and-reliquaries", "page": 1 },
+        "text": "The Stillkeepers' reliquaries, Sister Wend writes, keep keys to things that should stay closed. And this came out of one.",
+        "grants": ["reliquary-key", "a-secret"] },
+
+      { "id": "key.shelf", "locale": "library",
+        "trigger": { "verb": "shelve", "shelf": "mathematics" },
+        "text": "The Mathematics shelf won't take it, but it gives a dry little click, like a well-oiled mechanism." },
+
+      { "id": "key.pilgrims-hand", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "the-waterworks-of-stairfall", "page": 3 },
+        "text": "In the margin, in brown ink that shows only by gilded light: “I hold III. When they open the others, I'll open mine, and the falls will run silver, and I will come home. — I.F.” The key in your hand is Sluice III's." }
+    ],
+
+    "claims": [
+      { "id": "key.true", "kind": "true",
+        "designation": { "what": "sluice-key", "origin": "gallery-reach", "holds": "the-old-course" },
+        "requires": { "all": [ "reading:key.sluices", "reading:key.engraving", "reading:key.current" ] } },
+
+      { "id": "key.reliquary", "kind": "plausibleWrong",
+        "designation": { "what": "reliquary-key", "origin": "the-crown", "holds": "a-secret" },
+        "requires": { "all": [ "reading:key.reliquary", "reading:key.silver-bit" ] },
+        "nearMiss": "The Stillkeepers' reliquary keys are small and finely warded, small enough to lose in a glove. This one is as long as your forearm, and its silver bit is worn smooth from turning something enormous against moving water. It was only being kept in the reliquary. It wasn't made for one." },
+
+      { "id": "key.crown", "kind": "plausibleWrong",
+        "designation": { "what": "sluice-key", "origin": "the-crown", "holds": "the-old-course" },
+        "requires": { "all": [ "reading:key.engraving", "reading:key.sluices" ] },
+        "nearMiss": "The Crown stamped its mark on everything it paid for, but the Waterworks book is clear: each key was held at the Reach by its own warden. The Crown paid for this key, but it belongs to the Gallery Reach." }
+    ],
+
+    "resolution": {
+      "title": "The Silver Course",
+      "text": "The key to Sluice III at the Gallery Reach, the sluice the Crown closed in the Year of Quiet Water, “for repairs that never came.” Its warden, I.F., kept the key. Somehow it came down the Long Stair, and the Stillkeepers locked it away beneath their Balance, behind a riddle of shadow and flame.\n\nThe falls ran silver when all three sluices stood open. Somewhere in the High Hallows, someone sealed a vow under shrine-wax: “When the falls run silver, I will return.”\n\nThe key is in your hand. Brother Alder looks up the canyon at the falls for a long time without saying anything.",
+      "payload": { "minerals": ["silver-silt"] }
+    }
+  }
+}

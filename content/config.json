@@ -1,0 +1,80 @@
+// Game-wide tunables. Every value here is a designer decision that the engine merely reads.
+// Open questions from AGENTS.md §8 are exposed as tunables rather than decided in code.
+{
+  "config": {
+    "title": "Atrium",
+    "prologue": "Tucked away at the bottom of Stairfall, at the foot of a broken city waterway, lies a forgotten atrium. Four small houses, their keepers barely able to keep their doors open, stand around an old, towering tree that drinks from an accidental waterfall.\n\nYou have come down the last of the stairs with a satchel, a key to the Keeper's lodge, and a copy of the charter: keep the stacks in order, the pools in health, the lamps in oil, and the stillness in good repair.\n\nNobody is in a hurry here. Neither are you.",
+
+    // World-clock (open question 5). One tick per real second; idle gaps are capped so nothing floods.
+    "secondsPerTick": 1.0,
+    "maxTicksPerStep": 600,
+    "sitTicks": 60,
+    "offlineProgress": "none",
+    "offlineCapTicks": 1800,
+    "tickDisplay": "diegetic",
+
+    // Synthesis (open questions 2 and 4).
+    "lexiconMode": "global",
+    "funnel": "gentle",
+    "nearMissMinLocales": 2,
+
+    // Where minerals and auras are delivered (open question 11): "druids-bag" or "satchel".
+    "mineralDestination": "druids-bag",
+
+    "seed": 1310,
+
+    "synthesis": {
+      "invalid": [
+        "You turn the idea over. It doesn't sit with what your notes say.",
+        "You write it down, look at it, and cross it gently out. Something in your notes argues with it.",
+        "It's a lovely thought. It just isn't this.",
+        "The words won't settle together. Perhaps read back over what each place showed you."
+      ],
+      "notYet": [
+        "The thought feels close to something, but you haven't seen enough to hold it yet.",
+        "You can almost hold the idea, but there's a gap where some piece of evidence ought to be.",
+        "Not yet. Something you'd need to be sure of hasn't turned up."
+      ],
+      "alreadyConsidered": "You've already worked through why that doesn't hold. It's in your journal.",
+      "alreadyResolved": "You already know what this is. It's written in your journal in your best hand."
+    }
+  },
+
+  "libraryConfig": {
+    // Open question 10: the Milanote model (empty shelves tagged by the player). Switch to "prelabeled" and add
+    // "shelves": [{ "id": "...", "label": "...", "genre": "..." }] for the sigil-shelf model.
+    "shelvingModel": "tagged",
+    "shelfCount": 5,
+    "tags": ["horticulture", "history", "husbandry", "mysticism", "mathematics"],
+    "shelfCapacity": 14,
+    "orderBy": "year",
+    "fadedRevealWhen": { "capability": "library.read-faded" },
+    "checkoutLimit": 1,
+    "minPages": 1,
+    "maxPages": 3
+  },
+
+  "apothecaryConfig": {
+    "startingIngredients": ["spring-water", "hearth-ash", "patience"],
+    "maxInputs": 3,
+    "insightPerTry": 1,
+    "insightToReveal": 3
+  },
+
+  "poolsConfig": {
+    "cleanseAmount": 35,
+    "basicFoodName": "a pinch of pond flakes",
+    "basicFoodValue": 45,
+    "thriveHungerMax": 55,
+    "contentHungerMax": 85,
+    "thriveClarityMin": 50,
+    "contentClarityMin": 20,
+    "holdingName": "the Stillkeepers' holding crock",
+    "names": [
+      "Pebble", "Marigold", "Bramble", "Sorrel", "Tansy", "Wick", "Button", "Plum", "Fennel", "Juniper",
+      "Moth", "Dapple", "Pip", "Rowan", "Tuppence", "Clover", "Ember", "Nettle", "Biscuit", "Lumen",
+      "Quill", "Puddle", "Sable", "Saffron", "Thimble", "Hazel", "Cinder", "Minnow", "Tallow", "Glimmer",
+      "Oddment", "Barley", "Cobble", "Dimity", "Mallow", "Teasel", "Wren", "Yarrow", "Pickle", "Flint"
+    ]
+  }
+}

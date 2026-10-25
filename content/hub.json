@@ -1,0 +1,20 @@
+// The courtyard as the hub shows it. One fixed scene: Old Stoic is a big old tree, serene and unchanging,
+// beside a lazy waterfall in a quiet corner of the city. It is not a progress display (designer decision, 2026-10-24).
+{
+  "hub": {
+    "caption": "The courtyard",
+    "description": "Old Stoic leans out over the turquoise pools, vast and old and perfectly still, as it has for longer than anyone has kept count. Beside it the Slowsilver drifts down from the high tiers in a long, lazy ribbon. Far above, the city goes about its business. Down here it is quiet: a waterfall, a great tree, and a forgotten corner of Stairfall that nobody is in any hurry to leave.",
+    "art": [
+      "       ,-%%%%%%%%-,            ¦:¦",
+      "   ,-%%%%%%%%%%%%%%%%-,        ¦:¦",
+      " ,%%%%%%%%%%%%%%%%%%%%%%,      ¦:¦",
+      "%%%%%%%%%%%%%%%%%%%%%%%%%%     ¦:¦",
+      " '%%%%%%%%%%%%%%%%%%%%%%'      ¦:¦",
+      "    '%%%%%\\%%%%/%%%%%'         ¦:¦",
+      "         \\  \\||/ /             ¦:¦",
+      "          \\_|||_/              ¦:¦",
+      "            |||              .:¦:¦:.",
+      "~~~~~~~~~~~/|||\\~~~~~~~~~~~~~~~~~~~~~~"
+    ]
+  }
+}

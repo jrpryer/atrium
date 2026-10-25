@@ -1,0 +1,122 @@
+// Clue-object 2: how a remnant works and what reconstitution costs.
+// Found by cleansing the Sunward Basin. Crushing it (needed to see the truth) leaves an iron-slag remnant;
+// its flakes satisfy the Old Formulary's "true wealth"; the Pools want it whole again for the sun-blessing.
+{
+  "object": {
+    "id": "gold-nugget",
+    "name": "the gold nugget",
+    "baseForm": "gold-nugget",
+    "summary": "A thumb-joint of gold raked from the silt of the Sunward Basin.",
+    "arrival": {
+      "when": { "counter": "pools.cleansed:sunward-basin", "atLeast": 1 },
+      "location": "satchel",
+      "text": "Your rake catches on something heavy in the silt, just beneath where Old Stoic's lowest branch leans over the water: a nugget of gold the size of a thumb-joint. Brother Alder whistles.",
+      "reading": "nugget.silt"
+    },
+    "forms": [
+      { "id": "gold-nugget", "name": "Gold Nugget", "kind": "clueForm",
+        "traits": ["sunlit-metal", "glittering", "heavy"], "poolEnergy": { "light": 2, "heat": 1 },
+        "description": "A lump of gold the size of a thumb-joint, softly folded, as if it had been pressed rather than found. In water it gives off a faint, warm light." },
+      { "id": "gold-flakes", "name": "Gold Flakes", "kind": "clueForm",
+        "traits": ["true-wealth", "glittering"], "poolEnergy": { "light": 1, "heat": 0 },
+        "description": "Soft, bright flakes of beaten gold in a twist of paper. True wealth, glittering and rare.",
+        "inertName": "Dull Flakes", "inertDescription": "Just gold-coloured foil now. Whatever made it glitter has gone home." },
+      { "id": "gilded-lamp-oil", "name": "Gilded Lamp-Oil", "kind": "clueForm",
+        "traits": ["charter-oil", "glittering"],
+        "description": "A small flask of honey-coloured oil with gold drifting slowly through it. By its light, they say, lamplit ink can be read.",
+        "inertName": "Plain Lamp-Oil", "inertDescription": "Ordinary oil now, with a few dull specks at the bottom." },
+      { "id": "iron-slag", "name": "Iron Slag", "kind": "remnant",
+        "traits": ["iron"],
+        "description": "The iron core the gold was clinging to: square-shanked, tapering, hand-forged. A nail. Set in the Reconstitution Circle, it would remember the gold." }
+    ],
+    "derivations": [
+      { "id": "crush-nugget", "locale": "apothecary", "tool": "mortar-and-pestle", "input": "gold-nugget",
+        "produces": "gold-flakes", "remnant": "iron-slag",
+        "confirm": "Grinding the nugget will part the gold from whatever it's wrapped around. The gold will become flakes, and the core will be left behind as a remnant. (A remnant can be taken to the Sanctum's Circle to make the nugget whole again.)",
+        "text": "The gold comes away under the pestle in soft, bright flakes — it was never solid at all, only beaten thin and folded round and round." },
+      { "id": "gild-oil", "locale": "apothecary", "tool": "bunsen-burner", "inputTrait": "true-wealth",
+        "with": ["pressed-oil", "patience"], "produces": "gilded-lamp-oil",
+        "confirm": "The gold will go into the oil and stay there. (If the original is ever made whole again at the Circle, the oil will go dull.)",
+        "text": "You stir the flakes into the warm oil and let patience do the rest. The gold doesn't sink. It drifts, slowly, like dust in a sunbeam, and the oil takes on a low honeyed glow.",
+        "formulary": {
+          "title": "Gilded Lamp-Oil (Corran's hand)",
+          "text": "For the lamplighter's lantern: good pressed oil, a measure of patience, and something of true wealth, glittering and rare. Warm it gently on the burner — never to the boil. (Tamsin's note in the margin: “Never had any true wealth. Never made it.”)",
+          "availableWhen": "start"
+        } }
+    ],
+
+    "readings": [
+      { "id": "nugget.silt", "locale": "pools",
+        "trigger": { "verb": "place", "pool": "sunward-basin" },
+        "form": "gold-nugget",
+        "text": "It came out of the silt beneath the falls, right under Old Stoic's lowest branch. Washed down from the high tiers with the water, perhaps — the falls must bring all sorts.",
+        "grants": ["river-gold", "atrium-waters"] },
+
+      { "id": "nugget.glow", "locale": "pools",
+        "trigger": { "verb": "place" },
+        "form": "gold-nugget",
+        "text": "In the water it gives off a faint, warm light, like a coal remembering it was a fire. Brother Alder squints. “Gold doesn't do that. Not by itself.” Light, held in metal.",
+        "grants": ["stored-sunlight"],
+        "funnelHint": "See what the water makes of it." },
+
+      { "id": "nugget.light", "locale": "apothecary",
+        "trigger": { "verb": "work", "tool": "weighing-scales" },
+        "form": "gold-nugget",
+        "text": "Tamsin's brass weights don't add up. For its size it's too light for gold — lighter by a good third. Something less dense is hiding inside it, dressed up in gold.",
+        "grants": ["false-gold", "a-deception"],
+        "funnelHint": "The scales might have an opinion about it." },
+
+      { "id": "nugget.iron-nail", "locale": "apothecary",
+        "trigger": { "verb": "derive", "derivation": "crush-nugget" },
+        "text": "Beneath the gold is iron: black, square-shanked, tapering, its head flattened by many blows. A hand-forged nail. Someone beat a gold coin thin around a nail, round and round, as if wrapping a promise." },
+
+      { "id": "nugget.tithes", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "tithes-and-offerings-of-the-hallows", "page": 1 },
+        "text": "Brother Esk describes it exactly: a gold coin beaten thin around a hand-forged iron nail, driven into a waystation tree along the descent, so the tree would hold the promise until the pilgrim returned. Hallows-blessed gold, he adds, glows faintly in water. A tithe-nail.",
+        "grants": ["tithe-nail", "a-promise"],
+        "funnelHint": "Somebody in the Library will have written about offerings." },
+
+      { "id": "nugget.weights", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "weights-and-measures-of-the-exchange", "page": 1 },
+        "requires": "reading:nugget.light",
+        "text": "The Assayers are blunt: gold is the heaviest of the common metals and iron much lighter, so gilded iron weighs light for its size. Forgers know this, which is why forgers gild lead." },
+
+      { "id": "nugget.shelf", "locale": "library",
+        "trigger": { "verb": "shelve", "shelf": "mysticism" },
+        "text": "The Mysticism shelf won't take it, of course, but it hums at it faintly, the way it hums for books about offerings." },
+
+      { "id": "nugget.bark", "locale": "sanctum",
+        "trigger": { "verb": "inspect", "tool": "magnifying-glass" },
+        "text": "Under the glass, caught deep in the folds of the gold: fibres of bark, and a dark bead of old sap. This was driven into living wood, and stayed there a long time before it fell. You look out of the window at Old Stoic, leaning over the Sunward Basin.",
+        "grants": ["old-stoic"],
+        "funnelHint": "Look closely at its folds." },
+
+      { "id": "nugget.slag-holes", "locale": "library",
+        "trigger": { "verb": "compare", "tome": "old-stoic-a-biography", "page": 2 },
+        "form": "iron-slag",
+        "text": "Hollis Quire's sketch of the square holes in Old Stoic's bark, at the height of a raised hand. You lay the iron nail on the page. Its shank is exactly the size of the holes." }
+    ],
+
+    "claims": [
+      { "id": "nugget.true", "kind": "true",
+        "designation": { "what": "tithe-nail", "origin": "old-stoic", "holds": "a-promise" },
+        "requires": { "all": [ "reading:nugget.tithes", "reading:nugget.iron-nail", "reading:nugget.bark" ] } },
+
+      { "id": "nugget.river-gold", "kind": "plausibleWrong",
+        "designation": { "what": "river-gold", "origin": "atrium-waters", "holds": "stored-sunlight" },
+        "requires": { "all": [ "reading:nugget.silt", "reading:nugget.glow", "reading:nugget.light" ] },
+        "nearMiss": "River gold comes as grains and pebbles, worn smooth by water, and it's heavy. The scales say this is too light for gold, and it's folded, not worn. Whatever made it glow in the water, it didn't wash down the falls on its own." },
+
+      { "id": "nugget.false-gold", "kind": "plausibleWrong",
+        "designation": { "what": "false-gold", "origin": "atrium-waters", "holds": "a-deception" },
+        "requires": { "all": [ "reading:nugget.light", "reading:nugget.glow" ] },
+        "nearMiss": "A forger gilds lead to make a fake heavier, not iron to make it lighter. And no forger would bless a fake so that it glows in water. Whoever made this wasn't trying to fool anyone." }
+    ],
+
+    "resolution": {
+      "title": "The Gilded Nails",
+      "text": "A tithe-nail. Some pilgrim beat a gold coin thin around an iron nail and drove it into Old Stoic's bark, so the tree would hold their promise until they came back.\n\nYou walk round the trunk with a lantern. There are dozens of old square holes at the height of a raised hand. The tree has been holding promises for a very long time, and letting them fall, one by one, into the pool.",
+      "payload": {}
+    }
+  }
+}
