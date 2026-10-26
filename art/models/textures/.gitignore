@@ -1,0 +1,2 @@
+# Intermediate textures written by the Blender kit; the .glb files embed them, and a build recreates them.
+*.png

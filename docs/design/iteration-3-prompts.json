@@ -1,0 +1,405 @@
+{
+  "_about": "Iteration 3 prompt pack (draft, revised 2026-10-25 after the identity and production reviews). Tool-agnostic: written for any modern image model. Companion to iteration-3-art-bible.md and iteration-3-assets.md; iteration-3-direction-tests.md is assembled from this file. Templates use {placeholders} filled from content/ and from 'briefs' below, by id, so new content gets prompts automatically once it has a brief.",
+  "version": "2026-10-25b",
+
+  "assembly": {
+    "scene": ["subject", "world", "direction.medium"],
+    "scene_applies_to": ["direction_tests", "room_master", "hub_backdrop", "story_vignette", "key_art"],
+    "isolated": ["subject", "world_style", "direction.medium"],
+    "isolated_applies_to": ["item_icon", "clue_icon", "tool_icon", "lifeform_portrait", "lifeform_side", "lifeform_top", "book_spine", "pile_top", "book_cover", "texture_tile", "window_mask", "page_vignette", "ui_piece", "style_sheet"],
+    "negative_field": "Pass 'negative' only to tools with a real negative-prompt field. Otherwise leave it out entirely: writing 'text, letters…' into a positive prompt tends to summon text. Describe surfaces positively instead ('plain unmarked cloth', 'blank cream pages', 'an unpainted signboard').",
+    "reference_images": "Every generation in a template uses the same fixed anchor set: the locked style sheet plus 3–4 approved anchors for that template (art/reference/<template>/anchor-*.png). Never chain from the previous keeper; it compounds drift. Anything with geometry (direction tests of the courtyard, room masters, backdrops, props) also gets a structure reference (a depth or line render) captured from the engine with --capture, so the camera and light are the game's own.",
+    "seeds": "Record seeds for the audit trail only. Don't rely on them for consistency: hosted models change version underneath you.",
+    "style_model": "Once the anchors pass review in the engine, train one style adapter (a LoRA, or the tool's custom-model or style-reference feature) on 20–40 approved keepers of the chosen direction, and run every later batch through it. Record its file hash in the manifest. Retrain only at a review gate, never mid-batch.",
+    "transparency": "Generate isolated assets on flat mid-grey (#7A7A7A), or on a background that contrasts in value with the subject. Never parchment: it's the interface's paper colour and close to a dozen pale items. Prefer the tool's native transparent output; otherwise cut with a matting model and check the edges at 2x zoom. No cast or contact shadows in the image: the engine draws them, so they stay put when a prop lifts on hover. Paint jars and flasks as glazed or opaque with the substance showing in a window; leave real see-through glass to the engine.",
+    "lettering": "Hard rule: no generated lettering. Text-bearing surfaces are generated blank and the engine sets the words. Handwriting that a scene needs is drawn as unreadable flourishes.",
+    "qa": "Automated gate before human review: a palette histogram against the style sheet; an alpha check (no background pixels left, no halo); a text check (OCR; any detected glyph box means reject or inpaint); a silhouette check after downscaling to the in-game size (40 px icons, 20 px spines). Then review each batch as a contact sheet at in-game size beside its anchors."
+  },
+
+  "world": "The Atrium: the shaded canyon floor at the very bottom of Stairfall, a city built down a cliff face in tiers of stairs, arches and lit windows. Down here the light is the cool bright sky far overhead; warmth appears only where someone has carried a light down or lit one. Things here have arrived from above and settled: books in a pile, gold in the silt, a key in a reliquary. Palette: cistern slate, verdigris, deep-pool teal, canyon moss and fall-mist grey for the shade; parchment and sandstone for paper and stone; lamp amber, ember and a little Hem-clay red as rare warm accents. Quiet and unhurried.",
+
+  "world_style": "The painted world of the Atrium: old, used, mended things; cool blue-green shade; small warm light only from a lit source; quiet and unhurried.",
+
+  "negative": "text, lettering, letters, words, numbers, captions, signature, watermark, logo, frame or border, cast shadow or contact shadow on isolated subjects, modern objects, plastic, rubber tubing, neon, chrome, sci-fi, photoreal human faces, the player character's body, face, hands, shadow or reflection, cozy game, chibi, kawaii, anime, storybook cottage, gore, horror, gloom, oversaturated colour, airbrushed gradients, lens flare, blurry, duplicated objects, extra limbs, gilt or gold-leaf ornament",
+
+  "directions": {
+    "A": {
+      "name": "Lamplit Ink (recommended)",
+      "medium": "Gouache and ink, like a plate from an old naturalist's field book: observed, not whimsical. Flat opaque colour shapes with quiet visible brushwork, slightly dry edges and paper grain in the lights; a warm brown-black ink line, heavier on silhouettes and broken where light falls; two or three flat value steps per material, with coloured shadows of verdigris and slate; restrained and hand-made."
+    },
+    "B": {
+      "name": "The Pop-up Stair",
+      "medium": "A handmade paper-theatre diorama photographed in soft light: layered cut card and handmade paper, visible folds, scored edges, glue seams, cotton thread and tiny brass split pins; each depth layer a separate sheet casting a soft shadow on the one behind; matte paper colours, cool blue-green card for the shade, warm translucent tissue paper only where a lamp glows; tactile, precise, slightly imperfect."
+    },
+    "C": {
+      "name": "Kiln and Glaze",
+      "medium": "A tabletop museum model of glazed ceramic and carved, painted wood, photographed like a miniature: celadon and verdigris glazes pooling in the recesses, unglazed terracotta for clay, hand-carved wood with visible tool marks, tiny brass fittings; soft top light, shallow depth of field, warm pinpoints only where a lamp is lit; quiet, old and observed."
+    }
+  },
+
+  "direction_tests": [
+    {
+      "id": "test-hub-evening",
+      "aspect": "16:9",
+      "reference": "Engine capture of the courtyard from its real camera (about 30° down, 31° field of view): new game, `go hub`, early evening. Paint over it, keeping its framing exactly.",
+      "subject": "The courtyard at early evening, seen from above at the game's fixed angle. An enormous ancient tree leans about fifteen degrees out over three different pools: a wide sunlit one under the waterfall's spray, a deep dark one among the roots, a small mirror-still one ringed with flat stones that reflects the lit city above. Beside the tree a tall, lazy, pale duck-egg ribbon of waterfall drifts down the cliff. Four small houses stand around the tree: a tall, narrow grey stone house with a steep blue roof and a green door; a low timber lodge with a teal roof and a porch beside the pools; a low plaster shop with a violet roof, a chimney and a bowed window full of jars; and a round stone lodge with an ochre dome. Each has an old lamp over its door, dark and unlit. A few low iron lamp posts are just being lit. The canyon walls rise out of the top of the frame in stacked strata, stairs and warm lit windows. No people."
+    },
+    {
+      "id": "test-hub-noon",
+      "aspect": "16:9",
+      "reference": "The same engine capture at noon.",
+      "subject": "The same courtyard at noon. A single long shaft of sunlight falls through the gap between the cliffs onto the widest pool and the tree's crown, turning that water pale and bright. The pool among the roots stays in green shade. Spray from the waterfall glitters in the beam. The tree's short noon shadow, about a hand's width, pools at its own roots. Small square holes in the bark at a raised hand's height are empty and dark. No people."
+    },
+    {
+      "id": "test-library",
+      "aspect": "16:9",
+      "subject": "Inside a cramped old library in a tall, narrow stone house, looking slightly up: a long run of dark wooden bookcases along the back wall, mostly empty, with a brass lamp on the wall at the left end of the run; a reading table in front heaped with unshelved books in many worn cloth colours; a rolling ladder; dusty beams from a high window; a cup bristling with pencils and a dented biscuit tin on the table. No people."
+    },
+    {
+      "id": "test-apothecary",
+      "aspect": "16:9",
+      "subject": "Inside a small apothecary shop, looking slightly up: a long wooden bench with a copper mixing vessel, a heavy stone mortar and pestle, a small brass spirit burner with a blue flame, an assayer's balance and a reading glass on a stand; behind it a wall of shelves with glazed stoneware jars, string-tied, with blank paper labels; a bowed front window full of backlit jars; an empty wooden frame holding a blank sheet of paper on the wall; ash on the floorboards. No people."
+    },
+    {
+      "id": "test-pools",
+      "aspect": "16:9",
+      "subject": "A wet stone room beside a waterfall where druids keep three glass-sided tanks of pool water on a long stone ledge, looking slightly up. Each tank wears its own light: the first in warm, broken morning light and falling spray, with a branch shadow across it; the second in green, tired light filtered through tree roots, a root breaking through the wall behind it; the third glass-still and ringed with flat stones, with no ripples at all. Small bright fish, butter-yellow snails on stones, reeds with tiny glowing tips, a few slow floating sparks. Arched windows overgrown with ferns; a large clay crock, a stool and a druid's cloth bag on the wet flagstones. No people."
+    },
+    {
+      "id": "test-sanctum",
+      "aspect": "16:9",
+      "subject": "A round stone study at night, looking slightly up: a writing desk with an open journal of blank pages and two candles; a framed charter on the wall with a red wax seal; an old brass balance standing over a small sealed wooden reliquary; an assembly bench with tools and pinned blank sketches; a tall cedar cabinet; a chalk circle worked so neatly into the slate floor's pattern it could be decoration, glowing very faintly like a hearth after the fire is out; a round window above letting in a little moonlight. No people."
+    },
+    {
+      "id": "test-objects",
+      "aspect": "3:2",
+      "subject": "A study sheet of six small objects laid out in two rows on flat mid-grey, evenly spaced, no shadows: a pale, slender pressed leaf sealed flat under something clear and hard, its veins catching the light like threads of silver; a thumb-sized lump of gold, softly folded, as if pressed rather than found; a smooth, pale oval stone, a little translucent at the edges, cold-looking; a perfectly smooth black pearl; a heavy iron key with a plain bow and a bright silver bit; a small glazed stoneware jar of grey ash tied with string. Seen from slightly above, light from the upper left."
+    },
+    {
+      "id": "test-journal",
+      "aspect": "3:2",
+      "subject": "An open hand-bound journal on a dark wooden desk, seen from above: cloth cover re-bound along the spine, plain linen ribbon tabs down the fore-edge, deckled blank cream pages, a pencil, a red wax seal pressed in one corner, a brass lamp casting warm light across one page while the other stays cool."
+    }
+  ],
+
+  "style_sheet": {
+    "aspect": "3:2",
+    "subject": "A style reference sheet laid out as tidy swatches on flat mid-grey: a row of palette chips from cool slate, verdigris, teal and moss to parchment, sandstone, amber, ember and clay red; three material swatches (wet stone with moss, worn cloth book cover, verdigris brass); one glazed jar drawn small and again large; a lamp with its warm light pool; a leaf showing the line and paint treatment. No text or labels."
+  },
+
+  "templates": {
+    "item_icon": {
+      "source": "content items with kind ingredient, reagent, food, mineral or aura",
+      "fields": { "brief": "briefs[id]" },
+      "aspect": "1:1", "native": "1024x1024", "shipped": "320x320 in a 2048 atlas",
+      "subject": "An inventory icon: {brief}. Centred with a generous margin on flat mid-grey, three-quarter view from slightly above, light from the upper left, no shadow. A bold silhouette that still reads at 40 pixels, with one small sign of use or repair."
+    },
+    "clue_icon": {
+      "source": "content items with kind clueForm or remnant, plus the inert variants in briefs (id:inert)",
+      "fields": { "brief": "briefs[id]" },
+      "aspect": "1:1", "native": "1024x1024", "shipped": "320x320 in a 2048 atlas",
+      "subject": "An inventory icon, drawn exactly as described and nothing more: {brief}. No added holes, cords, chips, stains, marks, engravings or repairs. Centred on flat mid-grey, three-quarter view from slightly above, light from the upper left, no shadow; a bold silhouette that reads at 40 pixels.",
+      "notes": "Any glow, smoke or drifting fleck is painted as a separate layer (E6) so the engine can animate it and switch it off. Inert icons reuse the live icon's composition with the colour drained."
+    },
+    "tool_icon": {
+      "source": "content tools (fixed and assembled); saved under items/<id>.png because satchel tools are items",
+      "fields": { "brief": "briefs[id]" },
+      "aspect": "1:1", "native": "1024x1024", "shipped": "320x320",
+      "subject": "An inventory icon: {brief}. Centred on flat mid-grey, three-quarter view from slightly above, light from the upper left, no shadow; worn from use, with one old repair."
+    },
+    "lifeform_portrait": {
+      "source": "content lifeforms",
+      "fields": { "name": "name", "kind": "kind", "brief": "briefs[id] (falls back to the description after a human edit)" },
+      "aspect": "1:1", "native": "1024x1024", "shipped": "512x512",
+      "subject": "A naturalist's ledger study of the {name}, a small {kind} of the spirit pools: {brief}. Side view on flat mid-grey with faint pencil construction lines, precise but affectionate. No labels."
+    },
+    "lifeform_side": {
+      "source": "content lifeforms (seen through tank glass in the Pools room)",
+      "aspect": "1:1", "native": "1024x1024", "shipped": "256x256",
+      "subject": "Game sprite of the {name} seen from the side, in a relaxed {pose}, on flat mid-grey, no shadow, in neutral light so the engine's tints read: {brief}. A strong simple silhouette and two clear colour areas, readable at 40 pixels.",
+      "poses": { "fish": "mid-swim pose, tail slightly curved", "snail": "creeping pose, eye-stalks up", "plant": "upright clump, leaves spread", "mote": "a soft round spark with a faint halo" },
+      "notes": "Fish tails are painted as a separate layer for the engine to wag. Sulking, plumpness and hatchling pops are engine tints and scales."
+    },
+    "lifeform_top": {
+      "source": "content lifeforms (seen from above in the courtyard pools)",
+      "aspect": "1:1", "native": "1024x1024", "shipped": "256x256",
+      "subject": "Game sprite of the {name} seen from directly above, as if looking down into water, on flat mid-grey, no shadow: {brief}."
+    },
+    "book_spine": {
+      "source": "content/library/tomes/*.md front matter",
+      "fields": { "cover": "cover", "spine_rgb": "the colour LibraryScene.CoverColor parses from the same cover text" },
+      "aspect": "1:8", "native": "256x2048", "shipped": "96x768",
+      "subject": "The spine of an old hand-bound book, straight-on, filling a tall narrow frame on flat mid-grey: {cover}. Show only what that description puts on the spine, with raised bands and a blank title panel. Cloth colour close to {spine_rgb}.",
+      "notes": "QA rejects a large colour difference from {spine_rgb}, so the shelf, the pile and the art agree and the four deliberate off-genre covers survive. Sigils and seals named in a cover are stamped from the vector set in paint-over. Any gilt or silver stamp is painted as soot-dulled brass or tarnished grey."
+    },
+    "pile_top": {
+      "source": "content/library/tomes/*.md front matter",
+      "aspect": "4:3", "native": "1024x768", "shipped": "256x180",
+      "subject": "An old hand-bound book lying flat, seen from directly above, on flat mid-grey, no shadow: {cover}. Blank of any title or lettering; only the tooling, wear and marks described."
+    },
+    "book_cover": {
+      "source": "content/library/tomes/*.md front matter",
+      "priority": "P3, only if the designer adds a view that shows covers face-on",
+      "aspect": "3:4", "native": "1536x2048", "shipped": "768x1024",
+      "subject": "The front cover of an old hand-bound book, face-on and filling the frame, {wear}: {cover}. Completely blank of any title or lettering; only the tooling, wear and marks described. Soft, even light.",
+      "notes": "{wear}: new (from SR 600); well used (SR 500–599); old (SR 400–499); very old (before SR 400). No numbers in the prompt."
+    },
+    "story_vignette": {
+      "source": "anchors.story_vignettes (hand-written, because the beat text holds story the art mustn't front-run)",
+      "aspect": "16:10", "native": "1600x1000", "shipped": "1600x1000",
+      "subject": "A storybook vignette with soft painted edges fading out: {scene}"
+    },
+    "page_vignette": {
+      "source": "tome pages of kind poetry, letter, recipe, table, list or marginalia",
+      "fields": { "motif": "a one-line motif written per page by a human from the page's content" },
+      "aspect": "3:2", "native": "1200x800", "shipped": "900x600",
+      "subject": "A small spot illustration to sit at the head of a page in an old book: {motif}. A single simple motif in ink with a little wash, lots of empty paper around it, no frame."
+    },
+    "texture_tile": {
+      "source": "anchors.textures",
+      "aspect": "1:1", "native": "1024x1024", "shipped": "1024x1024 with mipmaps",
+      "subject": "A seamless, tileable texture of {material}, seen straight on, evenly and flatly lit with no shadows, highlights or perspective; the pattern scaled to repeat naturally across a wall or floor.",
+      "notes": "Unlit albedo: the shader does the light. If the tool has no tiling mode, offset by half and paint out the seam."
+    },
+    "hub_backdrop": {
+      "source": "anchors.backdrop_layers",
+      "aspect": "4:1", "native": "4096x1024 (stitched)", "shipped": "4096x1024 DDS DXT5",
+      "subject": "One layer of a painted backdrop for a canyon city, painted as one long strip that wraps around the canyon's arc (the camera orbits all the way round): {layer}. Flat, even daylight; no sky in the image; set against flat mid-grey so it can be cut out.",
+      "notes": "No baked time of day: the engine tints each layer from the clock (E3)."
+    },
+    "window_mask": {
+      "source": "one per city layer of anchors.backdrop_layers",
+      "subject": "A mask for the layer above: only its windows and lamps painted warm white on black, everything else black. The engine lights it at dusk and night."
+    },
+    "room_master": {
+      "source": "anchors.rooms",
+      "aspect": "16:9", "native": "about 2 MP, upscaled", "shipped": "3840x2160 DDS DXT1",
+      "reference": "Capture the iteration-2 room from its camera with --capture (a preset with the room unlocked, `go <room>`, `wait 1`, `shot <room>-empty`) and use it as the structure reference.",
+      "subject": "{plate} Fully furnished with: {furniture}. Seen from the room's fixed game camera: match the attached capture exactly (about 20 degrees down, 36-degree field of view). Keep interactive furniture inside the middle of the frame (from 42% to 72% across and 21% to 77% down): the left 42% sits under the working card, the right 27% under notices, the bottom 23% under the caption and satchel. No people.",
+      "notes": "Method: generate the room fully furnished in one image so every prop shares perspective and light; cut each piece of furniture to its own layer and inpaint the wall behind it to make the clean plate; project iteration 2's hotspot boxes through the same camera to seed the 2D hotspot outlines and the positions of data-driven furniture, stored as data beside the plate (E2). Furniture whose count comes from content is cut once and placed by the game."
+    },
+    "hero_turnaround": {
+      "source": "anchors.heroes",
+      "priority": "P3, optional",
+      "aspect": "2:1", "native": "2400x1200",
+      "subject": "A modelling reference sheet of {subject}: front, side and back views at the same scale, orthographic, flat even light, flat mid-grey background, nothing overlapping.",
+      "notes": "A modelling and paint-over reference only, to the parts spec in iteration-3-assets.md. If an image-to-3D tool is tried, its output is a blockout to retopologise, never the shipped mesh."
+    },
+    "ui_piece": {
+      "source": "anchors.ui",
+      "subject": "{piece}: a real object from the Keeper's desk, on flat dark slate (#2F3B44), straight-on and evenly lit, no shadow; blank of any text or symbol unless described."
+    },
+    "key_art": {
+      "priority": "P3",
+      "aspect": "16:9", "native": "about 2 MP, upscaled", "shipped": "3840x2160",
+      "subject": "The courtyard at dusk seen from low by the largest pool, looking up past the great leaning tree and the lazy pale waterfall to the tiers of the city lighting their windows. The four small houses stand around the tree, each with an old dark lamp over its door; the courtyard is lit only by a few low iron lamp posts. A satchel rests on the pool's edge with a pale pressed leaf just peeking out. The upper third is left calm for the title. No people."
+    }
+  },
+
+  "briefs": {
+    "_note": "Hand-written, look-only briefs per id: what to draw, never what a reading reveals. They replace the in-game descriptions, which are written for players ('Tastes of tears', 'Every child's first alchemy') and would be painted literally.",
+    "spring-water": "a stoppered glazed jar with a window showing clear cold water, a drop beaded on the cork",
+    "hearth-ash": "a glazed stoneware jar of soft grey ash, a little spilled over the lip",
+    "patience": "an hour-candle marked in thumb-widths, burning in a small dish",
+    "steam": "a small stoppered flask fogged inside with warm vapour, a curl escaping past the cork",
+    "lye": "a stoneware jar of pale yellow-green liquor, its cork eaten ragged",
+    "stillwater": "a jar of dark, glass-still water, perfectly level, with a cool sheen",
+    "loam": "a jar of dark crumbly earth with a clod beside it",
+    "morning-mist": "a jar holding a soft white haze, stoppered with a cloth",
+    "dew": "a small jar with a few bright, cold beads of water clinging inside its glaze window",
+    "potash": "a jar of white crusted salt-like powder, a flake of crust on the lid",
+    "mud": "a jar of wet brown mud with a smear down its side",
+    "clay": "a lump of smooth red-brown clay with thumb marks",
+    "green-shoot": "a small clay pot with a single bright green shoot",
+    "reed": "a bundle of tall hollow reeds tied with twine",
+    "reed-fibre": "a loose skein of long pale reed threads",
+    "reed-twine": "a coil of strong grey reed cord",
+    "reed-seed": "a little heap of small dark oily seeds on a scrap of paper",
+    "pressed-oil": "a small stoppered bottle of golden oil",
+    "fired-clay": "a small lopsided terracotta pot",
+    "grog-sand": "a wooden scoop of fine red sand",
+    "lamp-glass": "a curved piece of greenish, slightly bubbled lamp-chimney glass catching the light",
+    "soap": "a rough cake of pale soap tied with string",
+    "brine": "a jar of clear water with a white rim of salt crust",
+    "shrine-wax": "a few hard, glass-clear flakes of wax on a scrap of paper (clear, never yellow)",
+    "waxed-reed-pouch": "an empty pouch of tightly woven reed twine sealed with clear wax, drawn closed",
+    "cinder": "a jar with a glowing coal inside, warm light showing through its glaze window",
+    "charcoal": "a few sticks of matte black charcoal",
+    "lampblack-ink": "a small bottle of deep black ink",
+    "cold-brine": "a jar of brine with frost feathering its outside",
+    "votive-candle": "a small clear candle burning in a bowl of water",
+    "distilled-dew": "a tiny stoppered vial of perfectly clear water with frost at its neck",
+    "spirit-of-cinders": "a small stoppered vial with a warm orange shimmer inside, wrapped in a cloth",
+    "reed-meal": "a wooden scoop of coarse brown-green meal",
+    "clear-spirit": "a small stoppered vial of very clear water",
+    "sun-grit": "a pinch of warm golden grit in a twist of paper",
+    "shade-salt": "a few blue-grey crystals in a twist of paper",
+    "silver-silt": "a pinch of fine silver silt in a twist of paper, softly glittering",
+    "sun-mote-aura": "a stoppered jar of warm bright air glowing softly from within",
+    "pressed-leaf": "a pale, slender leaf sealed flat under something clear and hard, its veins catching the light like threads of silver",
+    "gold-nugget": "a lump of gold the size of a thumb-joint, softly folded, as if pressed rather than found",
+    "gold-flakes": "soft, bright flakes of beaten gold in a twist of paper",
+    "gold-flakes:inert": "the same twist of paper with dull gold-coloured foil flakes, no glitter at all",
+    "gilded-lamp-oil": "a small stoppered flask of honey-coloured oil with gold flecks drifting in it",
+    "gilded-lamp-oil:inert": "the same small flask holding ordinary pale oil, a few dull specks at the bottom",
+    "black-pearl": "a black pearl the size of a thumbnail, perfectly smooth, resting on a fold of dark cloth",
+    "smoke-in-a-bag": "a small waxed reed pouch drawn tight, bulging with slow grey smoke that shows darkly through the weave",
+    "smoke-in-a-bag:inert": "the same reed pouch gone slack, thin ordinary grey smoke leaking from the weave",
+    "pearl-husk": "the dull outer half of a pearl, hollow as an eggshell",
+    "iron-slag": "a square-shanked, tapering, hand-forged iron nail, dull black, with a flattened head",
+    "cold-sunstone": "a smooth, pale oval stone, a little translucent at the edges, with a cold blue-white sheen",
+    "waking-sunstone": "the same smooth pale oval stone, warm now and faintly glowing from within with soft gold-white light",
+    "sluice-key": "a heavy iron key as long as a forearm, its bow plain and its bit bright silver, worn smooth",
+    "mortar-and-pestle": "a heavy grey stone mortar and pestle, worn smooth by generations of hands",
+    "bunsen-burner": "a small brass spirit burner with a cloth wick and a blue flame, a brass snuffer cap beside it, no tubing",
+    "weighing-scales": "an assayer's balance with two brass pans and a row of tiny brass weights",
+    "loupe": "a jeweller's loupe in worn horn",
+    "spirit-still": "a coil of greenish glass tubing on a clay stand",
+    "magnifying-glass": "a round reading glass on a long brass chain",
+    "reconstitution-circle": "a ring of chalk drawn on a dark slate tile",
+    "lamplighters-lantern": "a small brass lantern with a greenish glass chimney, burning a low honeyed flame",
+    "lamplighters-lantern:inert": "the same brass lantern with a plain small yellow flame",
+    "stillkeepers-sieve": "a round sieve of woven reed mesh in a fired-clay rim",
+    "sun-lens": "a thick lens of greenish lamp glass set in a clay ring",
+    "still-kit": "the parts of a small still bundled together: a glass coil, a clay pot and a cork, tied with twine",
+    "spotted-spinner": "a small round-bodied pond fish, orange with darker spots, fins like little fans",
+    "blazing-glory": "a small pond fish of flame red and orange with long trailing fins",
+    "sun-spotted-goldfish": "a small golden pond fish dappled with bright sun-coloured spots",
+    "yellow-backed-snail": "a slow pond snail with a smooth butter-yellow shell",
+    "grey-guppy": "a small plain grey guppy with a neat fan tail",
+    "shadow-guppy": "a small guppy so dark it is nearly black, with a faint blue sheen",
+    "hush-moss": "a soft cushion of dark green moss that grows underwater",
+    "lantern-reed": "a clump of slender reeds with tiny warm glowing tips",
+    "sun-mote": "a small warm golden spark of light with a soft halo",
+    "frost-mote": "a small pale blue spark of cold light with a soft halo"
+  },
+
+  "anchors": {
+    "backdrop_layers": [
+      { "id": "backdrop-hallows", "layer": "the highest, farthest layer: the snowy mountain shrines of the High Hallows and the top of the Long Stair, tiny and pale" },
+      { "id": "backdrop-crown-gallery", "layer": "the upper tiers: the grand, slightly forgetful Crown with its charter office, and below it the Gallery's markets and glassworks; at one side three great sluices of oak and iron, water pouring through the two nearest the cliff while the outermost stands shut and dry, moss on its gate; each tier's small, old waystation tree, joined by the zigzag of the Long Stair" },
+      { "id": "backdrop-ribs-hem", "layer": "the lower tiers: cistern arches carved into the rock with tiny sealed lamps glowing deep in their mouths, kitchen gardens on ledges, washing lines, red clay paths, small mourning houses, each tier's waystation tree, and the Long Stair zigzagging down toward the courtyard" },
+      { "id": "backdrop-near-cliff", "layer": "the nearest cliff edges framing the canyon: stair landings, rope bridges, and pilgrim cords and lanterns hanging down into view" }
+    ],
+    "textures": [
+      { "id": "tex-sandstone", "material": "layered sandstone cliff strata in bands of cream, tan and pale ochre, weathered and slightly rounded" },
+      { "id": "tex-wet-stone", "material": "wet grey-green flagstones with thin lines of moss in the joints" },
+      { "id": "tex-moss-stone", "material": "stone thickly furred with soft canyon moss" },
+      { "id": "tex-hem-clay", "material": "a red clay footpath, packed hard, with footprints and a few pebbles" },
+      { "id": "tex-paving", "material": "worn plain paving stones, rounded where feet pass" },
+      { "id": "tex-stoic-bark", "material": "the bark of an ancient tree, deep vertical furrows, with a few small, empty square nail-holes, dark inside, no metal in them" },
+      { "id": "tex-canopy", "material": "a dense cluster of broad leaves in shade, for leaf cards (on flat mid-grey for cutting out)" },
+      { "id": "tex-roof-slate", "material": "blue-grey slate roof tiles, overlapping, a few replaced with newer ones" },
+      { "id": "tex-roof-thatch", "material": "reed thatch with a teal-painted ridge board" },
+      { "id": "tex-roof-violet", "material": "violet-glazed clay roof tiles, a few chipped" },
+      { "id": "tex-dome-ochre", "material": "ochre-painted render on a dome, crazed and patched" },
+      { "id": "tex-plaster", "material": "lime plaster wall, warm cream, patched in a slightly different shade" },
+      { "id": "tex-timber", "material": "weathered timber boards, silvered, with old nail heads" },
+      { "id": "tex-water-flow", "material": "painted pale duck-egg water seen from above, soft flow streaks" },
+      { "id": "tex-falls-strip", "material": "a long vertical strip of falling water, pale duck-egg and white, soft streaks, for scrolling" }
+    ],
+    "heroes": [
+      { "id": "hero-old-stoic", "subject": "an enormous ancient tree leaning about fifteen degrees to one side, thick buttressed roots gripping stone, a broad heavy canopy of clustered foliage, small empty square holes in the bark at a raised hand's height; serene and unchanging" },
+      { "id": "hero-library", "subject": "a tall, narrow grey stone house leaning very slightly, steep blue slate roof, a green door, two stacked windows, a chimney, an old lamp beside the door" },
+      { "id": "hero-pools-lodge", "subject": "a low timber lodge with a teal reed-thatch roof and a deep porch on two posts, shutters, wet boards, a rain barrel" },
+      { "id": "hero-apothecary", "subject": "a low plaster shop with a violet tiled roof, a brick chimney, a bowed front window full of jars, a narrow violet door, an unpainted hanging signboard" },
+      { "id": "hero-sanctum", "subject": "a round stone lodge with an ochre dome, a small spire, two round windows and a heavy wooden door" },
+      { "id": "hero-lamp-post", "subject": "an old iron lamp post with a glass lantern box, bent very slightly, verdigris at the joints" }
+    ],
+    "courtyard_scene": {
+      "_note": "Designer brief, 2026-10-25: use Higgsfield to make the courtyard scene (the tall tree, the four distinct houses and the pools) so it feels like a natural corner of a large medieval city. Higgsfield's 3D models lift one image of an object into a mesh; none generates a whole scene. So it's two steps: a look-development keyframe, then the courtyard painted as a miniature diorama (an object) and lifted to 3D. Prices aren't published through the API, so check the balance after each generation.",
+      "keyframe": {
+        "models": ["nano_banana_pro", "seedream_v5_pro", "gpt_image_2_5"],
+        "aspect": "16:9",
+        "reference": "Optional: the engine capture hub-evening.png (camera and layout only).",
+        "subject": "The Atrium: a quiet courtyard at the very bottom of a large medieval city built down the side of a canyon, seen from above at a thirty-degree angle. At its centre an enormous ancient tree leans about fifteen degrees out over three different pools: a wide one under the spray of a tall, lazy, pale waterfall drifting down the cliff; a deep, dark one among the roots; a small, mirror-still one ringed with flat stones. Four small houses stand around the tree, each unmistakable by its silhouette: a tall, narrow grey stone house with a steep blue slate roof and a green door; a long, low timber lodge with a teal reed-thatch roof and a deep porch beside the pools; a low plaster shop with a violet tiled roof, a brick chimney and a bowed window full of jars; and a round stone lodge with an ochre dome and a small spire. The courtyard is no island: the city crowds its edges and climbs the cliff behind it in tier on tier of timber-framed and stone houses, with stairs zigzagging down, arched passages, little bridges, chimneys, washing lines and warm lit windows. Mossy paving, worn steps, a few iron lamp posts; the old lamps over the four doors are dark. Early evening: the courtyard in cool shade, the high city still catching the last warm light. No people."
+      },
+      "diorama": {
+        "models": ["nano_banana_pro", "seedream_v5_pro"],
+        "aspect": "1:1",
+        "reference": "The approved keyframe, as a style and layout reference.",
+        "subject": "A detailed miniature diorama of a medieval courtyard, built on a thick square base of layered stone and earth, shown whole and centred on a plain flat mid-grey background, from a three-quarter angle above, evenly lit with soft light and no cast shadows. On the base: an enormous ancient tree leaning out over three small pools; a lazy waterfall pouring down a stepped cliff in the back corner into the largest pool; four small, distinct houses around the tree (a tall narrow stone house with a steep blue roof and a green door; a low timber lodge with a teal thatched roof and a porch; a low plaster shop with a violet roof, a chimney and a bowed window; a round stone lodge with an ochre dome). Along the two back edges, the start of a large medieval city: tall stacked timber-framed and stone houses climbing the cliff, with stairs and arches, cut off cleanly at the edge of the base. Chunky, readable, solid forms; nothing floating; nothing cropped by the frame.",
+        "medium": "A hand-painted miniature: matte gouache-painted surfaces with soft brushwork, warm brown-black painted linework along edges, flat colour shapes, coloured shadows of verdigris and slate."
+      },
+      "lift": {
+        "model": "tripo_p2_image_to_3d",
+        "params": { "delight": true, "texture_version": "v3.5-20260815", "texture_quality": "detailed", "pbr": false, "export_uv": true, "face_limit": 40000 },
+        "why": "Tripo P2 removes baked-in lighting before texturing (the bible wants unlit albedo, because the cel shader does the light) and caps faces at 50,000, safely under raylib's 65,535-vertex limit per part. PBR maps aren't used by the cel shader.",
+        "alternates": [
+          { "model": "tripo_h3_1_image_to_3d", "params": { "geometry_quality": "standard", "texture_quality": "detailed", "pbr": false, "face_limit": 40000 } },
+          { "model": "hunyuan3d_v3_image_to_3d", "params": { "generate_type": "LowPoly", "face_count": 40000 } },
+          { "model": "meshy_v7_image_to_3d", "params": { "model_type": "lowpoly", "should_texture": true, "target_polycount": 30000 } }
+        ],
+        "caveat": "A look test, not a shipping asset. One fused mesh can't light its windows, close shutters or sway the canopy apart from the trunk, and the engine can't draw it in the cel style until task E1 lands (iteration-3-art-bible.md, How the art meets the engine)."
+      }
+    },
+    "rooms": [
+      {
+        "house": "Library",
+        "plate": "Inside the Library, a tall narrow stone house: a bare panelled back wall with a long rail for bookcases, a brass lamp on the wall at the left end, a high window with dusty beams, worn floorboards and a faded rug.",
+        "furniture": "bookcases along the rail (one is cut out and placed by the game per shelf), a blank wooden tag plaque on two brass hooks above each, a reading table with a pile of unshelved books, a wooden returns box with a slot, a rolling ladder, a small globe, a dented biscuit tin, a cup crammed with pencils, a candle in a brass dish",
+        "cut_out": ["bookcase", "tag plaque (blank, with a tint mask)", "reading table", "book pile (small, medium, tall)", "returns box", "loan card", "rolling ladder", "globe", "biscuit tin", "pencil cup", "candle"]
+      },
+      {
+        "house": "Apothecary",
+        "plate": "Inside the Apothecary, a low plaster shop: a wall of shelves above a row of small drawers, a long wooden bench, a bowed front window, a chimney breast, ash on the floorboards.",
+        "furniture": "glazed stoneware jars with blank paper labels on the shelves (one jar shell is cut out and tinted per element through a substance mask), a copper mixing vessel on a stand, a brass tray, a stone mortar and pestle, a small brass spirit burner, an assayer's balance, a reading glass on a stand, a small glass still, an empty wooden frame holding a blank sheet of paper, an old cracked leather formulary on a lectern, a crate of empty bottles",
+        "cut_out": ["jar shell", "jar substance mask", "copper vessel", "vessel liquid surface", "brass tray", "mortar and pestle", "spirit burner", "burner flame", "balance body", "balance pans", "reading glass", "still", "map frame (blank paper; the engine draws the map)", "formulary on lectern", "crate of bottles"]
+      },
+      {
+        "house": "Spirit Pools",
+        "plate": "Inside the Stillkeepers' wet stone room beside the falls: arched windows overgrown with ferns, wet flagstones, a trickle of water running down the wall, a long stone ledge where tanks can stand.",
+        "furniture": "glass-sided tanks on the ledge (one tank is cut out and placed by the game per pool), a large clay holding crock, a druid's cloth bag half full, a breeding ledger open on a little stand, a three-legged stool, a hanging lantern, a small hand rake",
+        "cut_out": ["tank rim", "tank glass", "tank water (neutral; the engine tints it per pool)", "holding crock", "druids' bag", "breeding ledger on its stand", "stool", "lantern", "hand rake"]
+      },
+      {
+        "house": "Sanctum",
+        "plate": "Inside the Sanctum, a round stone study: a round window above, panelled walls, a slate floor with a chalk circle worked so neatly into its pattern it could be decoration, wall sconces.",
+        "furniture": "a writing desk with an open journal of blank pages and a quill, a framed charter on the wall with its seal in red wax (the seal composited from the vector), a reading glass on a brass stand with a little side table, an assembly bench with a vice, tools and pinned blank sketches, a tall cedar cabinet, an old brass balance standing over a small wooden reliquary (one balance and reliquary are cut out and placed by the game per seal), candles in brass candlesticks",
+        "cut_out": ["desk and journal", "framed charter", "reading glass on stand", "assembly bench", "cabinet body", "cabinet door", "balance stand", "balance beam", "balance pans", "reliquary body", "reliquary lid", "circle glow layer", "candle"]
+      }
+    ],
+    "ui": [
+      { "id": "ui-deckle-edge", "piece": "a long strip of cream parchment edge, softly deckled, tileable along its length" },
+      { "id": "ui-deckle-corner", "piece": "one corner of a sheet of cream parchment with a softly deckled edge" },
+      { "id": "ui-paper", "piece": "a plain sheet of cream parchment with faint grain, tileable" },
+      { "id": "ui-button", "piece": "a small rounded tab of thick cream card with a fine inked edge, in four states: plain, lifted, pressed and greyed-out" },
+      { "id": "ui-journal", "piece": "an open hand-bound journal spread, cloth cover re-bound along the spine, blank cream pages" },
+      { "id": "ui-tab", "piece": "one cloth ribbon tab in undyed linen (the engine tints and repeats it)" },
+      { "id": "ui-satchel", "piece": "a long worn leather satchel strap with stitching and a brass buckle, seen face-on" },
+      { "id": "ui-satchel-tile", "piece": "a small square pocket of soft leather, seen face-on" },
+      { "id": "ui-medallion", "piece": "a plain round brass medallion with a recessed blank face (the engine draws the courtyard plan and the shadow)" },
+      { "id": "ui-wax", "piece": "a blank round wax seal in deep red, glossy, with a soft drip" },
+      { "id": "ui-slip", "piece": "a narrow torn slip of parchment" },
+      { "id": "ui-tooltip", "piece": "a small dark ink-blue card with a cream edge" },
+      { "id": "ui-close", "piece": "a small round brass button with a simple cross" },
+      { "id": "ui-cursor", "piece": "a short sharpened pencil, pointing up and to the left" },
+      { "id": "ui-reader", "piece": "an open old book spread, deckled pages, a ribbon marker, blank pages" }
+    ],
+    "story_vignettes": [
+      { "id": "unkept-vow", "scene": "evening on a long stone stair: a small wax-sealed note passed from hand to hand down the tiers of the city, from one lit doorway to the next, toward a dark courtyard far below; only townsfolk's hands and sleeves are seen." },
+      { "id": "circle-wakes", "scene": "a slate floor at night: a closed chalk circle worked so neatly into the floor's pattern it could be decoration, glowing faintly the way a hearth glows after the fire is out; its centre empty (the engine composites the player's own remnant)." },
+      { "id": "gilded-nails", "scene": "close on the bark of a great tree at a raised hand's height: a column of empty square nail-holes ringed with smooth dark bark; a ladder leaning on the trunk with a notebook on its top rung, one gold-wrapped nail lying on the notebook; afternoon light." },
+      { "id": "smoke-pearl", "scene": "candlelight on an old brass balance standing over a sealed wooden reliquary; a torn scrap of old paper covered in faded, unreadable handwriting lies beside a black pearl in a dish." },
+      { "id": "reliquary-opened", "scene": "a brass balance level at last over an open cedar reliquary lined with worn velvet, a long empty hollow pressed into the velvet, dust turning in the candlelight." },
+      { "id": "lamps-relit", "scene": "night in the courtyard with the four old lamps over the four doors lit for the first time in eighty years; small figures on the last stairs from the tier above, looking down; warm light on the pools; a jar of glowing air waiting on flat stones by the water. The great tree is exactly as always." },
+      { "id": "silver-course", "scene": "a library table covered by an unrolled map of waterworks and sluices (drawn shapes, no writing), its corners weighted with teacups; an old book open beside it; a pinch of silver silt in a twist of paper." },
+      { "id": "pilgrims-hand", "scene": "two old pages side by side under a honeyed lantern, both covered in the same small handwriting drawn as unreadable flourishes, in identical ink; a pale pressed leaf under clear wax and a heavy iron key with a silver bit rest nearby." },
+      { "id": "chapter-one", "scene": "a warm evening picnic under the great leaning tree, seen from the Keeper's own place on the blanket: a good teacup set down in the foreground, far too much food, a goldfish in a jar of water, lamps lit around the pools; the others seen from behind or far off, no faces." },
+      { "id": "library-settled", "scene": "a long run of bookcases full and in perfect order, the lamp at the end of the run glowing, a single fingertip trail in the dust along the spines; quiet." },
+      { "id": "apothecary-map", "scene": "a bowed shop window seen from inside in morning sun: a hand-drawn map of connected circles (no writing) pinned to the glass, sunlight shining through it onto jars and the floor." },
+      { "id": "pools-thriving", "scene": "the edge of a sunlit pool: a crowd of small bright fish turning circles, butter-yellow snails on the stones, a druid's wet boots at the water's edge." }
+    ],
+    "trailer_capture": {
+      "_note": "Shot in the engine with --capture and a scripted camera, not generated: a video model would morph Old Stoic and show things the game can't do. Generated video is for internal mood boards only.",
+      "shots": [
+        { "id": "trailer-crane", "shot": "A slow orbit over the courtyard from noon into dusk as the city's windows come on." },
+        { "id": "trailer-library", "shot": "A book slides into its gap and the shelf glows; dust drifts in the window beam." },
+        { "id": "trailer-apothecary", "shot": "Elements drop into the copper vessel; it swirls; a new jar pops onto the shelf." },
+        { "id": "trailer-pools", "shot": "Food flakes drift down from above the frame into a tank; small fish turn circles; a hatchling pops." },
+        { "id": "trailer-circle", "shot": "A chalk circle in the slate floor brightens slowly, like a banked hearth, while dust turns in the candlelight. Nothing is shown being remade." },
+        { "id": "trailer-night", "shot": "Night falls over the courtyard; the lamp posts come on, then the city above becomes a wall of warm windows." }
+      ]
+    }
+  }
+}

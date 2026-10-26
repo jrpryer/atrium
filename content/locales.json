@@ -35,15 +35,15 @@
       "id": "pools",
       "order": 3,
       "name": "The Spirit Pools",
-      "description": "Three pools beneath the falls, one sunny, one shaded by the tree's roots, one small and still. Steam rises from the Stillkeepers' lodge again.",
-      "lockedDescription": "The Stillkeepers' lodge is shuttered. Beneath the falls the pools are clouded and very still, as if waiting for someone to notice them.",
+      "description": "A hidden grotto below the courtyard, where the falls' water rests on its way underground: three pools, one sunny, one among the tree's roots, one small and still.",
+      "lockedDescription": "A rusted gate closes the cave mouth where the stream goes under the rock, and the lamp on the steps is dark. Somewhere below, the pools are clouded and very still, as if waiting for someone to notice them.",
       "unlockWhen": {
         "any": [
           { "beat": "unkept-vow" },
           { "all": [ { "counter": "library.shelved", "atLeast": 15 }, { "counter": "apothecary.discovered", "atLeast": 8 } ] }
         ]
       },
-      "unlockText": "Smoke rises from the Stillkeepers' lodge again. A druid in a patched green coat is standing knee-deep in the Sunward Basin, frowning at the silt.",
+      "unlockText": "The gate over the cave mouth stands open, and the lamp on the steps is lit again. Down in the grotto, a druid in a patched green coat is standing knee-deep in the Sunward Basin, frowning at the silt.",
       "intro": "“Brother Alder,” says the druid, wading out to shake your hand with a wet one. “The pools have been sulking for thirty years. Nothing's died — nothing dies in a Stillkeeper's pool — but nothing's been happy, either.”\n\nHe shows you the two breaths of water: Light and Dark, Hot and Cold. Every creature has a place it can bear and a narrower place it thrives. “Keep them fed, keep the water clear, keep them where they like it, and they'll breed. Lay a thing in the water and the water changes. Leave it long enough, and the thing changes too.”\n\n“Start with the Sunward Basin,” he says. “It's silted to the knees.”",
       "fallback": {
         "place": "It settles on the bottom. The water takes no particular notice.",

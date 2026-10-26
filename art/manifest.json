@@ -1,0 +1,359 @@
+{
+  "_about": "Provenance for every art file (iteration-3 art bible, 'Provenance and licensing'). Generated files: tool, model, job id, credits, references, sha256. Derived files: the script that made them from which inputs. Raw generations stay in the Higgsfield library under their job ids. Licence terms for the tools were not yet reviewed (decision D7).",
+  "updated": "2026-10-26",
+  "generated": [
+    {
+      "file": "art/reference/sheets/library-sheet.png",
+      "sha256": "3c84b2fb81f1299e048cda9da94ca8e42a33dc611d7f9d3a85396ccccc6ec10f",
+      "kind": "turnaround sheet",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9",
+      "job": "cddc4cfb-8ebe-418d-82cc-f315c6be3eaf",
+      "credits": 2,
+      "references": [
+        "keyframe 0d7ca74e-5382-49da-8198-68c9ac8520bf"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/sheets/old-stoic-sheet.png",
+      "sha256": "8a53117671dcecfb5f8ac6c1f912380fb503d59df4f26568a56d28c9df21d117",
+      "kind": "turnaround sheet",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9",
+      "job": "6f5e159b-297d-4fdf-ac73-688930eed4cc",
+      "credits": 2,
+      "references": [
+        "library sheet cddc4cfb-8ebe-418d-82cc-f315c6be3eaf"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/sheets/lamp-post-sheet.png",
+      "sha256": "7115ef2a7aac9e3218382f2d3ec141b6865c7ce3a94c19f92ba2a2a0d2851c70",
+      "kind": "turnaround sheet",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9",
+      "job": "3fc9621f-90bf-45c1-ac38-932b7f765001",
+      "credits": 2,
+      "references": [
+        "library sheet cddc4cfb-8ebe-418d-82cc-f315c6be3eaf"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/textures/stoic-leaves.png",
+      "sha256": "dd9fb230f9ca9af9d74099081336ea0193351b5d8b1d702d9cf3d05564b5f430",
+      "kind": "tileable texture (top band only used)",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1",
+      "job": "faea5eda-54c8-4102-a8a0-e410df3c9beb",
+      "credits": 2,
+      "references": [
+        "old-stoic sheet 6f5e159b-297d-4fdf-ac73-688930eed4cc"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/textures/stoic-bark.png",
+      "sha256": "b27e013beea755d0bc874b21d5038cf9c8b20abd0eb841a33ef564f73392ecfb",
+      "kind": "tileable texture",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1",
+      "job": "3b7f1253-b312-46cf-abe3-19bc08c0d30e",
+      "credits": 2,
+      "references": [
+        "old-stoic sheet 6f5e159b-297d-4fdf-ac73-688930eed4cc"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/old-stoic/lift-tripo-h3.1-multiview.glb",
+      "sha256": "7d976edf784a6add550526a1d0dfadfe315894bda287402d32d0ac87dcd2e266",
+      "kind": "multi-view 3D lift; refined into the shipping Old Stoic by tools/blender/assets/old_stoic.py",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "tripo_h3_1_multiview_to_3d, texture detailed, no PBR, 40,000-face limit",
+      "job": "70ad8190-105c-4847-8c87-6ad8d11715ac",
+      "credits": 12,
+      "references": [
+        "art/reference/views/old-stoic-{front,left,back,right}.png, uploaded as 7cb057ab, 34134acd, 7ba70e3f, c36dbd93"
+      ],
+      "approved_by": "designer, 2026-10-25: preferred to the scripted rebuild (old_stoic_rebuilt.py)"
+    },
+    {
+      "file": "art/reference/sheets/apothecary-sheet.png",
+      "sha256": "ec90d788aa896fc64cec55bfc767bb3a9af53da2504765c280513e776e2ec53e",
+      "kind": "turnaround sheet",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9",
+      "job": "ec3919c1-c1c1-41ab-bf4c-7721e869310a",
+      "credits": 2,
+      "references": [
+        "art/reference/sheets/library-sheet.png (job cddc4cfb), for style and layout only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/sheets/pools-sheet.png",
+      "sha256": "d303e6988679d8026d12da48066614e488a5c8f4cef5f1b4c3cb3f5e18599283",
+      "kind": "turnaround sheet",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9",
+      "job": "c58861ee-2563-4d44-a921-c1cb773af9ea",
+      "credits": 2,
+      "references": [
+        "art/reference/sheets/library-sheet.png (job cddc4cfb), for style and layout only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/sheets/sanctum-sheet.png",
+      "sha256": "b85d352a6949f2bf93c6a00305f7bda69ab68b87f9ff2ed48a54c40fd98999b5",
+      "kind": "turnaround sheet",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9",
+      "job": "dea443fd-8bf5-473b-92ba-2be3004efd28",
+      "credits": 2,
+      "references": [
+        "art/reference/sheets/library-sheet.png (job cddc4cfb), for style and layout only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/sheets/apothecary-room-sheet.png",
+      "sha256": "1ef68017821beac73251b9a6a5e2dbd340817acf30683a803aa84f52ca4b0b9b",
+      "kind": "room prop sheet (furniture, fittings, floor and wall patches)",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "gpt_image_2_5, low quality, 1K, 16:9 (1344 x 752)",
+      "job": "e144aaa2-a4c7-48ee-9c7f-6d32d8552778",
+      "credits": 0.25,
+      "references": [
+        "art/reference/sheets/apothecary-sheet.png (job ec3919c1), for style and colour only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/sheets/library-room-sheet.png",
+      "sha256": "bc946fcbece4ba00657d32459d582351324ce4a5d01a4c95167190aa1b5ef54c",
+      "kind": "room prop sheet (furniture, fittings, floor and wall patches)",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "gpt_image_2_5, low quality, 1K, 16:9 (1344 x 752)",
+      "job": "ada507ad-ad7c-4e2f-8da4-f0c0c89c26a1",
+      "credits": 0.25,
+      "references": [
+        "art/reference/sheets/library-sheet.png (job cddc4cfb), for style and colour only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/sheets/pools-room-sheet.png",
+      "sha256": "f053c8b856d8fc4e7da25db0bc4e136d27063e06f7cc3041d5aaf1ad54e1ee1b",
+      "kind": "room prop sheet (furniture, fittings, floor and wall patches)",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "gpt_image_2_5, low quality, 1K, 16:9 (1344 x 752)",
+      "job": "e1ac6fd3-75e4-44c5-9d7d-64be76070cc1",
+      "credits": 0.25,
+      "references": [
+        "art/reference/sheets/pools-sheet.png (job c58861ee), for style and colour only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/sheets/sanctum-room-sheet.png",
+      "sha256": "48245416a83e22f2e757b95b778a79ca488d83b618b5310dbd749257f2fe9284",
+      "kind": "room prop sheet (furniture, fittings, floor and wall patches)",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "gpt_image_2_5, low quality, 1K, 16:9 (1344 x 752)",
+      "job": "3bc225a4-a024-4134-8ed7-4f81a32817f9",
+      "credits": 0.25,
+      "references": [
+        "art/reference/sheets/sanctum-sheet.png (job dea443fd), for style and colour only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/pools-grotto-concept.png",
+      "sha256": "475741f6d89c121c3d906807ca35244e8f046060aeabb1561f05508ffd7dc997",
+      "kind": "concept painting: the Spirit Pools as a hidden grotto",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "gpt_image_2_5, low quality, 1K, 16:9",
+      "job": "7c4c00af-87b4-48ae-a272-14a5ba5eb363",
+      "credits": 0.25,
+      "references": [
+        "a capture of the Spirit Pools room (uploaded as 40b9dfc2), for camera and cutaway only",
+        "art/reference/sheets/pools-sheet.png (job c58861ee), for style"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/courtyard-stream-concept.png",
+      "sha256": "16f1161bedd390d5fc607104cb47ac449f8dfe0c8353256c98c09d271ba4403f",
+      "kind": "concept painting: the courtyard with the falls cutting a stream into a cave",
+      "tool": "Higgsfield plugin (Plus plan)",
+      "model": "gpt_image_2_5, low quality, 1K, 16:9",
+      "job": "d8ce380a-9ed8-4960-b297-faed0d8c6123",
+      "credits": 0.25,
+      "references": [
+        "a capture of the courtyard (uploaded as a78a67c4), for layout",
+        "keyframe A (job 0d7ca74e), for style"
+      ],
+      "approved_by": null
+    }
+  ],
+  "derived": [
+    {
+      "file": "art/reference/views/old-stoic-front.png",
+      "sha256": "86d73b03fa5a1f06e52153a0746e6da66073feeeca17a2041876a3ece5681f28",
+      "made_by": "tools/blender/split_views.py",
+      "from": [
+        "art/reference/sheets/old-stoic-sheet.png",
+        "tools/blender/sheets.json"
+      ]
+    },
+    {
+      "file": "art/reference/views/old-stoic-left.png",
+      "sha256": "3b15a95768792ba55a89155a94c9e62ff22f7e3f47810de9d4feee8ff2ba4dd5",
+      "made_by": "tools/blender/split_views.py",
+      "from": [
+        "art/reference/sheets/old-stoic-sheet.png",
+        "tools/blender/sheets.json"
+      ]
+    },
+    {
+      "file": "art/reference/views/old-stoic-back.png",
+      "sha256": "95c3bd57ca192164c799f4549112c6430c1192c05c13106e9734dc3cc737aa3c",
+      "made_by": "tools/blender/split_views.py",
+      "from": [
+        "art/reference/sheets/old-stoic-sheet.png",
+        "tools/blender/sheets.json"
+      ]
+    },
+    {
+      "file": "art/reference/views/old-stoic-right.png",
+      "sha256": "ce8e7459a803e83e58f012e8ebd240611e4747308db5a9890ac4a483c93cd66b",
+      "made_by": "tools/blender/split_views.py",
+      "from": [
+        "art/reference/sheets/old-stoic-sheet.png",
+        "tools/blender/sheets.json"
+      ]
+    },
+    {
+      "file": "art/models/library.glb",
+      "sha256": "fb7b416c7ab1d2587a27ab90dbc2e7ca4c00944356187ae87a1163091d711a70",
+      "made_by": "tools/blender/assets/library.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/reference/sheets/library-sheet.png"
+      ],
+      "human_edits": "none yet",
+      "note": "Rebuilt 2026-10-26 after the kit.fit_uv fix: its door and window decals had been upside down."
+    },
+    {
+      "file": "art/models/lamp_post.glb",
+      "sha256": "926cbdfa85dcba402e607c439087f7d9362729cb0c292d504bf3a30fd8c42973",
+      "made_by": "tools/blender/assets/lamp_post.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/reference/sheets/lamp-post-sheet.png",
+        "art/reference/sheets/library-sheet.png"
+      ],
+      "human_edits": "none yet",
+      "note": "Rebuilt 2026-10-26 after the kit.fit_uv fix: its door and window decals had been upside down."
+    },
+    {
+      "file": "art/models/old_stoic.glb",
+      "sha256": "f65906c9ae27bede3971df4068f4af3d089c5e76c1fe1cc3647f0fada93a355a",
+      "made_by": "tools/blender/assets/old_stoic.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/raw/old-stoic/lift-tripo-h3.1-multiview.glb"
+      ],
+      "human_edits": "none yet",
+      "note": "The lift itself, turned, scaled to 14 m, split into trunk and canopy by painted colour, texture as a 2K PNG. The earlier scripted tree (tools/blender/assets/old_stoic_rebuilt.py, from the bark and leaf textures) is kept as an alternative and isn't exported."
+    },
+    {
+      "file": "art/models/apothecary.glb",
+      "sha256": "4d8151ebea3cda0863d45876973c0ae2a965b3a6d27d4bdf6b3f686cd37c523e",
+      "made_by": "tools/blender/assets/apothecary.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/reference/sheets/apothecary-sheet.png"
+      ],
+      "human_edits": "none yet"
+    },
+    {
+      "file": "art/models/pools.glb",
+      "sha256": "4668329fb53b64687e8c85d3cb449bf5ad2f791f5f4ac94b1c6f99ed80450f84",
+      "made_by": "tools/blender/assets/pools.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/reference/concepts/courtyard-stream-concept.png"
+      ],
+      "human_edits": "none yet",
+      "note": "The cave mouth (replaced the lodge, 2026-10-26); rock and moss painted procedurally."
+    },
+    {
+      "file": "art/models/sanctum.glb",
+      "sha256": "f3ac64e10492ff5807bc6273dd13e3ec86f525edcfa4fd2849fa38752a389049",
+      "made_by": "tools/blender/assets/sanctum.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/reference/sheets/sanctum-sheet.png"
+      ],
+      "human_edits": "none yet"
+    },
+    {
+      "file": "art/models/library-room.glb",
+      "sha256": "776f490f9c6552372e555b1af916123af64c586c054c6669d4ac7bef44438fe9",
+      "made_by": "tools/blender/assets/library_room.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/reference/sheets/library-room-sheet.png",
+        "art/reference/sheets/library-sheet.png"
+      ],
+      "human_edits": "none yet"
+    },
+    {
+      "file": "art/models/apothecary-room.glb",
+      "sha256": "d3b4d9f7754b9df8991757ef7e3660b5bb76a1b966cf10fab9b078fcebf4a656",
+      "made_by": "tools/blender/assets/apothecary_room.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/reference/sheets/apothecary-room-sheet.png",
+        "art/reference/sheets/apothecary-sheet.png"
+      ],
+      "human_edits": "none yet"
+    },
+    {
+      "file": "art/models/pools-room.glb",
+      "sha256": "47c17e9e583e00b789e299335aeb095b50e437f177b328795883da0e2b35dec9",
+      "made_by": "tools/blender/assets/pools_grotto.py (via pools_room.py) (Blender 5.2.3, headless)",
+      "from": [
+        "art/reference/concepts/pools-grotto-concept.png",
+        "art/reference/sheets/pools-room-sheet.png",
+        "art/reference/textures/stoic-bark.png"
+      ],
+      "human_edits": "none yet",
+      "note": "The hidden grotto (replaced the stone tank room, 2026-10-26)."
+    },
+    {
+      "file": "art/models/sanctum-room.glb",
+      "sha256": "ac3222d77c589e64f2e2a28588a6a676e99600cb8e387d399b8d87ce2804f18d",
+      "made_by": "tools/blender/assets/sanctum_room.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/reference/sheets/sanctum-room-sheet.png",
+        "art/reference/sheets/sanctum-sheet.png"
+      ],
+      "human_edits": "none yet"
+    }
+  ],
+  "discarded": [
+    {
+      "job": "139bc9fd-26f8-431c-bba0-7ab721c593b3",
+      "credits": 2,
+      "why": "first tree sheet: styled from the whole courtyard keyframe, it grew the courtyard"
+    },
+    {
+      "job": "4fbd4070-bb7a-41c9-8628-3e44ddc999fb",
+      "credits": 2,
+      "why": "first lamp-post sheet: repainted the whole keyframe"
+    },
+    {
+      "job": "28142639-ff7d-4c79-ad51-af159dea039e",
+      "credits": 0,
+      "why": "bark texture: failed on Higgsfield's side (refunded)"
+    }
+  ]
+}

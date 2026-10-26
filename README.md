@@ -8,7 +8,7 @@
 
 *The overview sheet, as a rough mockup. Design sheets live in [docs/design/](docs/design/).*
 
-This folder holds the design brief ([AGENTS.md](AGENTS.md)) and the first playable build. The build has an engine-agnostic C# game core, a standalone terminal front end, all four minigames, five clue-objects and 42 tomes. See [Play it](#play-it) and [What exists today](#what-exists-today).
+This folder holds the design brief ([AGENTS.md](AGENTS.md)) and the playable builds. The game is an engine-agnostic C# core with two front ends: a standalone terminal game (iteration 1) and a standalone 3D "lantern-lit diorama" (iteration 2, on the `standalone-diorama` branch). Both have all four minigames, five clue-objects and 42 tomes. See [Play it](#play-it) and [What exists today](#what-exists-today).
 
 > Proper nouns below (Stairfall, the Slowsilver, Old Stoic, the Stillkeepers and so on) come from the prototypes and are placeholders until the designer approves them.
 
@@ -16,7 +16,18 @@ This folder holds the design brief ([AGENTS.md](AGENTS.md)) and the first playab
 
 ## Play it
 
-You need the [.NET 8 SDK or newer](https://dotnet.microsoft.com/download). From this folder:
+You need the [.NET 8 SDK or newer](https://dotnet.microsoft.com/download). From this folder, the 3D game:
+
+```bash
+dotnet run --project src/Atrium.Diorama
+```
+
+It opens a window on a small courtyard diorama. Right-drag (or `A`/`D`) to look around, scroll to zoom, and
+click a house to go in. `J` opens the journal, `Space` sits by the water, `P` pauses the clock and `Esc` goes
+back. All the art and sound are generated in code; the only bundled asset is the EB Garamond font (OFL). See
+[docs/design/iteration-2-diorama.md](docs/design/iteration-2-diorama.md) for the art, audio and "juice" choices.
+
+Or the terminal game:
 
 ```bash
 dotnet run --project src/Atrium.Terminal
@@ -24,7 +35,7 @@ dotnet run --project src/Atrium.Terminal
 
 The game opens full-screen in your terminal. Every option is a single keypress. `Esc` or `X` goes back, and
 `,` / `.` turn pages. Windows Terminal, or any terminal with 24-bit colour, looks best. Make the window
-about 100×40 or larger. Saves go to `%APPDATA%\Atrium\saves` automatically.
+about 100×40 or larger. Saves go to `%APPDATA%\Atrium\saves` automatically, and both front ends share them.
 
 To check designer content after editing anything in [content/](content/):
 
@@ -239,8 +250,9 @@ The first playable covers all eight steps at "spike" depth with placeholder pres
 | [AGENTS.md](AGENTS.md) | The design and engineering brief: invariants, architecture, open questions. It's the source of truth. |
 | [src/Atrium.Core/](src/Atrium.Core/) | The whole game, engine-agnostic (.NET 8). It has: content schemas, a loader and a load-time validator; the evidence → gate → synthesis spine; the essence/remnant registry and Reconstitution Circle; the world-clock; the four minigames; story progression; and save/load. |
 | [src/Atrium.Terminal/](src/Atrium.Terminal/) | A standalone, full-screen terminal front end. It only presents the game; every rule lives in the core. |
+| [src/Atrium.Diorama/](src/Atrium.Diorama/) | Iteration 2: a standalone 3D front end on raylib (Raylib-cs). It has a cel-shaded courtyard diorama with a day/night cycle, four furnished 3D rooms with parchment working cards, synthesised music and sounds, and a scripted screenshot mode. It only presents the game; every rule lives in the core. See [docs/design/iteration-2-diorama.md](docs/design/iteration-2-diorama.md). |
 | [content/](content/) | All designer data: taxonomy, 4 locales, 42 tomes (one Markdown file each), 30 Apothecary discoveries, 10 lifeforms with breeding genetics, 3 pools, 6 tools, 5 clue-objects, 12 story beats, and the fixed courtyard scene. |
-| [tests/](tests/) | 34 tests: validator rules, invariants, each minigame on its own, saves, and a complete Chapter One playthrough. |
+| [tests/](tests/) | 35 tests: validator rules, invariants, each minigame on its own, saves, and a complete Chapter One playthrough. |
 | [docs/](docs/) | [Architecture](docs/ARCHITECTURE.md), [content guide](docs/CONTENT_GUIDE.md), and design notes ([iteration 1](docs/design/iteration-1.md), [world bible](docs/design/world-bible.md), [tome manifest](docs/design/tome-manifest.md), [spoiler walkthrough](docs/design/chapter-one-walkthrough.md)). |
 
 The Milanote board, the four browser prototypes and the Godot/Maaack scaffold described in earlier

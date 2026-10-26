@@ -1,0 +1,73 @@
+{
+  "_about": "Where each view sits on a turnaround sheet (pixels on the full-size sheet, from the top-left). x0/x1 bound the view, base_x is the centre of its footprint, y0/y1 crop away anything above or below it. split_views.py cuts each view onto a same-size grey canvas with the footprint at the same place, so all views share one scale (for multi-view 3D lifts and for comparing renders). Optional \"clear\" rectangles [x0, y0, x1, y1] (sheet pixels) are painted grey first, to remove bits of neighbouring views that reach into a box.",
+  "old-stoic-sheet.png": {
+    "canvas": [
+      1200,
+      1200
+    ],
+    "base": [
+      600,
+      1130
+    ],
+    "views": {
+      "front": {
+        "x0": 28,
+        "x1": 894,
+        "base_x": 438,
+        "y0": 241,
+        "y1": 1273,
+        "clear": [
+          [
+            770,
+            1150,
+            894,
+            1273
+          ]
+        ]
+      },
+      "left": {
+        "x0": 771,
+        "x1": 1376,
+        "base_x": 1046,
+        "y0": 241,
+        "y1": 1273,
+        "clear": [
+          [
+            771,
+            241,
+            915,
+            1100
+          ],
+          [
+            1330,
+            640,
+            1376,
+            900
+          ]
+        ]
+      },
+      "back": {
+        "x0": 1355,
+        "x1": 2222,
+        "base_x": 1789,
+        "y0": 241,
+        "y1": 1273,
+        "clear": [
+          [
+            1355,
+            241,
+            1372,
+            660
+          ]
+        ]
+      },
+      "right": {
+        "x0": 2222,
+        "x1": 2704,
+        "base_x": 2442,
+        "y0": 241,
+        "y1": 1273
+      }
+    }
+  }
+}
