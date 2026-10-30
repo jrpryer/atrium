@@ -19,6 +19,7 @@ public sealed class Renderer : IDisposable
     private int _w, _h;
     private Camera3D _cam;
     private readonly Dictionary<string, ModelAsset?> _imported = new();
+    private readonly Dictionary<string, Texture2D?> _textures = new();
 
     public Renderer()
     {
@@ -157,9 +158,47 @@ public sealed class Renderer : IDisposable
         return a;
     }
 
+    /// <summary>
+    /// A painted texture (art/textures, copied beside the game), loaded once for the session with mipmaps and
+    /// trilinear filtering; null if the file is missing.
+    /// </summary>
+    public Texture2D? Texture(string path)
+    {
+        if (_textures.TryGetValue(path, out var t)) return t;
+        Texture2D? loaded = null;
+        if (File.Exists(path))
+        {
+            var tex = Raylib.LoadTexture(path);
+            Raylib.GenTextureMipmaps(ref tex);
+            Raylib.SetTextureFilter(tex, TextureFilter.Trilinear);
+            Raylib.SetTextureWrap(tex, TextureWrap.Repeat);
+            loaded = tex;
+        }
+        else Console.WriteLine($"textures: {path} not found; using flat colour");
+        return _textures[path] = loaded;
+    }
+
+    /// <summary>Gives a built model a texture (raylib's UnloadModel leaves textures alone, so cached ones can be shared).</summary>
+    public static unsafe Model WithTexture(Model m, Texture2D? t)
+    {
+        if (t is { } tex) m.Materials[0].Maps[(int)MaterialMapIndex.Albedo].Texture = tex;
+        return m;
+    }
+
+    /// <summary>Adds a texture's light over the scene (unlit, no depth write), scaled by the tint.</summary>
+    public void DrawAdditive(Part p, Matrix4x4 world, Color tint)
+    {
+        Raylib.BeginBlendMode(BlendMode.Additive);
+        Rlgl.DisableDepthMask();
+        DrawMeshes(p, Shaders.Unlit, Matrix4x4.Transpose(world), tint);
+        Rlgl.EnableDepthMask();
+        Raylib.EndBlendMode();
+    }
+
     public void Dispose()
     {
         foreach (var a in _imported.Values) a?.Dispose();
+        foreach (var t in _textures.Values) if (t is { } tex) Raylib.UnloadTexture(tex);
         Raylib.UnloadTexture(Dot);
         Raylib.UnloadTexture(Grain);
         if (_target.Id != 0) Raylib.UnloadRenderTexture(_target);

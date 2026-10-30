@@ -67,6 +67,8 @@ public sealed class ModelAsset : IDisposable
     }
 
     public bool Has(string part) => _partOf.Contains(part);
+    /// <summary>Every part's name (a kit's pieces and roles).</summary>
+    public IEnumerable<string> PartNames => _partOf.Where(n => n != "").Distinct();
 
     /// <summary>The meshes of the named parts.</summary>
     public int[] Meshes(params string[] parts) => Enumerable.Range(0, _partOf.Length).Where(i => parts.Contains(_partOf[i])).ToArray();

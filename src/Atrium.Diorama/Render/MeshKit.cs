@@ -146,6 +146,25 @@ public sealed class MeshBuilder
         return this;
     }
 
+    /// <summary>
+    /// Appends a loaded mesh's triangles (a piece of a Blender kit), transformed, in one colour, flat-shaded; with
+    /// <paramref name="uv"/>, texture coordinates come from each vertex's world position (running water).
+    /// </summary>
+    public unsafe MeshBuilder AppendMesh(Mesh mesh, Matrix4x4 m, Color col, Func<Vector3, Vector2>? uv = null)
+    {
+        if (mesh.Vertices == null) return this;
+        for (int t = 0; t < mesh.TriangleCount; t++)
+        {
+            int a = t * 3, b = a + 1, c = a + 2;
+            if (mesh.Indices != null) (a, b, c) = (mesh.Indices[a], mesh.Indices[b], mesh.Indices[c]);
+            Vector3 P(int i) => Vector3.Transform(new Vector3(mesh.Vertices[i * 3], mesh.Vertices[i * 3 + 1], mesh.Vertices[i * 3 + 2]), m);
+            var (pa, pb, pc) = (P(a), P(b), P(c));
+            if (uv is null) Tri(pa, pb, pc, col);
+            else TriUv(pa, pb, pc, uv(pa), uv(pb), uv(pc), col);
+        }
+        return this;
+    }
+
     public MeshBuilder Append(MeshBuilder other)
     {
         _pos.AddRange(other._pos); _nrm.AddRange(other._nrm); _col.AddRange(other._col); _uv.AddRange(other._uv);
@@ -160,6 +179,53 @@ public sealed class MeshBuilder
         {
             _pos[i] = Vector3.Transform(_pos[i], m);
             _nrm[i] = Vector3.Normalize(Vector3.TransformNormal(_nrm[i], nm));
+        }
+        return this;
+    }
+
+    /// <summary>
+    /// Texture coordinates by projection, at <paramref name="tile"/> units per repeat: faces looking up or down take
+    /// the ground plane; the rest take a cylinder round the origin when <paramref name="cylinder"/> is set (a curved
+    /// wall's texture then runs unbroken round its arc), else the side plane they mostly face. Faces that turn
+    /// across the cylinder (a wall's end caps) take their side plane too, so the texture never streaks.
+    /// </summary>
+    public MeshBuilder ProjectUv(float tile, bool cylinder = false)
+    {
+        for (int i = 0; i + 2 < _pos.Count; i += 3)
+        {
+            var (p0, p1, p2) = (_pos[i], _pos[i + 1], _pos[i + 2]);
+            var n = Vector3.Cross(p1 - p0, p2 - p0);
+            n = n.LengthSquared() < 1e-12f ? Vector3.UnitY : Vector3.Normalize(n);
+            var centre = (p0 + p1 + p2) / 3;
+            var radial = new Vector2(centre.X, centre.Z);
+            bool across = cylinder && radial.LengthSquared() > 1e-6f
+                && MathF.Abs(Vector2.Dot(new Vector2(n.X, n.Z), Vector2.Normalize(radial))) < 0.45f * new Vector2(n.X, n.Z).Length();
+            float ax = MathF.Abs(n.X), ay = MathF.Abs(n.Y), az = MathF.Abs(n.Z);
+            for (int k = i; k < i + 3; k++)
+            {
+                var p = _pos[k];
+                _uv[k] = ay >= 0.7f ? new Vector2(p.X, p.Z) / tile
+                    : cylinder && !across ? new Vector2(MathF.Atan2(p.Z, p.X) * new Vector2(p.X, p.Z).Length(), -p.Y) / tile
+                    : ax >= az ? new Vector2(p.Z, -p.Y) / tile : new Vector2(p.X, -p.Y) / tile;
+            }
+        }
+        return this;
+    }
+
+    /// <summary>Smooth shading: each vertex takes the average normal of the faces that share its (millimetre-rounded) position.</summary>
+    public MeshBuilder SmoothNormals()
+    {
+        var sum = new Dictionary<(int, int, int), Vector3>();
+        (int, int, int) Key(Vector3 p) => ((int)MathF.Round(p.X * 1000), (int)MathF.Round(p.Y * 1000), (int)MathF.Round(p.Z * 1000));
+        for (int i = 0; i < _pos.Count; i++)
+        {
+            var k = Key(_pos[i]);
+            sum[k] = sum.TryGetValue(k, out var acc) ? acc + _nrm[i] : _nrm[i];
+        }
+        for (int i = 0; i < _pos.Count; i++)
+        {
+            var n = sum[Key(_pos[i])];
+            if (n.LengthSquared() > 1e-8f) _nrm[i] = Vector3.Normalize(n);
         }
         return this;
     }

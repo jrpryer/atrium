@@ -54,6 +54,54 @@ step (`src/Atrium.Diorama/Render/ModelAsset.cs`) does what raylib doesn't:
 - it builds mipmaps;
 - it refuses any part over 65,535 vertices.
 
+### The city kit
+
+`assets/city_kit.py` builds `models/city-kit.glb` with `build.py -- city-kit`. These are the white city's
+buildings, which `HubCity` bakes into the hub's city in place of its code boxes:
+- **Pieces:** townhouses, a shop, an inn, a stable and a tower-house.
+- **Layout:** each piece is built round its own origin (on the ground, at the footprint's centre, front toward
+  −Y) and laid out along X. An empty named after the piece marks the origin; `<piece>-lamp` marks its lantern.
+- **Parts:** one mesh per role, named `<piece>_<role>`:
+  - `stone` and `trim` go into the masonry layer;
+  - `roof` and `cloth` are tinted per building;
+  - `glass-a`, `glass-b` and `glass-back` are each lit or left dark as a set;
+  - `lamp` is always lit;
+  - the rest keep their material colour.
+- **Footprints:** each piece's nominal footprint is in `PIECES`, matched by `HubCity.Kit`. The game scales each
+  building to its lot.
+- **Fallback:** without the file, the city falls back to code boxes.
+
+### The wall kit
+
+`assets/wall_kit.py` builds `models/wall-kit.glb` with `build.py -- wall-kit`. These are the outer city wall's
+pieces, which `HubCity.CityWall` places:
+- **Bays:** an arched bay (a relieving arch with voussoirs and imposts, a cornice, the inner railing) and a plain bay.
+  Both carry a corbelled parapet with machicolations and merlons with arrow slits. Each is 5.5 m long, with y = 0 at
+  the wall-walk; the game stretches bays to fit each run.
+- **Towers:** a machicolated, crenellated crown with a brazier; a slate cone with a finial; a string-course band with
+  arrow slits. They are built for a 3 m radius and scaled to each tower.
+- **Gates:** the Low Gate's gatehouse, and the broad water gate the Spirit Pools' cave mouth sits in. The water
+  gate's frame runs 0.5 m back into the wall, where the game sets the wall's body back (`Run`'s `notch`).
+
+The wall's body, the arcade's piers and the towers' shafts stay code-built in the city's ashlar. Wall pieces have
+their face at local z = 0, with relief toward +z (into the city). Kit colours are written as sRGB and converted to
+Blender's linear values (all three kits do this).
+
+### The corner kit
+
+`assets/corner_kit.py` builds `models/corner-kit.glb` with `build.py -- corner-kit`. These are the forgotten corner's
+pieces, which `Scenes/HubCorner.cs` places round the sunken courtyard:
+- **Walls:** crumbling wall sections and the cracked brick arch the falls burst from.
+- **Ground:** root-heaved flagstones, rubble and fallen coping.
+- **Growth:** ivy curtains, moss, a fern and a grass tuft.
+- **Water:** puddles and a rivulet.
+
+It follows the city kit's conventions (`<piece>_<role>` parts and an origin empty per piece), read through
+`Render/KitAsset.cs`. Wall pieces have their face at local z = 0, with relief toward +z and the foot at y = 0. Ivy
+hangs down from y = 0. The `water` role is drawn as standing water, `trickle` as running water, and `stone` takes the
+corner's crumbling-wall texture (or its path texture, for the flagstones). Without the file, the code's own ivy and
+arch come back.
+
 ### Room kits
 
 Each room can also draw a kit: `models/<locale>-room.glb`, built by `assets/<locale>_room.py` with

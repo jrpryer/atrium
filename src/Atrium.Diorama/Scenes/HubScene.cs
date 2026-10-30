@@ -54,7 +54,10 @@ public sealed class HubScene : Scene
     {
         _yaw = Ease.Approach(_yaw, _yawTarget, 6, dt);
         _dist = Ease.Approach(_dist, _distTarget, 5, dt);
-        var target = _target;
+        // zoomed out, the camera looks a little flatter and higher, so the tiers above the courtyard come into view
+        float wide = Math.Clamp((_dist - 40) / 18, 0, 1);
+        wide = wide * wide * (3 - 2 * wide);
+        var target = _target + new Vector3(0, 6f * wide, -3f * wide);
         float dist = _dist;
         if (_entering is not null && _world.Houses.TryGetValue(_entering, out var h))
         {
@@ -62,7 +65,7 @@ public sealed class HubScene : Scene
             target = Vector3.Lerp(_target, h.Door, e);
             dist = dist + (6 - dist) * e;
         }
-        Camera = Orbit(target, _yaw, _pitch, dist, 31);
+        Camera = Orbit(target, _yaw, _pitch - 0.2f * wide, dist, 31);
         _world.Camera = Camera;
     }
 
@@ -90,7 +93,8 @@ public sealed class HubScene : Scene
         if (Input.KeyDown(KeyboardKey.D) || Input.KeyDown(KeyboardKey.Right)) _yawTarget -= dt * 1.1f;
         if (Input.KeyPressed(KeyboardKey.Space)) Sit();
         _idle += dt;
-        if (!R.ReduceMotion && _idle > 25) _yawTarget += dt * 0.02f; // a slow, idle drift
+        if (!R.ReduceMotion && _idle > 25) _yawTarget += dt * 0.02f * MathF.Sign(MathF.Sin(_idle * 0.01f)); // a slow, idle drift
+        _yawTarget = Math.Clamp(_yawTarget, -0.95f, 0.62f); // the front arc, short of looking in from outside the city wall
         UpdateCamera(dt);
 
         // hover and click
@@ -198,7 +202,7 @@ public sealed class HubScene : Scene
 public sealed class TitleScene : Scene
 {
     private HubWorld _world = null!;
-    private float _yaw = 0.2f;
+    private float _yaw = 0.2f, _sway;
     private bool _hasSave;
 
     public override string Mood => "title";
@@ -217,7 +221,8 @@ public sealed class TitleScene : Scene
         HubWorld.ApplyTimeOfDay(R.Light, 0.68f);
         R.SkyTop = Palette.Lerp(R.Light.Sky, R.Light.Fog, 0.2f);
         _world.Update(dt, App.Particles, null, R.ReduceMotion);
-        _yaw += dt * (R.ReduceMotion ? 0 : 0.04f);
+        _sway += dt * (R.ReduceMotion ? 0 : 0.04f);
+        _yaw = -0.17f + MathF.Sin(_sway) * 0.74f; // the title view sways across the front arc
         Camera = Orbit(new Vector3(-2.5f, 3.2f, -1.5f), _yaw, 0.42f, 46, 30);
         _world.Camera = Camera;
     }

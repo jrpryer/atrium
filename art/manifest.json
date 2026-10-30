@@ -1,6 +1,6 @@
 {
   "_about": "Provenance for every art file (iteration-3 art bible, 'Provenance and licensing'). Generated files: tool, model, job id, credits, references, sha256. Derived files: the script that made them from which inputs. Raw generations stay in the Higgsfield library under their job ids. Licence terms for the tools were not yet reviewed (decision D7).",
-  "updated": "2026-10-26",
+  "updated": "2026-10-29",
   "generated": [
     {
       "file": "art/reference/sheets/library-sheet.png",
@@ -198,6 +198,310 @@
         "keyframe A (job 0d7ca74e), for style"
       ],
       "approved_by": null
+    },
+    {
+      "file": "art/raw/courtyard/rock.png",
+      "sha256": "3a1d4e9ad96868f20014cb06d010a438cec92dddf98490bc34c27de89a7cb29d",
+      "kind": "tileable painted texture: cliff sandstone",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro, 2K, 1:1",
+      "job": "419a6a72-d63f-4d4c-933d-5eb742d734d8",
+      "credits": 2,
+      "references": [
+        "library sheet (cddc4cfb), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/courtyard/grass.png",
+      "sha256": "f555a2f0e272e051dc41829bd6f0681d418568bf24d63e097af8aa2c5b1f918c",
+      "kind": "tileable painted texture: grass turf",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro, 2K, 1:1",
+      "job": "5707e36c-e05f-4dde-b93a-c5c364b4211a",
+      "credits": 2,
+      "references": [
+        "library sheet (cddc4cfb), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/courtyard/city-day.png",
+      "sha256": "a5f461d39d9011a08f7be8a23e645889e7e95fc5b98fb27a4e156690590b3325",
+      "kind": "city-tier backdrop panorama on flat green (retired 2026-10-29: the city is modelled; kept as provenance)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro, 4K, 21:9",
+      "job": "781728d2-0f7f-4322-ab6a-6808a0445e88",
+      "credits": 4,
+      "references": [
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/courtyard/city-night.png",
+      "sha256": "6ff094f439a75eb58717826366bb4a7938f27807fd4b65f42b17b7006bfdc2e8",
+      "kind": "night repaint of the backdrop (source of the lit-window mask) (retired 2026-10-29: the city is modelled; kept as provenance)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro, 4K, 21:9 (edit)",
+      "job": "42715b94-9c6a-4ea5-b1c4-90bd68395eeb",
+      "credits": 4,
+      "references": [
+        "city-day.png (781728d2)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/courtyard/paving.png",
+      "sha256": "308521adfd7ad9741b933ea164f59c7a8c9e0f38b6686f0657fb80117c82641e",
+      "kind": "tileable painted texture: worn flagstones and cobbles, moss in the joints",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro, 2K, 1:1",
+      "job": "6212bebd-e8a3-4fcf-8091-82a94aca0b11",
+      "credits": 2,
+      "references": [
+        "library sheet (cddc4cfb), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/courtyard/masonry.png",
+      "sha256": "6b5d26d997d7b358eda2713114c6382b66417b75ce3b523630f1abd9791f520b",
+      "kind": "tileable painted texture: rough-cut retaining-wall masonry, damp streaks",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro, 2K, 1:1",
+      "job": "330fed5a-8f10-43b5-b053-74e4965b1900",
+      "credits": 2,
+      "references": [
+        "library sheet (cddc4cfb), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/courtyard-city-paintover.png",
+      "sha256": "ac3b32762c555440e3961117b05fc350bab25e93484a9d5e90e477a08a5d8a6d",
+      "kind": "concept paint-over of the walled-city blockout (target for the Blender city kit)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9",
+      "job": "75b96dd4-d34e-4ba4-8640-a73cf1cd223e",
+      "credits": 2,
+      "references": [
+        "blockout capture art/reference/concepts/courtyard-city-blockout.png (uploaded as 5c1fa9bd), for layout",
+        "keyframe A (0d7ca74e), for style"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/city-round/wide-a.jpg",
+      "sha256": "d1e6276312a5470a5e4ab8061b00681aad70d4a0c23cbc2c94ae5b383e7d9aad",
+      "kind": "paint-over, zoomed-out day: busy white city, forgotten corner (layout target)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "4c982841-0a2b-4403-9245-a6a64d86185f",
+      "credits": 4,
+      "references": [
+        "blockout capture (5c1fa9bd), for layout",
+        "keyframe A (0d7ca74e), for style",
+        "first paint-over (75b96dd4), for detail level"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/city-round/wide-b.jpg",
+      "sha256": "b1eac3d459b7b2a336d765b355c4de752d6572877f9e6831311d6bd5dbb8d55d",
+      "kind": "paint-over, zoomed-out day (variant)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "04fb8976-bcaf-44ab-843a-8a8e3e40135e",
+      "credits": 4,
+      "references": [
+        "blockout capture (5c1fa9bd), for layout",
+        "keyframe A (0d7ca74e), for style",
+        "first paint-over (75b96dd4), for detail level"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/city-round/wide-c.jpg",
+      "sha256": "594be12de8da242d12a1eb9a197600201558896d37021ced9c21a8840ed2fb3c",
+      "kind": "paint-over, zoomed-out day: strongest white-city vs green-corner contrast (mood target; layout drifts)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "606a643c-341a-453f-aff8-67b896ccfff4",
+      "credits": 4,
+      "references": [
+        "blockout capture (5c1fa9bd), for layout",
+        "keyframe A (0d7ca74e), for style",
+        "first paint-over (75b96dd4), for detail level"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/city-round/wide-d.jpg",
+      "sha256": "e4ae140d7631264daebab4f9fb6eaf3949bab19dad7b8b1a9916c7251aa857a2",
+      "kind": "paint-over, zoomed-out day (variant)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "97826f82-bc42-4626-a75a-5293f3b39ded",
+      "credits": 4,
+      "references": [
+        "blockout capture (5c1fa9bd), for layout",
+        "keyframe A (0d7ca74e), for style",
+        "first paint-over (75b96dd4), for detail level"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/city-round/corner-a.jpg",
+      "sha256": "43b67a1849154c71cc597d8f795c5bc9364cef89fd065e98114f3eb7fa815a5a",
+      "kind": "paint-over, default view: the forgotten corner close (texture/prop target)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "ef453d13-6cd5-4a58-8d30-9a085af4d5fb",
+      "credits": 4,
+      "references": [
+        "blockout capture (4d55fe9d)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/city-round/corner-b.jpg",
+      "sha256": "339ed1b8c53d77eff71aa76b83e24c3ba9c2bfdfacd97dc7bfbc324bb84a1f85",
+      "kind": "paint-over, default view (variant)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "1c629261-d9e8-4a52-8b1d-cb32cf8523c7",
+      "credits": 4,
+      "references": [
+        "blockout capture (4d55fe9d)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/city-round/night-a.jpg",
+      "sha256": "4f7a69be2f170a9847d0b372b6ad0d094c5ae899a345a65ebb114667935cf0ab",
+      "kind": "paint-over, zoomed-out night (lighting target)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "e750534e-3c3e-46a8-b538-736ea66485c1",
+      "credits": 4,
+      "references": [
+        "blockout capture (2f8a82e8)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/city-round/night-b.jpg",
+      "sha256": "41413eb4dad64b6b6b141a2363544d08dbc6e63bef1843c2d9655d3541fff9a2",
+      "kind": "paint-over, zoomed-out night (variant)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "52939e63-91b3-4721-b2eb-179ae2563533",
+      "credits": 4,
+      "references": [
+        "blockout capture (2f8a82e8)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/city-round/corner-kit-a.jpg",
+      "sha256": "fa5ccd4caf5dfe8acef44b5768d1e42dd09c5637df491cc1d2723bcd604e44f5",
+      "kind": "kit sheet: forgotten-corner pieces (crumbling walls, root-heaved flags, water, moss, ivy)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "30ce8b2a-d6d0-4500-a0bc-3e65ad832b86",
+      "credits": 4,
+      "references": [
+        "library sheet (cddc4cfb)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/city-round/corner-kit-b.jpg",
+      "sha256": "97972f7f3a163f61cc01f44f6b4cda67dc5cb2fe90bbec2a7a456d9d348d8fd6",
+      "kind": "kit sheet: forgotten-corner pieces (variant)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "b9f93b9e-aedc-4e8d-b862-70b990e79577",
+      "credits": 4,
+      "references": [
+        "library sheet (cddc4cfb)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/city-round/city-kit-a.jpg",
+      "sha256": "c1e78b868df974720c67390f3bdcd2851162ffcc85c8ac7fe0d46cb99a6f017e",
+      "kind": "kit sheet: white-city buildings, wall, tower, gate, stair, aqueduct, stall",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "a1a6e711-9c71-4c8c-9ae2-65044142d941",
+      "credits": 4,
+      "references": [
+        "library sheet (cddc4cfb)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/courtyard/city-ashlar.png",
+      "sha256": "042cc2fd3640c293715876c05378ab75ff57a0921ea161bf5234ed89d5c37479",
+      "kind": "tileable painted texture: the tidy city's clean white limestone ashlar",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1",
+      "job": "7733efc7-42cd-48ae-a2da-026ae8a37bf3",
+      "credits": 2,
+      "references": [
+        "masonry.png (330fed5a), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/courtyard/city-paving.png",
+      "sha256": "b2ce2b3597604cc9138c92608f57af5ac2b0ba041fbe6d2e965cb50472c77186",
+      "kind": "tileable painted texture: the tidy city's clean pale street paving",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1",
+      "job": "d3b5aa3c-ba25-4901-a76f-8a04ff97252c",
+      "credits": 2,
+      "references": [
+        "paving.png (6212bebd), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/courtyard/corner-wall.png",
+      "sha256": "36beff3dac7aa5b2ab3b50b63e8ca54e109e99059def76c13fabb0c6f9a4ba71",
+      "kind": "tileable painted texture: the forgotten corner's crumbling limestone, brick showing through, damp streaks, moss",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1",
+      "job": "6788a5a4-22dc-4c4e-bc7b-61d291d26d12",
+      "credits": 2,
+      "references": [
+        "masonry.png (330fed5a), style",
+        "corner kit sheet (30ce8b2a)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/courtyard/corner-paving.png",
+      "sha256": "65a4a15e7cfb0a8fe57bcbf468df856166ef708ad08d495b9212dda6a703c668",
+      "kind": "tileable painted texture: the forgotten corner's overgrown old brick path, moss and grass in the gaps",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1",
+      "job": "a86ebdbc-be92-438e-aff1-45600bae36a3",
+      "credits": 2,
+      "references": [
+        "paving.png (6212bebd), style",
+        "corner-a paint-over (ef453d13)"
+      ],
+      "approved_by": null
     }
   ],
   "derived": [
@@ -337,6 +641,112 @@
         "art/reference/sheets/sanctum-sheet.png"
       ],
       "human_edits": "none yet"
+    },
+    {
+      "file": "art/textures/courtyard-rock.png",
+      "sha256": "b6d65802fe43253e2d89a217b71f2745f9db6edd7798ef5b058e8d6f9dfe1aee",
+      "made_by": "tools/blender/courtyard_textures.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/raw/courtyard/rock.png"
+      ],
+      "human_edits": "none yet"
+    },
+    {
+      "file": "art/textures/courtyard-grass.png",
+      "sha256": "cf1763533cfdc196df089b0a17a6a18d784ce4dd7d513d399cc18aa90674a51b",
+      "made_by": "tools/blender/courtyard_textures.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/raw/courtyard/grass.png"
+      ],
+      "human_edits": "none yet"
+    },
+    {
+      "file": "art/textures/courtyard-paving.png",
+      "sha256": "1ca8d70865b4618a15248f626f9b88f7201e90ffa2ffd419a6f20c9212944402",
+      "made_by": "tools/blender/courtyard_textures.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/raw/courtyard/paving.png"
+      ],
+      "human_edits": "none yet"
+    },
+    {
+      "file": "art/textures/courtyard-masonry.png",
+      "sha256": "72155b3d84b0f2294056ae8101940343ce00d2dfd57a414c7c3a0b1c28781870",
+      "made_by": "tools/blender/courtyard_textures.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/raw/courtyard/masonry.png"
+      ],
+      "human_edits": "none yet"
+    },
+    {
+      "file": "art/textures/city-ashlar.png",
+      "sha256": "da6638b7428e521593a36d20a232d4ab3a883bcf3e5f5309322e079e608c7ace",
+      "made_by": "tools/blender/courtyard_textures.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/raw/courtyard/city-ashlar.png"
+      ],
+      "human_edits": "none yet"
+    },
+    {
+      "file": "art/textures/city-paving.png",
+      "sha256": "0179c2eadb2696662257e4cee18e54a2910dc579bce2443ca44459d4b6eb3c50",
+      "made_by": "tools/blender/courtyard_textures.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/raw/courtyard/city-paving.png"
+      ],
+      "human_edits": "none yet"
+    },
+    {
+      "file": "art/models/city-kit.glb",
+      "sha256": "e9bca9d3af412bb4ad4db53d1fd17d51afbd8fa3e4005a33b4fec423fd4766e3",
+      "made_by": "tools/blender/assets/city_kit.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/reference/concepts/city-round/city-kit-a.jpg",
+        "art/reference/concepts/city-round/wide-a.jpg",
+        "art/reference/concepts/city-round/wide-c.jpg"
+      ],
+      "human_edits": "none yet"
+    },
+    {
+      "file": "art/textures/corner-wall.png",
+      "sha256": "2a20fb8b57f8ad213baa15b19190725daf907932e5842c51041e9b0cee1a7c33",
+      "made_by": "tools/blender/courtyard_textures.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/raw/courtyard/corner-wall.png"
+      ],
+      "human_edits": "none yet"
+    },
+    {
+      "file": "art/textures/corner-paving.png",
+      "sha256": "ddf2385a219f184e70d795622270a886a4dcc29521a19103a7136127c1aacd93",
+      "made_by": "tools/blender/courtyard_textures.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/raw/courtyard/corner-paving.png"
+      ],
+      "human_edits": "none yet"
+    },
+    {
+      "file": "art/models/corner-kit.glb",
+      "sha256": "fd472e6610728b83350b558ff7c8fde2b92b8820dc746e0ea8c2f579201d5897",
+      "made_by": "tools/blender/assets/corner_kit.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/reference/concepts/city-round/corner-kit-a.jpg",
+        "art/reference/concepts/city-round/corner-kit-b.jpg",
+        "art/reference/concepts/city-round/corner-a.jpg"
+      ],
+      "human_edits": "none yet"
+    },
+    {
+      "file": "art/models/wall-kit.glb",
+      "sha256": "eaab38d0f04ed0889d8193e858ce6e320831f079dcbe541f7c9fd3b90e998be3",
+      "made_by": "tools/blender/assets/wall_kit.py (Blender 5.2.3, headless)",
+      "from": [
+        "art/reference/concepts/city-round/city-kit-a.jpg",
+        "art/reference/concepts/city-round/wide-a.jpg",
+        "art/reference/concepts/city-round/wide-c.jpg",
+        "art/reference/concepts/city-round/night-a.jpg"
+      ],
+      "human_edits": "none yet"
     }
   ],
   "discarded": [
@@ -354,6 +764,11 @@
       "job": "28142639-ff7d-4c79-ad51-af159dea039e",
       "credits": 0,
       "why": "bark texture: failed on Higgsfield's side (refunded)"
+    },
+    {
+      "job": "4168f1ca-bcf3-403c-b2b2-e7b7885013c3",
+      "credits": 4,
+      "why": "white-city kit sheet B: lower half smeared into fog, painted text on a sign, a banner too close to a known film emblem"
     }
   ]
 }

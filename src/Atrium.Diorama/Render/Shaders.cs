@@ -19,7 +19,7 @@ public sealed class Lighting
 /// <summary>Loads and drives the iteration's GLSL shaders (GLSL 330, raylib's desktop default).</summary>
 public sealed class Shaders : IDisposable
 {
-    public Shader Toon, Outline, Water, Falls, Post;
+    public Shader Toon, Outline, Water, Falls, Post, Unlit;
     private readonly Dictionary<(uint, string), int> _locs = new();
 
     public Shaders()
@@ -29,6 +29,7 @@ public sealed class Shaders : IDisposable
         Water = Load(WaterVs, WaterFs);
         Falls = Load(FallsVs, FallsFs);
         Post = Raylib.LoadShaderFromMemory(PostVs, PostFs);
+        Unlit = Raylib.LoadShaderFromMemory(UnlitVs, UnlitFs);
     }
 
     private static unsafe Shader Load(string vs, string fs)
@@ -59,6 +60,17 @@ public sealed class Shaders : IDisposable
 
     private readonly Vector4[] _lampPos = new Vector4[8];
     private readonly Vector4[] _lampCol = new Vector4[8];
+
+    /// <summary>Sets the fog for the draws that follow (the hub's far city takes a shorter, cooler one); Apply restores it each frame.</summary>
+    public void FogRange(float near, float far, Color colour)
+    {
+        foreach (var s in new[] { Toon, Outline })
+        {
+            Set(s, "fogNear", near);
+            Set(s, "fogFar", far);
+            Set(s, "fogColor", Palette.V3(colour));
+        }
+    }
 
     /// <summary>Uploads the frame's lighting to every lit shader.</summary>
     public void Apply(Lighting l, Camera3D cam, float time, Vector2 viewport)
@@ -95,7 +107,7 @@ public sealed class Shaders : IDisposable
 
     public void Dispose()
     {
-        foreach (var s in new[] { Toon, Outline, Water, Falls, Post }) Raylib.UnloadShader(s);
+        foreach (var s in new[] { Toon, Outline, Water, Falls, Post, Unlit }) Raylib.UnloadShader(s);
     }
 
     // ───────────────────────── GLSL ─────────────────────────
@@ -119,6 +131,23 @@ public sealed class Shaders : IDisposable
             float f = clamp((length(viewPos - p) - fogNear) / (fogFar - fogNear), 0.0, 1.0);
             return mix(c, fogColor, f * f);
         }
+        """;
+
+    /// <summary>A texture times the tint, no light or fog: glows laid over the scene additively.</summary>
+    private const string UnlitVs = """
+        #version 330
+        in vec3 vertexPosition; in vec2 vertexTexCoord;
+        uniform mat4 mvp;
+        out vec2 uv;
+        void main() { uv = vertexTexCoord; gl_Position = mvp * vec4(vertexPosition, 1.0); }
+        """;
+
+    private const string UnlitFs = """
+        #version 330
+        in vec2 uv;
+        uniform sampler2D texture0; uniform vec4 colDiffuse;
+        out vec4 finalColor;
+        void main() { finalColor = texture(texture0, uv) * colDiffuse; }
         """;
 
     private const string ToonVs = """
@@ -246,15 +275,18 @@ public sealed class Shaders : IDisposable
         uniform vec4 colDiffuse;
         out vec4 finalColor;
         float hash(float n) { return fract(sin(n) * 43758.5453); }
+        float vnoise(float x) { float i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f); return mix(hash(i), hash(i + 1.0), f); }
         void main() {
-            float col = floor(uv.x * 9.0);
-            float speed = 0.35 + hash(col) * 0.2;
-            float s = fract(uv.y * 5.0 - time * speed + hash(col + 3.0));
-            float streak = smoothstep(0.0, 0.25, s) * smoothstep(0.9, 0.55, s);
-            float edge = smoothstep(0.0, 0.18, uv.x) * smoothstep(1.0, 0.82, uv.x);
-            vec3 c = mix(colDiffuse.rgb, vec3(0.93, 0.98, 0.96), streak * 0.6);
+            // soft streaks that vary smoothly across the sheet and race down it, churning white toward its foot
+            float x = uv.x * 7.0;
+            float speed = 0.55 + vnoise(x) * 0.35;
+            float s = fract(uv.y * 3.0 - time * speed + vnoise(x + 11.0) * 2.0);
+            float streak = smoothstep(0.0, 0.3, s) * smoothstep(1.0, 0.45, s);
+            float edge = smoothstep(0.0, 0.25, uv.x) * smoothstep(1.0, 0.75, uv.x);
+            float foam = smoothstep(0.55, 1.0, uv.y);
+            vec3 c = mix(colDiffuse.rgb, vec3(0.96, 0.99, 0.98), clamp(streak * 0.55 + foam * 0.6, 0.0, 1.0));
             c *= mix(groundColor, skyColor, 0.6) * 0.5 + sunColor * 0.6;
-            float a = edge * (0.55 + streak * 0.35) * colDiffuse.a;
+            float a = edge * (0.55 + streak * 0.3 + foam * 0.25) * colDiffuse.a;
             finalColor = vec4(fog(c, fragPos), a);
         }
         """;

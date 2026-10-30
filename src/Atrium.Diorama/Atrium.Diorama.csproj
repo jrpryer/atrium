@@ -18,5 +18,7 @@
     <None Include="Assets\**\*" CopyToOutputDirectory="PreserveNewest" />
     <!-- Models built by tools/blender (iteration 3); the hub falls back to built-in shapes for any that are missing. -->
     <None Include="..\..\art\models\*.glb" LinkBase="models" CopyToOutputDirectory="PreserveNewest" />
+    <!-- Painted textures for the built-in courtyard (paving, grass, gorge, city masonry); flat colour where one is missing. -->
+    <None Include="..\..\art\textures\*.png" LinkBase="textures" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

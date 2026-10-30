@@ -143,7 +143,7 @@ def build(kit):
             q = [corners[k] for k in f]
             c = sum(q, Vector()) / 4
             out = c - (lo + hi) / 2
-            shell.face([B(*p) for p in q], moss if out.y > 0 and rng.random() < 0.35 else rock, uvs=uv, out=B(*out) - B(0, 0, 0))
+            shell.face([B(*p) for p in q], rock, uvs=uv, out=B(*out) - B(0, 0, 0))  # worn bare; moss only at the edges (decor)
 
     # ── Old Stoic's roots: down the left wall, over the floor around the second pool ──
     def root_tube(ctrl, r0, r1, seg=14, sides=8):
@@ -210,7 +210,7 @@ def build(kit):
             mound(decor, B(p.x, p.y + h, p.z), r, r, r * 0.6, cap_mats[k % 2], rng, seg=7)
     for cx, cz, rx, rz in ((-4.6, 3.1, 0.7, 0.45), (4.7, 1.9, 0.8, 0.5), (-0.6, -1.3, 0.6, 0.4), (2.5, 3.0, 0.7, 0.4), (-2.6, 2.9, 0.5, 0.35),
                            (-4.4, -3.9, 0.7, 0.5), (0.6, 1.9, 0.5, 0.35), (-3.9, 1.0, 0.6, 0.4), (3.6, 2.2, 0.45, 0.3), (-1.0, 3.2, 0.5, 0.3)):
-        mound(decor, B(cx, 0.0, cz), rx, rz, 0.1, moss, rng, seg=9)
+        mound(decor, B(cx, 0.0, cz), rx, rz, 0.08, moss, rng, seg=18)
     for i in range(26):
         x, z = rng.uniform(-4.8, 5.2), rng.uniform(1.4, 3.6)
         mound(decor, B(x, 0.0, z), rng.uniform(0.05, 0.12), rng.uniform(0.04, 0.1), rng.uniform(0.03, 0.07), rock, rng, seg=6)

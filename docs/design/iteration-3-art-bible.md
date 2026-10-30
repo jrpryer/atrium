@@ -47,6 +47,18 @@ like a natural corner of a big medieval city:
 - stairs zigzag down, with arched passages, little bridges, chimneys and washing lines;
 - the four houses belong to that city, and the tree and pools sit in a quiet pocket of it.
 
+**A carved stone city, modelled** (designer direction, 2026-10-29). The city is stone, carved and rocky, and it is
+modelled in 3D like everything else, never a painted card. The camera's reach hides how little of it there is.
+The water is an afterthought of nature: it pours from a crack in the city (an old cistern or bathhouse outlet),
+and it has done so for long enough that the tree has grown and the wet stone has gone over to moss.
+
+**A walled, tiered city like Minas Tirith** (designer direction, 2026-10-30):
+- The courtyard is a forgotten pocket in the corner of the lowest tier, under the outer city wall, which guards it
+  from the world beyond.
+- The tier walls curve across the view toward a citadel above, fading into haze.
+- The city's stone is pale and cool; the courtyard's stays warm, so it reads as a pocket of nature in it.
+- The city does not look in on the courtyard. Its fronts, shops, inns and lights face their own streets.
+
 Iteration 2's floating slab is the opposite of this. The Higgsfield courtyard brief
 (`anchors.courtyard_scene` in the prompt pack) starts from it.
 
@@ -295,7 +307,7 @@ testable:
 |---|---|---|
 | **E1. Textured cel shading and mesh import** | Adds a texture sampler to the toon shader that keeps the cel bands. World-space triplanar mapping covers the slab, cliff and walls (no UVs needed); UVs are added in MeshBuilder only where a texture must follow the surface (roofs, bark, doors). An import step for glTF (`.glb`): rejects any part over 65,535 vertices (raylib meshes have 16-bit indices); sets the toon and outline shaders on every material (raylib leaves material 0 as an unused default); rebuilds smooth normals into the tangent channel for the ink outline; checks scale (1 unit = 1 m), pivot and facing. **Status (2026-10-25): the sampler and the import step are in** (`Render/ModelAsset.cs`); the import also names each mesh after its part, reads the markers, turns linear base colours back to sRGB and builds mipmaps. Scale, pivot and facing are checked by the Blender kit, not at import. **Still to do:** triplanar mapping and MeshBuilder UVs for the built-in courtyard. | Before E1 the toon shader read vertex colour only and MeshBuilder made no UVs, so no surface could take a texture, and imported models bypassed the cel shading and ink entirely. |
 | **E2. A 2D stage for each room** | Sprite layers, 2D hotspot outlines, a hover outline from each sprite's alpha, and the hop as a 2D offset. One task per room. | The rules and working cards carry over unchanged, but the staging doesn't: hotspots today are 3D boxes picked by ray, and books, jars, fish and the Balance are 3D draws. |
-| **E3. Courtyard backdrop** | Long painted strips mapped onto curved cards that follow the canyon's arc. The engine tints them from the clock's sky and fog colours and lights a hand-painted window mask at night. | The courtyard camera orbits a full 360°, so flat cards would be seen edge-on. Baked lighting states can't follow the continuous day cycle. |
+| **E3. Courtyard backdrop** | **Status (2026-10-29): in.** One painted panorama on a card at the canyon's arc, its night lights drawn additively as night falls (`HubWorld.BuildBackdrop`, `tools/blender/courtyard_textures.py`); the cliff and ground take painted rock and grass textures. Long painted strips mapped onto curved cards that follow the canyon's arc. The engine tints them from the clock's sky and fog colours and lights a hand-painted window mask at night. | The courtyard camera orbits a full 360°, so flat cards would be seen edge-on. Baked lighting states can't follow the continuous day cycle. |
 | **E4. The tree's shadow** | A soft projected shadow decal, swept by the clock across the Almanac's landmarks. | The renderer casts no shadows. |
 | **E5. Art loading** | Looks up files by content id and falls back to iteration 2's procedural art when a file is missing, so content never waits on art (AGENTS.md invariant 8). Bleeds edge colour into transparent areas, builds mipmaps with trilinear filtering, and loads compressed DDS textures for plates and backdrops. Keeps only the current room's plate in memory. | Without mipmaps, icons drawn small shimmer; uncompressed plates cost about 32 MB each. |
 | **E6. Living layers and quiet states** | Separate painted layers that the engine animates and switches off: glow, smoke and drifting flecks. A "quiet" shader for inert items (desaturate and wash toward parchment), with painted inert icons for the four forms content names. A still frame for every animated layer when reduce-motion is on. | Iteration 2 already animates these and greys inert things. A flat painting would lose both cues. |

@@ -69,7 +69,7 @@
   },
   "hub": {
     "charterLampsBeat": "lamps-relit",
-    "models": {"old_stoic": 0.85, "library": 0.62, "apothecary": 0.62, "pools": 0.85, "sanctum": 0.62, "lamp_post": 0.8}
+    "models": {"old_stoic": 0.85, "library": 0.62, "apothecary": 0.62, "pools": 0.75, "sanctum": 0.62, "lamp_post": 0.8}
   },
   "rooms": {"models": ["library", "apothecary", "pools", "sanctum"]}
 }

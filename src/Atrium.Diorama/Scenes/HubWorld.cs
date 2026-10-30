@@ -8,8 +8,8 @@ using Raylib_cs;
 namespace Atrium.Diorama.Scenes;
 
 /// <summary>
-/// The courtyard as a floating diorama, built entirely from code: the slab, the cliff and the city's tiers above,
-/// the Slowsilver, the pools, Old Stoic (big, old and unchanging), and the four houses.
+/// The courtyard as a diorama, built from code and Blender models: a square stone block, the city's terraces stepping
+/// up round three sides, the Slowsilver, the pools, Old Stoic (big, old and unchanging), and the four houses.
 /// </summary>
 public sealed class HubWorld : IDisposable
 {
@@ -44,9 +44,16 @@ public sealed class HubWorld : IDisposable
 
     public readonly Dictionary<string, House> Houses = new();
     public static readonly Vector3 TreePos = new(-0.8f, 0, -1.4f);
-    public static readonly Vector3 FallsBase = new(1.6f, 0.15f, -7.4f);
+    public static readonly Vector3 FallsBase = new(1.6f, 0.15f, -7.7f);   // where the falls land in the pool
+    /// <summary>Half the width of the square block the courtyard is cut from.</summary>
+    private const float Block = 12.5f;
 
-    private readonly Model _slab, _cliff, _city, _windows, _props, _falls, _stream, _banks;
+    private readonly Model _slab, _paving, _grass, _gorge, _props, _falls, _stream, _banks;
+    /// <summary>The city (HubCity): near and far, the far part drawn in heavier haze.</summary>
+    private readonly Model _cityGround, _cityStone, _cityUpper, _windows, _cityWall, _farStone, _farUpper, _farWindows, _farWall, _scarp, _corner, _baths, _poolRim;
+    /// <summary>The forgotten corner's dressing (HubCorner), when the corner kit is there.</summary>
+    private readonly Model? _cornerStone, _cornerFlags, _cornerUpper, _puddles, _rivulets;
+    private readonly Vector3[] _lanterns;
     /// <summary>The stream's course, from the plunge pool under the falls to the Spirit Pools' cave mouth.</summary>
     private Vector3[] _course = Array.Empty<Vector3>();
     /// <summary>The courtyard's three water basins. Content pools fill them in content order (largest, under the falls, first).</summary>
@@ -71,9 +78,49 @@ public sealed class HubWorld : IDisposable
         var toon = r.Shaders.Toon;
         AddHouses(toon); // first, so the paving can lead to each door and the stream can find the cave mouth
         _course = StreamCourse();
-        _slab = BuildSlab(Houses.Values.Select(h => (h.Pos, h.PathEnd)), _course).Model(toon);
-        _cliff = BuildCliff().Model(toon);
-        (_city, _windows) = BuildCity(toon);
+        _slab = Renderer.WithTexture(BuildSlab(Houses.Values.Select(h => (h.Pos, h.PathEnd)), _course).ProjectUv(2.4f).Model(toon),
+            r.Texture(Path.Combine(AppContext.BaseDirectory, "textures", "courtyard-masonry.png")));
+        // painted textures (art/textures); each falls back to flat colour if it's missing
+        string Tex(string name) => Path.Combine(AppContext.BaseDirectory, "textures", name);
+        var rock = r.Texture(Tex("courtyard-rock.png"));
+        var grassTex = r.Texture(Tex("courtyard-grass.png"));
+        var paving = r.Texture(Tex("courtyard-paving.png"));
+        var masonry = r.Texture(Tex("courtyard-masonry.png"));
+        var (paved, grass, gorge) = BuildGround(_course);
+        _paving = Renderer.WithTexture(paved.ProjectUv(3.6f).Model(toon), r.Texture(Tex("corner-paving.png")) ?? paving);
+        _grass = Renderer.WithTexture(grass.ProjectUv(5.5f).Model(toon), grassTex);
+        _gorge = Renderer.WithTexture(gorge.ProjectUv(1.6f).Model(toon), rock);
+        var cornerKit = KitAsset.From(r.Import(Path.Combine(AppContext.BaseDirectory, "models", "corner-kit.glb")));
+        var wallKit = KitAsset.From(r.Import(Path.Combine(AppContext.BaseDirectory, "models", "wall-kit.glb")));
+        var city = HubCity.Build(HubCity.Kit.From(r.Import(Path.Combine(AppContext.BaseDirectory, "models", "city-kit.glb"))), cornerKit is not null, wallKit);
+        // the tidy city in clean white ashlar and paving; the forgotten corner keeps its weathered masonry
+        var ashlar = r.Texture(Tex("city-ashlar.png")) ?? masonry;
+        var cityPaving = r.Texture(Tex("city-paving.png")) ?? paving;
+        var cornerWall = r.Texture(Tex("corner-wall.png")) ?? masonry;
+        var cornerPaving = r.Texture(Tex("corner-paving.png")) ?? paving;
+        _corner = Renderer.WithTexture(city.Corner.ProjectUv(2.4f).Model(toon), cornerWall);
+        _baths = Renderer.WithTexture(city.Baths.ProjectUv(4.2f).Model(toon), cornerWall);
+        _poolRim = Renderer.WithTexture(BuildPoolRim().ProjectUv(1.6f).Model(toon), cornerWall);
+        if (cornerKit is not null)
+        {
+            var dress = HubCorner.Build(cornerKit, CornerBlocked);
+            _cornerStone = Renderer.WithTexture(dress.Stone.ProjectUv(2.4f).Model(toon), cornerWall);
+            _cornerFlags = Renderer.WithTexture(dress.Flags.ProjectUv(3.6f).Model(toon), cornerPaving);
+            _cornerUpper = dress.Upper.Model(toon);
+            _puddles = dress.Puddles.Model(r.Shaders.Water);
+            _rivulets = dress.Rivulets.Model(r.Shaders.Falls);
+        }
+        _cityGround = Renderer.WithTexture(city.Ground.ProjectUv(3.6f).Model(toon), cityPaving);
+        _cityStone = Renderer.WithTexture(city.Stone.ProjectUv(3.0f).Model(toon), ashlar);
+        _cityUpper = city.Upper.Model(toon);
+        _windows = city.Windows.Model(toon);
+        _cityWall = Renderer.WithTexture(city.Wall.ProjectUv(4.4f).Model(toon), ashlar);   // larger ashlar than the houses
+        _farStone = Renderer.WithTexture(city.FarStone.ProjectUv(3.0f).Model(toon), ashlar);
+        _farWall = Renderer.WithTexture(city.FarWall.ProjectUv(4.4f).Model(toon), ashlar);
+        _farUpper = city.FarUpper.Model(toon);
+        _farWindows = city.FarWindows.Model(toon);
+        _scarp = Renderer.WithTexture(city.Scarp.ProjectUv(6f).Model(toon), masonry);
+        _lanterns = city.Lanterns.ToArray();
         AddTree(toon);
         _props = BuildProps().Model(toon);
         AddLampPosts(toon);
@@ -143,27 +190,37 @@ public sealed class HubWorld : IDisposable
     }
 
     /// <summary>The four old charter lamps, on the diagonals around the tree.</summary>
+    /// <summary>Ground the corner's dressing keeps off: the houses, the stream, the pool, the trunk, the lamp posts, the benches.</summary>
+    private bool CornerBlocked(Vector2 q) =>
+        Houses.Values.Any(h => Vector2.Distance(q, new Vector2(h.Pos.X, h.Pos.Z)) < h.Radius + 0.5f)
+        || StreamDistance(q, _course) < 1.0f
+        || MathF.Pow((q.X - 1.8f) / 3.2f, 2) + MathF.Pow((q.Y + 6.1f) / 2.5f, 2) < 1
+        || Vector2.Distance(q, new Vector2(TreePos.X, TreePos.Z)) < 1.4f
+        || LampSpots().Any(l => Vector2.Distance(q, new Vector2(l.X, l.Z)) < 0.6f)
+        || Vector2.Distance(q, new Vector2(-1.9f, -4.3f)) < 1.1f || Vector2.Distance(q, new Vector2(3.6f, -3.1f)) < 1.1f;
+
     private static IEnumerable<Vector3> LampSpots()
     {
-        for (int i = 0; i < 4; i++)
+        // three on a ring round the tree; the fourth stands by the pool, not in it
+        foreach (float deg in new[] { 45f, 135f, 225f })
         {
-            float a = MathF.PI / 4 + i * MathF.PI / 2;
+            float a = deg * MathF.PI / 180;
             yield return TreePos + new Vector3(MathF.Cos(a), 0, MathF.Sin(a)) * 5.1f;
         }
+        yield return new Vector3(4.9f, 0, -3.4f);
     }
 
     private static MeshBuilder BuildSlab(IEnumerable<(Vector3 Pos, Vector3? PathEnd)> houses, Vector3[] stream)
     {
         var m = new MeshBuilder();
-        var grass = Palette.Hex(0x86A86E);
-        m.Cylinder(new Vector3(0, -1.4f, 0), 12.5f, 12.6f, 1.4f, 44, Palette.Hex(0x9C8C74), grass);
-        m.Cylinder(new Vector3(0, -6.8f, 0), 3.2f, 12.3f, 5.4f, 22, Palette.Hex(0x7D6E5C), null, 0, 0.12f);
-        var under = new Random(17);
-        for (int i = 0; i < 9; i++)
-        {
-            float a = i / 9f * MathF.Tau, d = 4 + (float)under.NextDouble() * 5;
-            m.Blob(new Vector3(MathF.Cos(a) * d, -5.2f - (float)under.NextDouble() * 1.8f, MathF.Sin(a) * d), new Vector3(1.6f, 1.4f, 1.6f), 3, 6, Palette.Hex(0x6E604F), 200 + i, 0.25f);
-        }
+        // the square block the courtyard is cut from: stone sides, its top under the ground (BuildGround) and the
+        // stream's gorge, on a dark plinth
+        var side = Palette.Hex(0xE2DACB);
+        m.Box(new Vector3(0, -1.65f, 0), new Vector3(Block * 2, 1.9f, Block * 2), side, Palette.Hex(0x2E3A30));
+        foreach (var (c, size) in new[] { (new Vector3(0, -0.35f, Block - 0.05f), new Vector3(Block * 2, 0.7f, 0.1f)), (new Vector3(0, -0.35f, -Block + 0.05f), new Vector3(Block * 2, 0.7f, 0.1f)),
+                                          (new Vector3(Block - 0.05f, -0.35f, 0), new Vector3(0.1f, 0.7f, Block * 2)), (new Vector3(-Block + 0.05f, -0.35f, 0), new Vector3(0.1f, 0.7f, Block * 2)) })
+            m.Box(c, size, side);
+        m.Box(new Vector3(0, -2.85f, 0), new Vector3(Block * 2 + 0.6f, 0.5f, Block * 2 + 0.6f), Palette.Hex(0x3A3532));
         // paving ring around the tree and paths to the doors
         var stone = Palette.Hex(0xD7C9AE);
         m.Ring(TreePos + new Vector3(0, 0, 0), 4.7f, 3.2f, 0.06f, 28, stone, stone);
@@ -207,107 +264,6 @@ public sealed class HubWorld : IDisposable
         fx = fx * fx * (3 - 2 * fx); fy = fy * fy * (3 - 2 * fy);
         float a = H(xi, yi, seed), b = H(xi + 1, yi, seed), c = H(xi, yi + 1, seed), d = H(xi + 1, yi + 1, seed);
         return a + (b - a) * fx + (c - a) * fy + (a - b - c + d) * fx * fy;
-    }
-
-    /// <summary>One continuous, weathered canyon wall around the back of the slab, banded in sandstone strata.</summary>
-    private static MeshBuilder BuildCliff()
-    {
-        var m = new MeshBuilder();
-        var strata = new[] { Palette.Hex(0xB59B78), Palette.Hex(0xC7B08A), Palette.Hex(0xA88E6C), Palette.Hex(0xBFA581), Palette.Hex(0xAD936F) };
-        const int cols = 56, rows = 9;
-        const float Base = -1.4f;
-        float a0 = MathF.PI * 1.04f, a1 = MathF.PI * 1.96f;
-        float fallsA = MathF.Atan2(FallsBase.Z - 4.6f, FallsBase.X);
-        if (fallsA < 0) fallsA += MathF.Tau;
-        var grid = new Vector3[cols + 1, rows + 1];
-        var heights = new float[cols + 1];
-        for (int i = 0; i <= cols; i++)
-        {
-            float a = a0 + (a1 - a0) * i / cols;
-            float edge = MathF.Min(i, cols - i) / (float)cols;              // lower toward the ends
-            float h = 6.5f + Noise(i * 0.35f, 0, 3) * 4f + MathF.Min(edge * 14, 1) * 2.5f;
-            h *= 0.55f + 0.45f * MathF.Min(1, edge * 5);
-            if (MathF.Abs(a - fallsA) < 0.2f) h = MathF.Max(h, 11.4f);       // the lip the Slowsilver pours from
-            heights[i] = h;
-            for (int j = 0; j <= rows; j++)
-            {
-                float t = j / (float)rows;
-                // the foot sits just inside the slab's rim and below the turf, so no seam shows
-                float r = 12.1f + t * 1.6f + (Noise(i * 0.6f, j * 0.8f, 7) - 0.5f) * 1.1f * MathF.Min(1, t * 4) + (j % 2) * 0.12f;
-                grid[i, j] = new Vector3(MathF.Cos(a) * r, Base + (h - Base) * t, MathF.Sin(a) * r);
-            }
-        }
-        // every face is wound by the direction it should face, so the hull outline never shows through
-        void Face(Vector3 a, Vector3 b, Vector3 c, Vector3 d, Vector3 facing, Color col)
-        {
-            if (Vector3.Dot(Vector3.Cross(b - a, c - a), facing) < 0) m.Quad(a, d, c, b, col);
-            else m.Quad(a, b, c, d, col);
-        }
-        static Vector3 Out(Vector3 p) => Vector3.Normalize(new Vector3(p.X, 0, p.Z));
-        Vector3 Back(Vector3 p) => p + Out(p) * 2.4f;
-        for (int i = 0; i < cols; i++)
-            for (int j = 0; j < rows; j++)
-            {
-                var col = strata[(j + (int)(Noise(i * 0.2f, j, 11) * 2)) % strata.Length];
-                var mid = (grid[i, j] + grid[i + 1, j + 1]) / 2;
-                Face(grid[i, j], grid[i + 1, j], grid[i + 1, j + 1], grid[i, j + 1], -Out(mid), col);   // the courtyard-facing wall
-            }
-        // a mossy top, a plain back and an underside, so it reads as solid from any angle
-        var moss = Palette.Hex(0x8DA86A); var backCol = Palette.Hex(0x9C8466); var under = Palette.Hex(0x7D6E5C);
-        for (int i = 0; i < cols; i++)
-        {
-            var t0 = grid[i, rows]; var t1 = grid[i + 1, rows];
-            var f0 = grid[i, 0]; var f1 = grid[i + 1, 0];
-            Face(t0, t1, Back(t1), Back(t0), Vector3.UnitY, moss);
-            Face(Back(t0), Back(t1), Back(t1) with { Y = Base }, Back(t0) with { Y = Base }, Out(t0), backCol);
-            Face(f0, f1, Back(f1) with { Y = Base }, Back(f0) with { Y = Base }, -Vector3.UnitY, under);
-        }
-        // end caps where the wall steps down at either side
-        foreach (var (i, sign) in new[] { (0, -1f), (cols, 1f) })
-        {
-            float a = a0 + (a1 - a0) * i / cols;
-            var along = new Vector3(-MathF.Sin(a), 0, MathF.Cos(a)) * sign;
-            for (int j = 0; j < rows; j++)
-            {
-                var p0 = grid[i, j]; var p1 = grid[i, j + 1];
-                var q0 = Back(grid[i, rows]) with { Y = p0.Y }; var q1 = Back(grid[i, rows]) with { Y = p1.Y };
-                Face(p0, p1, q1, q0, along, strata[j % strata.Length]);
-            }
-        }
-        // switchback stairs cut into the left end, toward the Hem
-        for (int i = 0; i < 12; i++)
-        {
-            float t = i / 11f;
-            var p = new Vector3(-11.3f + (i % 6 < 3 ? i % 6 : 6 - i % 6) * 0.45f, 0.2f + i * 0.45f, -4.4f - t * 2.6f);
-            m.Box(p, new Vector3(1.1f, 0.2f, 0.65f), Palette.Hex(0xD3C4A6));
-        }
-        return m;
-    }
-
-    private static (Model City, Model Windows) BuildCity(Shader toon)
-    {
-        var m = new MeshBuilder();
-        var w = new MeshBuilder();
-        var rng = new Random(21);
-        var tiers = new[] { (y: 10.5f, z: -18f, n: 13, spread: 15f), (y: 15.5f, z: -24f, n: 15, spread: 19f), (y: 21f, z: -30f, n: 13, spread: 23f) };
-        foreach (var (y, z, n, spread) in tiers)
-        {
-            m.Box(new Vector3(0, y - 1.5f, z + 1.5f), new Vector3(spread * 2.2f, 3f, 5f), Palette.Hex(0xAE9F86));
-            for (int i = 0; i < n; i++)
-            {
-                float x = -spread + i * (spread * 2 / (n - 1)) + (float)rng.NextDouble() * 0.6f;
-                float bw = 1.6f + (float)rng.NextDouble() * 1.4f, bh = 2.2f + (float)rng.NextDouble() * 3.4f, bd = 1.8f;
-                var col = Palette.Lerp(Palette.Hex(0xCFC0A4), Palette.Hex(0xB8A88E), (float)rng.NextDouble());
-                var roof = Palette.Lerp(Palette.Hex(0x8C6A5A), Palette.Hex(0x6E7A8A), (float)rng.NextDouble());
-                var bc = new Vector3(x, y + bh / 2, z + (float)rng.NextDouble() * 1.2f);
-                m.Box(bc, new Vector3(bw, bh, bd), col);
-                m.Gable(bc + new Vector3(0, bh / 2, 0), bw, bd, 0.9f + (float)rng.NextDouble() * 0.6f, roof);
-                for (int k = 0; k < 2; k++)
-                    if (rng.NextDouble() < 0.7)
-                        w.Box(bc + new Vector3(-bw * 0.22f + k * bw * 0.44f, bh * 0.1f, bd / 2 + 0.02f), new Vector3(0.28f, 0.38f, 0.04f), Color.White);
-            }
-        }
-        return (m.Model(toon), w.Model(toon));
     }
 
     private static Matrix4x4 TreeLean()
@@ -374,9 +330,7 @@ public sealed class HubWorld : IDisposable
     private static MeshBuilder BuildProps()
     {
         var m = new MeshBuilder();
-        var rim = Palette.Hex(0xC8B898);
-        m.Ring(new Vector3(1.8f, 0, -6.1f), 3.3f, 2.95f, 0.34f, 30, rim, Palette.Mul(rim, 1.05f), 0.76f);
-        m.Disc(new Vector3(1.8f, 0.03f, -6.1f), 2.95f, 30, Palette.Hex(0x2C5E60), 0.76f);
+        m.Disc(new Vector3(1.8f, 0.03f, -6.1f), 3.0f, 30, Palette.Hex(0x2C5E60), 0.76f);   // the basin's floor (its rim: BuildPoolRim)
         // benches by the water, where the Keeper sits
         void Bench(Vector3 p, float yaw)
         {
@@ -387,7 +341,7 @@ public sealed class HubWorld : IDisposable
             b.Box(new Vector3(0.7f, 0.2f, 0), new Vector3(0.14f, 0.4f, 0.42f), Palette.Mul(wood, 0.8f));
             m.Append(b.Transform(Matrix4x4.CreateRotationY(yaw) * Matrix4x4.CreateTranslation(p)));
         }
-        Bench(new Vector3(-0.6f, 0, -5.2f), 0.4f);
+        Bench(new Vector3(-1.9f, 0, -4.3f), -1.12f);
         Bench(new Vector3(3.6f, 0, -3.1f), -0.6f);
         // crates and barrels by the Apothecary
         m.Box(new Vector3(8.4f, 0.35f, 3.0f), new Vector3(0.7f, 0.7f, 0.7f), Palette.Hex(0xA98058));
@@ -421,19 +375,141 @@ public sealed class HubWorld : IDisposable
     private static MeshBuilder BuildFalls()
     {
         var m = new MeshBuilder();
-        int segs = 14;
-        Vector3 Spine(float t) => new(FallsBase.X, FallsBase.Y + (1 - t) * 11.2f, FallsBase.Z - 4.6f + MathF.Pow(t, 0.55f) * 4.6f - MathF.Sin(t * MathF.PI) * 0.4f);
-        for (int i = 0; i < segs; i++)
+        // the jet: out of the hole in the arch's bricks (HubCorner's brick-arch, 3.95 m up), arcing forward as it
+        // drops into the pool; a curved sheet, not a flat card, narrow at the hole and spreading as it falls, with a
+        // thinner, wider veil round it
+        var top = new Vector3(FallsBase.X, 3.95f, HubCity.North + 0.12f);
+        Vector3 Spine(float t) => new(top.X, top.Y - (top.Y - FallsBase.Y) * t * t, top.Z + (FallsBase.Z - top.Z) * t);
+        void Sheet(float width0, float width1, float bulge, float out_, float vOffset)
         {
-            float t0 = i / (float)segs, t1 = (i + 1) / (float)segs;
-            float w0 = 1.0f + t0 * 0.45f, w1 = 1.0f + t1 * 0.45f;
-            var a = Spine(t0); var b = Spine(t1);
-            var a0 = a - new Vector3(w0, 0, 0); var a1 = a + new Vector3(w0, 0, 0);
-            var b0 = b - new Vector3(w1, 0, 0); var b1 = b + new Vector3(w1, 0, 0);
-            m.TriUv(a0, b0, b1, new Vector2(0, t0), new Vector2(0, t1), new Vector2(1, t1), Color.White);
-            m.TriUv(a0, b1, a1, new Vector2(0, t0), new Vector2(1, t1), new Vector2(1, t0), Color.White);
+            const int Segs = 16, Across = 6;
+            for (int i = 0; i < Segs; i++)
+                for (int k = 0; k < Across; k++)
+                {
+                    Vector3 P(int si, int ki)
+                    {
+                        float t = si / (float)Segs, u = ki / (float)Across * 2 - 1;
+                        float w = width0 + (width1 - width0) * MathF.Sqrt(t);
+                        return Spine(t) + new Vector3(u * w, 0, (1 - u * u) * bulge + out_);
+                    }
+                    Vector2 Uv(int si, int ki) => new(ki / (float)Across, si / (float)Segs * 1.6f + vOffset);
+                    var (a, b, c, d) = (P(i, k), P(i + 1, k), P(i + 1, k + 1), P(i, k + 1));
+                    m.TriUv(a, b, c, Uv(i, k), Uv(i + 1, k), Uv(i + 1, k + 1), Color.White);
+                    m.TriUv(a, c, d, Uv(i, k), Uv(i + 1, k + 1), Uv(i, k + 1), Color.White);
+                }
         }
+        Sheet(0.24f, 0.62f, 0.14f, 0, 0);
+        Sheet(0.34f, 0.85f, 0.2f, 0.05f, 0.37f);
+        // the churn where it lands: a ring of foam whose streaks run outward (v falls from the centre to the edge)
+        const int Ring = 24, Bands = 4;
+        for (int i = 0; i < Ring; i++)
+            for (int b = 0; b < Bands; b++)
+            {
+                float a0 = MathF.Tau * i / Ring, a1 = MathF.Tau * (i + 1) / Ring;
+                float r0 = 1.25f * b / Bands, r1 = 1.25f * (b + 1) / Bands;
+                Vector3 P(float r, float a) => FallsBase + new Vector3(MathF.Cos(a) * r, 0.03f, MathF.Sin(a) * r * 0.8f);
+                Vector2 Uv(float r, float a) => new(0.5f + 0.2f * MathF.Sin(a * 3), 0.98f - r / 1.25f * 0.45f);
+                m.TriUv(P(r0, a0), P(r1, a0), P(r1, a1), Uv(r0, a0), Uv(r1, a0), Uv(r1, a1), Color.White);
+                m.TriUv(P(r0, a0), P(r1, a1), P(r0, a1), Uv(r0, a0), Uv(r1, a1), Uv(r0, a1), Color.White);
+            }
         return m;
+    }
+
+    /// <summary>
+    /// The pool's rim: an old basin of weathered stones following its edge, each a little askew, a few gone (one
+    /// tumbled into the water, one lying by the rim), and a gap on the east where the pool spills into the stream.
+    /// </summary>
+    private static MeshBuilder BuildPoolRim()
+    {
+        var m = new MeshBuilder();
+        var rng = new Random(41);
+        float R(float a, float b) => a + (float)rng.NextDouble() * (b - a);
+        var c = new Vector3(1.8f, 0, -6.1f);
+        const float Rx = 3.15f, Squash = 0.76f;
+        float outlet = MathF.Atan2((-5.7f - c.Z) / Squash, 5.3f - c.X);   // where the stream leaves
+        const int Stones = 26;
+        for (int i = 0; i < Stones; i++)
+        {
+            float a = MathF.Tau * (i + R(-0.1f, 0.1f)) / Stones;
+            float off = MathF.Abs(MathF.IEEERemainder(a - outlet, MathF.Tau));
+            if (off < 0.32f) continue;                                          // the spill into the stream
+            if (i == 7 || i == 16) continue;                                    // two long gone
+            var at = c + new Vector3(MathF.Cos(a) * Rx, 0, MathF.Sin(a) * Rx * Squash);
+            var tangent = Vector3.Normalize(new Vector3(-MathF.Sin(a), 0, MathF.Cos(a) * Squash));
+            float yaw = MathF.Atan2(tangent.X, tangent.Z) + MathF.PI / 2 + R(-0.12f, 0.12f);
+            float h = R(0.26f, 0.42f);
+            var tint = Palette.Lerp(Palette.Hex(0xF2EDE4), Palette.Hex(0xD8D0C2), R(0, 1));
+            var stone = new MeshBuilder().Box(new Vector3(0, h / 2 - 0.1f, 0), new Vector3(R(0.72f, 0.86f), h + 0.1f, R(0.42f, 0.52f)), tint)
+                .Transform(Matrix4x4.CreateRotationZ(R(-0.06f, 0.06f)) * Matrix4x4.CreateRotationX(R(-0.05f, 0.05f))
+                           * Matrix4x4.CreateRotationY(yaw) * Matrix4x4.CreateTranslation(at));
+            m.Append(stone);
+        }
+        // one tumbled into the water by the falls, one lying on the grass where it fell outward
+        m.Append(new MeshBuilder().Box(Vector3.Zero, new Vector3(0.8f, 0.36f, 0.48f), Palette.Hex(0xE4DDD0))
+            .Transform(Matrix4x4.CreateRotationZ(0.5f) * Matrix4x4.CreateRotationY(0.4f) * Matrix4x4.CreateTranslation(c + new Vector3(-0.9f, 0.08f, -1.4f))));
+        m.Append(new MeshBuilder().Box(Vector3.Zero, new Vector3(0.8f, 0.34f, 0.48f), Palette.Hex(0xE4DDD0))
+            .Transform(Matrix4x4.CreateRotationX(0.25f) * Matrix4x4.CreateRotationY(1.3f) * Matrix4x4.CreateTranslation(c + new Vector3(-3.3f, 0.12f, 1.9f))));
+        return m;
+    }
+
+    /// <summary>
+    /// The courtyard's floor: worn paving over the whole block, grass in patches and round Old Stoic's roots, finer
+    /// near the stream, where it drops into the stream's gorge (stone walls, a dark bed).
+    /// </summary>
+    private static (MeshBuilder Paving, MeshBuilder Grass, MeshBuilder Gorge) BuildGround(Vector3[] course)
+    {
+        var paving = new MeshBuilder(); var grass = new MeshBuilder(); var gorge = new MeshBuilder();
+        const float Coarse = 0.5f, Bed = 0.48f, Lip = 0.74f, Depth = 0.6f;
+        const int Split = 4;
+        float bx0 = 0, bx1 = 0, bz0 = 0, bz1 = 0;
+        if (course.Length > 1)
+        {
+            bx0 = MathF.Floor((course.Min(c => c.X) - 1) / Coarse) * Coarse; bx1 = MathF.Ceiling((course.Max(c => c.X) + 1) / Coarse) * Coarse;
+            bz0 = MathF.Floor((course.Min(c => c.Z) - 1) / Coarse) * Coarse; bz1 = MathF.Ceiling((course.Max(c => c.Z) + 1) / Coarse) * Coarse;
+        }
+        bool InBox(float x, float z) => course.Length > 1 && x >= bx0 && x < bx1 && z >= bz0 && z < bz1;
+        float H(float x, float z)
+        {
+            if (!InBox(x - 0.01f, z - 0.01f) && !InBox(x + 0.01f, z + 0.01f)) return 0;
+            float d = StreamDistance(new Vector2(x, z), course);
+            return d < Bed ? -Depth : d < Lip ? -Depth * (Lip - d) / (Lip - Bed) : 0;
+        }
+        bool Grassy(float x, float z) => Vector2.Distance(new Vector2(x, z), new Vector2(TreePos.X, TreePos.Z)) < 3.1f || Noise(x * 0.32f + 40, z * 0.32f, 21) > 0.7f;
+        void Cell(float ax, float az, float size)
+        {
+            Vector3 P(float x, float z) => new(x, H(x, z), z);
+            var (a, b, c, d) = (P(ax, az), P(ax, az + size), P(ax + size, az + size), P(ax + size, az));
+            float h = (a.Y + b.Y + c.Y + d.Y) / 4;
+            if (h < -0.04f)
+                gorge.Quad(a, b, c, d, h < -Depth + 0.08f ? Palette.Hex(0x3A5048) : Palette.Lerp(Palette.Hex(0xE8E0D0), Palette.Hex(0x9A9080), -h / Depth));
+            else if (Grassy(ax + size / 2, az + size / 2)) grass.Quad(a, b, c, d, Color.White);
+            else paving.Quad(a, b, c, d, Color.White);
+        }
+        int n = (int)MathF.Round(Block / Coarse);
+        for (int i = -n; i < n; i++)
+            for (int j = -n; j < n; j++)
+            {
+                float ax = i * Coarse, az = j * Coarse;
+                if (InBox(ax, az))
+                    for (int u = 0; u < Split; u++)
+                        for (int v = 0; v < Split; v++) Cell(ax + u * Coarse / Split, az + v * Coarse / Split, Coarse / Split);
+                else Cell(ax, az, Coarse);
+            }
+        return (paving, grass, gorge);
+    }
+
+    /// <summary>How far a point (x, z) lies from the stream's course.</summary>
+    private static float StreamDistance(Vector2 p, Vector3[] course)
+    {
+        float best = float.MaxValue;
+        for (int i = 0; i < course.Length - 1; i++)
+        {
+            var a = new Vector2(course[i].X, course[i].Z); var b = new Vector2(course[i + 1].X, course[i + 1].Z);
+            var ab = b - a;
+            float t = ab.LengthSquared() < 1e-6f ? 0 : Math.Clamp(Vector2.Dot(p - a, ab) / ab.LengthSquared(), 0, 1);
+            best = MathF.Min(best, Vector2.Distance(p, a + ab * t));
+        }
+        return best;
     }
 
     /// <summary>
@@ -442,7 +518,7 @@ public sealed class HubWorld : IDisposable
     /// </summary>
     private Vector3[] StreamCourse()
     {
-        var pts = new List<Vector3> { new(5.3f, 0, -5.7f), new(6.0f, 0, -4.4f), new(6.3f, 0, -3.0f), new(6.9f, 0, -1.6f), new(8.0f, 0, -1.0f) };
+        var pts = new List<Vector3> { new(5.3f, 0, -5.7f), new(6.6f, 0, -4.9f), new(8.0f, 0, -5.0f), new(9.4f, 0, -6.1f) };
         if (Houses.TryGetValue("pools", out var cave))
         {
             var w = cave.World(0);
@@ -477,12 +553,12 @@ public sealed class HubWorld : IDisposable
         {
             var (a, b) = (course[i], course[i + 1]);
             var (sa, sb) = (Side(i), Side(i + 1));
-            water.Quad(a - sa * 0.42f + new Vector3(0, 0.08f, 0), b - sb * 0.42f + new Vector3(0, 0.08f, 0), b + sb * 0.42f + new Vector3(0, 0.08f, 0), a + sa * 0.42f + new Vector3(0, 0.08f, 0), Color.White);
-            m.Quad(a - sa * 0.62f + new Vector3(0, 0.03f, 0), b - sb * 0.62f + new Vector3(0, 0.03f, 0), b + sb * 0.62f + new Vector3(0, 0.03f, 0), a + sa * 0.62f + new Vector3(0, 0.03f, 0), Palette.Hex(0x2A4A44));
+            var dip = new Vector3(0, -0.3f, 0); // down in the gorge (BuildGround)
+            water.Quad(a - sa * 0.46f + dip, b - sb * 0.46f + dip, b + sb * 0.46f + dip, a + sa * 0.46f + dip, Color.White);
             if (i % 2 == 0)
                 foreach (var side in new[] { -1f, 1f })
                 {
-                    var p = a + sa * side * (0.66f + R01() * 0.12f);
+                    var p = a + sa * side * (0.86f + R01() * 0.12f); // on the gorge's lip
                     float s = 0.14f + R01() * 0.14f;
                     m.Blob(p + new Vector3(0, s * 0.4f, 0), new Vector3(s * 1.3f, s * 0.75f, s), 3, 6, Palette.Mul(Palette.Hex(0x9A8E78), 0.85f + R01() * 0.25f), 700 + i * 2 + (side > 0 ? 1 : 0), 0.25f);
                     if (R01() < 0.35f) m.Blob(p + new Vector3(0, s * 0.95f, 0), new Vector3(s, 0.05f, s * 0.8f), 2, 6, Palette.Moss, 900 + i, 0.25f);
@@ -566,10 +642,15 @@ public sealed class HubWorld : IDisposable
         }
         // each house uses its imported model if visuals.json lists one, else its built-in shape (turn: radians away
         // from facing the tree, where a model needs a slightly different site than its built-in shape)
-        bool TryImport(string locale, Vector3 pos, float turn = 0)
+        bool TryImport(string locale, Vector3 pos, float turn = 0, float? facing = null)
         {
             if (Import(locale, out float scale) is not { } a) return false;
-            Imported(locale, pos, a, scale, turn);
+            var h = Imported(locale, pos, a, scale, turn);
+            if (facing is { } yaw)
+            {
+                h.Yaw = yaw;
+                if (a.Markers.TryGetValue("door-point", out var door)) h.PathEnd = Vector3.Transform(door, h.World(0));
+            }
             return true;
         }
 
@@ -592,10 +673,10 @@ public sealed class HubWorld : IDisposable
             g.Box(new Vector3(0, 4.6f, 1.31f), new Vector3(0.5f, 0.5f, 0.06f), Color.White);
             Make("library", new Vector3(-7.2f, 0, -3.2f), b, g, 1.9f, 8.3f, new Vector3(0, 2.0f, 1.55f));
         }
-        // The Spirit Pools: a cave mouth set into the cliff's end where the stream goes underground, down to the grotto
+        // The Spirit Pools: the cave mouth set into the water gate at the foot of the city wall, where the stream goes underground
         // (models/pools.glb), turned toward the courtyard so its opening shows. The built-in shape is still iteration
         // 2's lodge, for when the model is missing.
-        if (!TryImport("pools", new Vector3(10.4f, 0, -3.2f), 55 * MathF.PI / 180))
+        if (!TryImport("pools", new Vector3(12.9f, 0, HubCity.WaterGateZ), facing: -MathF.PI / 2))
         {
             var b = new MeshBuilder(); var g = new MeshBuilder(); var sh = new MeshBuilder();
             var wood = Palette.Hex(0xA07A58);
@@ -688,10 +769,10 @@ public sealed class HubWorld : IDisposable
         if (_mistTimer <= 0 && !reduceMotion)
         {
             _mistTimer = 0.05f;
-            var at = FallsBase + new Vector3(p.R(-1.2f, 1.2f), 0.2f, p.R(-0.3f, 0.5f));
+            var at = FallsBase + new Vector3(p.R(-0.7f, 0.7f), 0.2f, p.R(-0.5f, 0.5f));
             p.Emit(at, new Vector3(p.R(-0.3f, 0.3f), p.R(0.4f, 1.1f), p.R(0.2f, 0.8f)), p.R(1.6f, 2.8f), p.R(0.5f, 1.0f), Palette.Alpha(Palette.Foam, 0.35f), false, 0.7f, 0.6f);
             if (_rng.NextDouble() < 0.4)
-                p.Emit(FallsBase + new Vector3(p.R(-1f, 1f), 0.15f, p.R(-0.2f, 0.4f)), new Vector3(p.R(-0.6f, 0.6f), p.R(0.8f, 1.6f), p.R(0.1f, 0.9f)), 0.6f, 0.14f, Palette.Alpha(Color.White, 0.8f), false, -0.05f, 0.4f, -3f);
+                p.Emit(FallsBase + new Vector3(p.R(-0.5f, 0.5f), 0.15f, p.R(-0.4f, 0.4f)), new Vector3(p.R(-0.7f, 0.7f), p.R(0.9f, 1.8f), p.R(-0.5f, 0.9f)), 0.6f, 0.14f, Palette.Alpha(Color.White, 0.8f), false, -0.05f, 0.4f, -3f);
         }
         _steamTimer -= dt;
         if (_steamTimer <= 0 && !reduceMotion && Houses.TryGetValue("apothecary", out var apo) && apo.Smoke is { } smoke)
@@ -720,9 +801,29 @@ public sealed class HubWorld : IDisposable
         r.Shaders.Apply(l, Camera, r.Time, new Vector2(Raylib.GetRenderWidth(), Raylib.GetRenderHeight()));
 
         r.Draw(_slab, Matrix4x4.Identity, Color.White, outlineWidth: 1.6f);
-        r.Draw(_cliff, Matrix4x4.Identity, Color.White, outlineWidth: 1.4f);
-        r.Draw(_city, Matrix4x4.Identity, Color.White, outline: false);
-        r.Draw(_windows, Matrix4x4.Identity, Palette.Lerp(Palette.Hex(0x6A6460), Palette.LanternHot, 0.35f + night * 0.65f), emissive: 0.4f + night * 1.4f, outline: false);
+        r.Draw(_paving, Matrix4x4.Identity, Color.White, outlineWidth: 1.0f);
+        r.Draw(_grass, Matrix4x4.Identity, Color.White, outlineWidth: 1.0f);
+        r.Draw(_gorge, Matrix4x4.Identity, Color.White, outlineWidth: 1.2f);
+        // the city's windows are dark glass by day and warm lamplight after dusk, dimmer than the courtyard's own lamps
+        var windowTint = Palette.Lerp(Palette.Hex(0x3A3836), Palette.Lantern, night);
+        r.Draw(_cityGround, Matrix4x4.Identity, Color.White, outlineWidth: 1.0f);
+        r.Draw(_corner, Matrix4x4.Identity, Color.White, outlineWidth: 1.3f);
+        r.Draw(_baths, Matrix4x4.Identity, Color.White, outlineWidth: 1.3f);
+        r.Draw(_poolRim, Matrix4x4.Identity, Color.White, outlineWidth: 1.2f);
+        foreach (var m in new[] { _cornerStone, _cornerFlags, _cornerUpper })
+            if (m is { } dress) r.Draw(dress, Matrix4x4.Identity, Color.White, outlineWidth: 1.0f);
+        r.Draw(_cityStone, Matrix4x4.Identity, Color.White, outlineWidth: 1.3f);
+        r.Draw(_cityWall, Matrix4x4.Identity, Color.White, outlineWidth: 1.4f);
+        r.Draw(_cityUpper, Matrix4x4.Identity, Color.White, outlineWidth: 1.3f);
+        r.Draw(_windows, Matrix4x4.Identity, windowTint, emissive: night * 0.6f, outline: false);
+        r.Draw(_scarp, Matrix4x4.Identity, Color.White, outlineWidth: 1.2f);
+        // the rows past the main street and the upper tiers fade into a cooler, lighter haze
+        r.Shaders.FogRange(12, 100, Palette.Lerp(l.Fog, Palette.Hex(0xC8D2DE), 0.45f * (1 - night)));
+        r.Draw(_farStone, Matrix4x4.Identity, Color.White, outlineWidth: 1.1f);
+        r.Draw(_farWall, Matrix4x4.Identity, Color.White, outlineWidth: 1.2f);
+        r.Draw(_farUpper, Matrix4x4.Identity, Color.White, outlineWidth: 1.1f);
+        r.Draw(_farWindows, Matrix4x4.Identity, windowTint, emissive: night * 0.75f, outline: false);
+        r.Shaders.FogRange(l.FogNear, l.FogFar, l.Fog);
         r.Draw(_props, Matrix4x4.Identity, Color.White, outlineWidth: 1.4f);
         r.Draw(_banks, Matrix4x4.Identity, Color.White, outlineWidth: 1.2f);
         r.Draw(_trunk, _treeAt, Color.White, outlineWidth: 2.2f);
@@ -757,6 +858,8 @@ public sealed class HubWorld : IDisposable
             r.DrawWater(water, Matrix4x4.CreateTranslation(centre), Palette.TealLight, Palette.Teal, 0.12f);
         r.DrawWater(_stream, Matrix4x4.Identity, Palette.TealLight, Palette.Teal, 0.1f);
         r.DrawFalls(_falls, Matrix4x4.Identity, Palette.Alpha(Palette.Hex(0xBFE6E0), 0.85f));
+        if (_puddles is { } puddles) r.DrawWater(puddles, Matrix4x4.Identity, Palette.Hex(0xCFE2E2), Palette.Hex(0x8FB2B4), 0.05f, 0.8f);
+        if (_rivulets is { } rivulets) r.DrawFalls(rivulets, Matrix4x4.Identity, Palette.Alpha(Palette.Hex(0xCFEAE6), 0.7f));
 
         foreach (var h in Houses.Values)
             if (s is null || s.IsUnlocked(h.Locale)) r.Glow(h.Lamp, 0.9f + night * 0.9f, Palette.Alpha(Palette.LanternHot, 0.55f + night * 0.4f));
@@ -768,6 +871,7 @@ public sealed class HubWorld : IDisposable
                     r.Glow(Doorway(h), 2.6f * pulse, Palette.Alpha(Palette.LanternHot, 0.45f * pulse));
                 }
         if (lampsRelit) foreach (var c in _charterLamps) r.Glow(c, 1.1f + night * 1.1f, Palette.Alpha(Palette.LanternHot, 0.6f + night * 0.4f));
+        if (night > 0.05f) foreach (var c in _lanterns) r.Glow(c, 0.5f + night * 1.3f, Palette.Alpha(Palette.LanternHot, night * 0.75f)); // the city's street lanterns
     }
 
     public Camera3D Camera { get; set; }
@@ -780,8 +884,9 @@ public sealed class HubWorld : IDisposable
 
     public void Dispose()
     {
-        foreach (var m in new[] { _slab, _cliff, _city, _windows, _props, _falls, _stream, _banks }) Raylib.UnloadModel(m);
+        foreach (var m in new[] { _slab, _paving, _grass, _gorge, _cityGround, _cityStone, _cityUpper, _windows, _cityWall, _farStone, _farUpper, _farWindows, _farWall, _scarp, _corner, _baths, _poolRim, _props, _falls, _stream, _banks }) Raylib.UnloadModel(m);
         foreach (var p in _pools) Raylib.UnloadModel(p.Water);
+        foreach (var m in new[] { _cornerStone, _cornerFlags, _cornerUpper, _puddles, _rivulets }) if (m is { } model) Raylib.UnloadModel(model);
         foreach (var m in _built) Raylib.UnloadModel(m);
     }
 }
