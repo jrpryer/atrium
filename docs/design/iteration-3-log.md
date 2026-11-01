@@ -540,3 +540,168 @@ Without the file, the code boxes come back.
   - A gap on the east lets the pool spill into the stream.
 - **Placement:** the fourth lamp post stands by the pool at (4.9, -3.4); the bench sits outside the rim, facing the water.
 
+## 2026-10-31: flicker, the falls again, one stone
+
+Designer's notes on a screenshot: the wall behind the falls was very glitchy, like overlapping geometry, and so were the lily pads, the puddles and the Apothecary's smoke. The falls still read as white lines drooping down. The city's stone was much lighter than the courtyard's, and it should all be one stone.
+
+- **Flicker.** The real cause was the camera's near plane, raylib's default 0.01 m. It left about a centimetre of depth precision 45 m away, so every decal, puddle, crack, window pane and brick patch a centimetre or two off its surface fought it. `Renderer.Begin3D` now sets the clip planes to 0.4–450 m (`Rlgl.SetClipPlanes`), about 50 times finer at the courtyard. One true overlap is gone too: the north retaining wall no longer shares its face with the baths' back wall, behind the falls.
+- **Lily pads and puddles.** The pool's surface swelled up to 6 cm, above the pads, and the puddles' swell took them under the ground. `DrawWater` now takes a swell factor: the pool 0.35, with the pads floated just above it; the puddles flat.
+- **The falls.** One translucent sheet now (the veil is gone), drawn as a body of water: deeper at its edges and clearer through its middle. Broad, softly edged highlights flow down it (2D value noise, not streak columns), with a white lip at the top and churn at the foot. The rivulets share the shader through UVs it reads as a clear trickle.
+- **One stone.** `courtyard_textures.py` now takes the stone in `corner-wall` and `corner-paving` to the city's limestone (`homogenise`: the reference's colour and brightness, the texture's own light and shade), leaving brick, moss, grass and damp as they are. The city's tint warmed a little (`StoneTint` 0xE2DED6), and the corner's kit pieces share it. City and corner are now one limestone, differing only in weathering. The baths take the corner texture at a larger scale so its brick patches don't repeat up the tall wall.
+
+## 2026-11-01: the interiors' art round
+
+**Direction.** The designer asked to take another look at the interiors and use Higgsfield to make them much better. The grotto's checkerboard cave walls and low-poly boulders were the weakest; the other three rooms were tidy but plain.
+
+**The round.** 16 images, 48 credits, preflighted.
+- **Paint-overs:** a 4K paint-over in keyframe A's style for each room, two variants each. Each keeps the room's camera and layout. They are in `art/reference/concepts/rooms-round/`, 22 MB as JPG.
+  - Library: a dusty shaft of light from the arched window, grain in the oak, the shelves still waiting for their books. A small step up.
+  - Apothecary: warm plaster between dark timbers, a steaming copper cauldron, jars and drawers, drying herbs. Strong in both.
+  - Spirit Pools: glowing turquoise pools in water-worn mossy basins, layered pale limestone, a great tree's roots through the walls, glowing mushrooms in variant B. The biggest change.
+  - Sanctum: warm sandstone, the desk and pinboard, the chalk hexagon in its brass ring; variant B adds a standing mirror, a reading stand and a curio cabinet.
+- **Textures:** a wall and a floor for each room, in `art/raw/rooms/` at 2K: library wall and floor, apothecary wall and floor, pools rock and ground, sanctum wall and floor.
+
+**Next:** rebuild each room's Blender kit toward its chosen paint-over, using these textures in place of the flat and procedural ones.
+
+
+## 2026-11-01: fresh takes on the interiors
+
+**Direction.** The designer was wary of affirmation bias in the paint-overs: build a room one way, prompt Higgsfield from it, and get more of the same back. They asked for a different take almost entirely, the grotto especially, with new interpretations from the ground up. The paint-overs above are set aside as the baseline, not the target.
+
+**Briefs, blind.** Four art directors (the workflow `interior-fresh-takes`), one per room, wrote divergent briefs without seeing any current art: five for the grotto and three each for the other rooms. Each kept the room's gameplay furniture (the pools on the two axes, the ledger and satchel, the Apothecary's tools and starting matter, the Library's shelving and returns, the Sanctum's Circle, balance, catalogue and tool bench) but reimagined the space around it. The briefs, ideas and prompts are in `art/reference/concepts/rooms-fresh/briefs.json`.
+
+**The round.** 33 images, 59 credits, preflighted, text only. No capture, paint-over or keyframe went in, even as a style reference, so nothing of the current build could steer them. Every brief went to two models, so one model's habits don't make them look alike:
+- Nano Banana Pro at 2K: ink-outlined storybook. Two takes per grotto brief, one per room brief.
+- GPT Image 2.5 (high): more painterly and nearer realism.
+- Contact sheets are in `rooms-fresh/sheets/`: one per grotto brief, with its idea beside the three takes, and one per room.
+
+**The grotto:**
+1. **The Drowned Bathhouse.** An abandoned civic bathhouse under the wall. The hot bath sits under fallen vault in the sun, the round fountain basin is the spawning pond, and the domed apse has roots through it and a cold dark pool.
+2. **The Travertine Well.** A sinkhole of cream mineral terraces, where Light–Dark is height. A root stair goes down from the sunlit top bowl to the frosted bottom pool.
+3. **The Glow Hollow.** A low natural cave with no daylight. The pools' own glow (honey, mint, indigo) reads the axes as colour.
+4. **Beneath the Wall, Cut Open.** A picture-book cross-section: the courtyard a grassy strip on top, the pool chambers threaded through roots and foundation stones.
+5. **The River Gate at Dawn.** A vaulted tunnel where the river leaves through a rusted water gate. Light–Dark runs along it toward the sunrise. This one invents the river leaving the city, which is a lore call.
+
+**The rooms:**
+- **Apothecary:**
+  - Hearth Under the Rafters: a cottage kitchen cutaway, with the discovery tree as string across the chimney breast.
+  - Glasshouse Against the Wall: a lean-to of leaded glass on the pale city wall, with living starting matter.
+  - Noon Shaft Still-Room: two levels, the gallery of bottles climbing as the tree grows, the tree drawn as a chart on the table.
+- **Library:**
+  - The Book Amphitheatre: the floor dug into curved tiers of shelving, the tiered city in miniature.
+  - Under the Blue Roof: an attic loft with tagged bays and a book hoist through a trapdoor.
+  - The Sorting Office: a wall of coloured pigeonhole columns, a mail slot and a bookwheel.
+- **Sanctum:**
+  - The Old Bathhouse Dome: the dry plunge basin is the Circle, under a dome of coin-of-light skylights.
+  - The Lamplit Stacked Tower: a three-floor cutaway with tools, catalogue and Circle stacked up.
+  - The Spiral of Findings: a ramp of niches coiling round the Circle, the catalogue as a timeline.
+
+**Notes for choosing:**
+- Two directors reached a bathhouse independently (grotto 1 and Sanctum 1). Pick one, or make them one complex.
+- GPT's stacked tower painted a harbour city behind it. That is the model's invention, not a proposal.
+- The cutaways (grotto 4, Apothecary 1, Sanctum 2) also suggest a presentation, rooms framed as dollhouse sections, which would apply across all four if chosen.
+
+**Next:** the designer picks a direction per room (or a blend), then a focused round develops it before any kit is rebuilt.
+
+## 2026-11-01: developing the Travertine Well
+
+**Direction.** The designer chose the Travertine Well for the grotto: cream rimstone terraces stepping down a sinkhole, a root stair, and a beam from above.
+
+**Fitting it to the game first (no credits).** The workflow `travertine-well-brief` read PoolsScene, InteriorScene, PoolsCards, the content and the hub. An art director planned the round, a critic attacked the plan, and the director revised it. The shot list, critique and open questions are in `rooms-fresh/travertine/round.json`.
+- **The camera.** The room's fixed camera looks down only about 26°. A well climbing toward an opening above would show its upper pools at a grazing angle and run them off the top of the frame, so the well descends *toward* the camera instead:
+  - Sunward Basin: water +1.5 m at the back right.
+  - Spawning Pond: water 0, dead centre.
+  - Shade Pool: water −1.5 m at the front left.
+  - The opening in the rock is never in frame. Its beam comes in from the top right.
+- **The HUD.** The concepts' upper-left cave mouth would sit under the clock, title and tabs, so the mouth moves to the back wall right of centre. Nothing essential sits in the bottom-centre band (hover caption and satchel bar).
+- **Furniture.** The druids' bag sits on the landing by the mouth, where the Sanctum's deliveries arrive. The ledger, stool and holding crock share a ledge right of the middle pool. One dry bowl waits for a fourth pool; any more go in alcoves round the right wall.
+- **Drawings.** A Blender blockout rendered from the exact camera, the same with the HUD drawn over it, a to-scale plan and a section are in `rooms-fresh/travertine-layout/`. The section puts the well under the city wall's footings, just beyond its outer face: from the hub's water gate a stair runs about 4.3 m further down. The opening sits in the scarp shelf, which the hub never shows, so the hub needs no change.
+
+**Stage 1: layout masters.** Six images, 11.5 credits, in `rooms-fresh/travertine/`:
+- Two text-only takes (Nano, GPT) and one with the GPT Travertine for forms. These invent freely, and GPT's has the best rimstone of the round, but none matches the game camera's geometry.
+- Two from the blockout. Of these, *4a* turns it into natural clay and passes the HUD check; *4b* barely changed it.
+- One from the cascade blockout: the same layout, but with water spilling top to middle to bottom instead of the runnel bypass.
+
+**Stage 2a: finishes on master 4a.** Nine images, 18 credits:
+- **A:** the hub corner's finish (corner-a style).
+- **B:** the Travertine storybook's clean ink.
+- **C:** painterly realism. This needs a renderer change: no ink outline, plus shadows and reflections.
+- **D:** "build-honest", what our toon renderer would actually draw.
+
+All four keep the layout and read the start state well: the top pool silted olive-jade with fish and snails, the middle clear teal with its reed, the bottom indigo-slate with grey fish.
+
+**Notes for choosing:**
+- A and B are close: both are ink with soft cel colour, B a little brighter.
+- D is nearer to A and B than expected, so the gap between the aspirational finishes and what ships is small.
+- Every finish inherits the blockout's blocky terraces and its placeholders: the green cylinders are fern pots, and the bag came out as a backpack. The kit sheet should take its rimstone lips from the text-only masters, GPT's especially.
+- The focus-camera shot failed: it drained the top pool and set the objects on its rim. Whether the near lip hides laid objects during a card will be answered for free by rendering the blockout from the focus camera.
+
+**Next:** the designer picks a finish and settles the water route (bypass or cascade). Stage 2b (about 22 credits) then makes the state sheets, the night frame, the travertine kit sheet, the druids' props and the section cutaway in that finish. The open questions in `round.json` cover camera code changes, the beam and the world clock, the content prose that still mentions the falls, and pool positions moving to kit markers.
+
+**Stage 2b, in finish B.** The designer chose finish B, the Travertine storybook ink. B1 became the style reference, and for the room frames also the layout reference. The kit sheet also took the GPT master's rimstone forms. The water route stays the runnel bypass. Nine images, 22 credits; the section cutaway was discarded, so eight are kept.
+
+Two reviewers checked the set. The full notes are in `rooms-fresh/travertine/review-2b.json`.
+- **Game readability.** All four room frames pass the HUD check at 1600×900.
+  - *Light × Heat grid:* the legend for the pool card. The nine states are distinct and in order.
+  - *Tended take a:* the best mid-game frame. Live state wins over the set and every pool keeps its identity.
+  - *Tended take b:* its frost reads as surf, and it drops the Spinners.
+  - *Night:* cozy and readable. Lamps carried down and the pools' own glows carry the room.
+  - *Residents:* usable with notes. It swaps fish species for moods, and silt reads as Light.
+  - *View up (not in game):* key art only. It shows the cascade, not the bypass.
+  - *Section cutaway:* discarded. It put the pools about 6 m above the courtyard. `travertine-layout/section.png` stays the guide; an illustrated cutaway, if wanted, should be a Blender render painted over.
+- **Buildability.**
+  - *Kit sheet:* every piece is present and buildable in the toon shader. Its forms are the target, but none of its sizes: sizes come from `layout.py` and `pools_room.py`.
+  - *Props sheet:* all eleven are readable. The druids' bag is now a drawstring bucket bag with oak leaves, not a satchel. The crock keeps the existing squat profile, and the ledger's slope goes on the existing trestle.
+
+**Build notes the review raised:**
+- **Heat is weaker in code than in any image.** Steam is small puffs at alpha 0.22, and frost is five small glints. Heat needs a rim-wide frost tint and a denser steam plume, set against dark wet rock rather than the beam.
+- **Bed colour.** The water draws over the bed at alpha 0.5–0.92, so beds below the waterline must be mid-dark. Cream stays on the lips and a narrow mineral ring.
+- **The front strip of every bed stays clear,** for laid objects and soak rings. Plants root along the back, and the boulders at the front of the Shade Pool stay low.
+- **Placeholders.** The green cylinders were fern pots and must become unmistakable pots with fronds; they read as extra stools. The pale riser behind the Spawning Pond needs a darker moss band so motes read by day.
+- **Kit contract.** The game builds the bowls, lanterns, spill and river itself; `Prop()` asks only for shell, decor, ferns, crock, bag, ledger, stool and rake. The proposal is one "bowl" part in the pool's local frame (with a wet blue-grey Shade variant and its crook lantern), drawn with the tank's world matrix so the hover rim and lift keep working. Pool positions move to `pool-N` markers plus an axis marker for yaw. Markers carry only positions, and parts are matched by vertex count.
+- **Bugs and gaps.**
+  - The runnel in `layout.py` flows uphill out of the top pool, so the channel must be cut into the terraces.
+  - The lathe helper's ellipse scaling makes lips 2.4× wider at the ends, so lips need a sweep helper.
+  - The drain grate and feed shelf need new spots.
+- The review's ordered build list (layout values and markers, helpers, shell, bowl part, runnel, mouth, walls and alcoves, bottom level, roots and stair, props, decor, then the code changes) is the plan for the kit.
+
+## 2026-11-01: the Travertine Well, built
+
+The designer asked for the kit to be built. `art/models/pools-room.glb` is now the Travertine Well, and the Spirit Pools scene reads it through a written contract between kit and game.
+
+**The contract, in short.** The kit owns the room's layout; the game keeps every fallback.
+- **Pool slots.** Markers `pool-N` / `pool-N-x` / `pool-N-z` place each pool slot and give its size and yaw. In a kit room a pool's drawn size comes from its slot, not its capacity; capacity still rules the game. That lets every bowl fit the hole carved for it. The Spawning Pond's slot is the smaller one, for the content's "small, perfectly still pond".
+- **Three bowl variants.**
+  - `bowl`: cream rolled lip and mid-dark bed, so the water never looks milky.
+  - `bowl-dark`: wet blue-grey, with low boulders; used for pools whose base Light is below zero.
+  - `bowl-dry`: drawn at slots with no pool, so a fourth pool added as data fills a bowl already waiting for it.
+- **Other parts.** `lantern` is the crook lantern at each pool.
+- **Prop positions.** The crock, bag, ledger and stool stand at `at-*` markers.
+- **Water.** It follows `brook-*` from the cave mouth, `runnel-*` (the overflow bypass down the left) and `outflow-*` (out under the low arch). Level runs are drawn turquoise and drops as falls. The old crack trickle, straight spill and front river are now fallbacks only.
+- **Light.** The sun comes from `oculus` toward `beam-spot`, the `beam` is drawn as a soft additive shaft, and the dust motes stay inside it.
+- **Focus.** The camera's height clamp drops to −2.5, so the bottom pool frames properly.
+
+The full contract and its revisions are in the session notes, and summarised in `tools/blender/README.md`.
+
+**How it was built.** Workflows, in three passes:
+- *Pass 1:* the game code was written and tested against a stand-in kit, today's room plus the new markers.
+- *Pass 2:* the shell (`pools_travertine.py`, numbers in `travertine_layout.py`) and the bowls, lantern, props and decor (`travertine_props.py`) were built in parallel. A verifier joined them in game and fixed a boulder blocking the outflow arch and the ledger candle's misplaced glow.
+- *Pass 3:* a fix round after the first in-game look.
+  - Roots: rebuilt as curving, tapering, forked roots that hug the walls; the earlier A-frame of poles crossing the room is gone.
+  - Runnel: a shallow channel, so its stream shows.
+  - Outflow arch: set into a rounded rock mass.
+  - Well floor and walls: they run on toward the camera, so close-ups show no cut edge; the floor is a calmer wet blue-grey.
+  - Terrace tops: toned down.
+  - Moss: strips along the dam edges.
+  - Pool rims: lips raised 4 cm proud of the terrace, so each reads as one rolled rim.
+  - Bag: rebuilt as a drawstring sack.
+
+**State.** The kit builds clean (every part and all 41 markers present). The game builds with no warnings and all 35 tests pass. In-game captures are in `rooms-fresh/travertine/in-game/`.
+
+**Still open:**
+- The room's opening text speaks of "a rusted gate" and "the lamp on the steps", which the new mouth doesn't have (the designer's call).
+- The shaft walls' vertical drapes read a little like curtains, and the terrace tops are still bright under the noon sun. A painted texture round could improve both.
+- The bag is better but still a little jar-like.
+- The shared bowl has no overflow notch, so the runnel and outflow ribbons pass under the lip for about 0.3 m.
+- In the start state the silted pools hide their fish, as designed. Making Heat read better (frost tint, steam plume) is separate work.
+- Pools 5 and 6 (alcoves off frame) are untested until content adds them.

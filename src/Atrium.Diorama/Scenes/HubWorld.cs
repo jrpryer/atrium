@@ -99,7 +99,7 @@ public sealed class HubWorld : IDisposable
         var cornerWall = r.Texture(Tex("corner-wall.png")) ?? masonry;
         var cornerPaving = r.Texture(Tex("corner-paving.png")) ?? paving;
         _corner = Renderer.WithTexture(city.Corner.ProjectUv(2.4f).Model(toon), cornerWall);
-        _baths = Renderer.WithTexture(city.Baths.ProjectUv(4.2f).Model(toon), cornerWall);
+        _baths = Renderer.WithTexture(city.Baths.ProjectUv(6.0f).Model(toon), cornerWall);
         _poolRim = Renderer.WithTexture(BuildPoolRim().ProjectUv(1.6f).Model(toon), cornerWall);
         if (cornerKit is not null)
         {
@@ -351,7 +351,7 @@ public sealed class HubWorld : IDisposable
         var rng = new Random(9);
         for (int i = 0; i < 9; i++)
         {
-            var p = new Vector3(1.8f, 0.17f, -6.1f) + new Vector3(((float)rng.NextDouble() - 0.5f) * 4.2f, 0, ((float)rng.NextDouble() - 0.5f) * 2.6f);
+            var p = new Vector3(1.8f, 0.185f, -6.1f) + new Vector3(((float)rng.NextDouble() - 0.5f) * 4.2f, 0, ((float)rng.NextDouble() - 0.5f) * 2.6f);
             if (Vector3.Distance(p, FallsBase) < 1.6f) continue;
             m.Disc(p, 0.22f + (float)rng.NextDouble() * 0.12f, 7, Palette.Hex(0x6E9F5E));
         }
@@ -376,8 +376,8 @@ public sealed class HubWorld : IDisposable
     {
         var m = new MeshBuilder();
         // the jet: out of the hole in the arch's bricks (HubCorner's brick-arch, 3.95 m up), arcing forward as it
-        // drops into the pool; a curved sheet, not a flat card, narrow at the hole and spreading as it falls, with a
-        // thinner, wider veil round it
+        // drops into the pool; a curved sheet, not a flat card, narrow at the hole and spreading as it falls, one
+        // body that clears through its middle
         var top = new Vector3(FallsBase.X, 3.95f, HubCity.North + 0.12f);
         Vector3 Spine(float t) => new(top.X, top.Y - (top.Y - FallsBase.Y) * t * t, top.Z + (FallsBase.Z - top.Z) * t);
         void Sheet(float width0, float width1, float bulge, float out_, float vOffset)
@@ -392,14 +392,13 @@ public sealed class HubWorld : IDisposable
                         float w = width0 + (width1 - width0) * MathF.Sqrt(t);
                         return Spine(t) + new Vector3(u * w, 0, (1 - u * u) * bulge + out_);
                     }
-                    Vector2 Uv(int si, int ki) => new(ki / (float)Across, si / (float)Segs * 1.6f + vOffset);
+                    Vector2 Uv(int si, int ki) => new(ki / (float)Across, si / (float)Segs + vOffset);
                     var (a, b, c, d) = (P(i, k), P(i + 1, k), P(i + 1, k + 1), P(i, k + 1));
                     m.TriUv(a, b, c, Uv(i, k), Uv(i + 1, k), Uv(i + 1, k + 1), Color.White);
                     m.TriUv(a, c, d, Uv(i, k), Uv(i + 1, k + 1), Uv(i, k + 1), Color.White);
                 }
         }
-        Sheet(0.24f, 0.62f, 0.14f, 0, 0);
-        Sheet(0.34f, 0.85f, 0.2f, 0.05f, 0.37f);
+        Sheet(0.26f, 0.66f, 0.16f, 0, 0);
         // the churn where it lands: a ring of foam whose streaks run outward (v falls from the centre to the edge)
         const int Ring = 24, Bands = 4;
         for (int i = 0; i < Ring; i++)
@@ -855,10 +854,10 @@ public sealed class HubWorld : IDisposable
 
         // water and falls (transparent) last
         foreach (var (water, centre, _, _) in _pools)
-            r.DrawWater(water, Matrix4x4.CreateTranslation(centre), Palette.TealLight, Palette.Teal, 0.12f);
+            r.DrawWater(water, Matrix4x4.CreateTranslation(centre), Palette.TealLight, Palette.Teal, 0.12f, swell: 0.35f);   // calm enough for the lily pads
         r.DrawWater(_stream, Matrix4x4.Identity, Palette.TealLight, Palette.Teal, 0.1f);
         r.DrawFalls(_falls, Matrix4x4.Identity, Palette.Alpha(Palette.Hex(0xBFE6E0), 0.85f));
-        if (_puddles is { } puddles) r.DrawWater(puddles, Matrix4x4.Identity, Palette.Hex(0xCFE2E2), Palette.Hex(0x8FB2B4), 0.05f, 0.8f);
+        if (_puddles is { } puddles) r.DrawWater(puddles, Matrix4x4.Identity, Palette.Hex(0xCFE2E2), Palette.Hex(0x8FB2B4), 0.05f, 0.8f, swell: 0);
         if (_rivulets is { } rivulets) r.DrawFalls(rivulets, Matrix4x4.Identity, Palette.Alpha(Palette.Hex(0xCFEAE6), 0.7f));
 
         foreach (var h in Houses.Values)

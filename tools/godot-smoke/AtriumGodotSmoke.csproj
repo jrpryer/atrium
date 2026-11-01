@@ -1,0 +1,12 @@
+<Project Sdk="Godot.NET.Sdk/4.7.2">
+  <!-- Smoke test, not the Godot front end: Godot 4.7's .NET host running Atrium.Core on net10.0. Open project.godot
+       in the Godot 4.7.2 .NET editor and press Play (F5); the Output panel prints the result. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>AtriumGodotSmoke</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Atrium.Core\Atrium.Core.csproj" />
+  </ItemGroup>
+</Project>

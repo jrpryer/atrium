@@ -83,6 +83,16 @@ public abstract class InteriorScene : Scene, ISatchelAware
     /// <summary>Whether the room's kit supplies a part (rooms fit anything the content sizes, like the bookcases).</summary>
     protected bool FromKit(string key) => _kit?.Has(key) == true;
 
+    /// <summary>
+    /// The kit's markers: empties placed in Blender (where things stand, where water runs, where the light comes
+    /// from), by name, in room units. Empty when the room has no kit.
+    /// </summary>
+    protected IReadOnlyDictionary<string, Vector3> Markers => _kit?.Markers ?? NoMarkers;
+    private static readonly Dictionary<string, Vector3> NoMarkers = new();
+
+    /// <summary>A kit marker's position, or null if the kit doesn't place it.</summary>
+    protected Vector3? Marker(string name) => Markers.TryGetValue(name, out var p) ? p : null;
+
     /// <summary>Registers (or replaces) a hotspot covering the box from <paramref name="min"/> to <paramref name="max"/>.</summary>
     protected Spot AddSpot(string id, Vector3 min, Vector3 max, string name, string hint)
     {

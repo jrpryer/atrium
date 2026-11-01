@@ -110,7 +110,9 @@ internal static class HubCity
     private readonly record struct Layer(MeshBuilder Stone, MeshBuilder Upper, MeshBuilder Windows);
     internal enum Kind { House, Shop, Inn, Stable, Tower }
 
-    private static readonly Color StoneTint = Palette.Hex(0xE8EDF3), Coping = Palette.Hex(0xEEF0F3), StreetTint = Palette.Hex(0xD9DDE2);
+    // one limestone for city and corner alike: the corner differs by its weathering, not by its stone
+    internal static readonly Color StoneTint = Palette.Hex(0xE2DED6);
+    private static readonly Color Coping = Palette.Hex(0xE9E6DF), StreetTint = Palette.Hex(0xD6D2CA);
     private static readonly Color Dark = Palette.Hex(0x23201F), Glass = Palette.Hex(0x3A3836), Timber = Palette.Hex(0x5A4330), Iron = Palette.Hex(0x34302E);
     private static readonly Color MossCol = Palette.Hex(0x6E8B4E), Street = Palette.Hex(0xCDD2D8), Lead = Palette.Hex(0x6A7078);
     private static readonly Color[] Slate = { Palette.Hex(0x5A6470), Palette.Hex(0x4E5862), Palette.Hex(0x66707A), Palette.Hex(0x545A66), Palette.Hex(0x6A6E72), Palette.Hex(0x5E6670) };
@@ -205,7 +207,8 @@ internal static class HubCity
         var s = p.Corner;
         // retaining walls (west, north, the east shelf's, down to the base at the front) and their coping
         s.Box(new Vector3(West - 0.5f, (Tier1 - 0.5f) / 2, (CornerC.Y + Front) / 2), new Vector3(1, Tier1 + 0.5f, Front - CornerC.Y), StoneTint);
-        s.Box(new Vector3((CornerC.X + East) / 2, (Tier1 - 0.5f) / 2, North - 0.5f), new Vector3(East - CornerC.X, Tier1 + 0.5f, 1), StoneTint);
+        foreach (var (x0, x1) in new[] { (CornerC.X, -2.6f), (6.4f, East) })   // the baths' own back wall stands between
+            s.Box(new Vector3((x0 + x1) / 2, (Tier1 - 0.5f) / 2, North - 0.5f), new Vector3(x1 - x0, Tier1 + 0.5f, 1), StoneTint);
         s.Box(new Vector3(East + 0.5f, (Tier1 - 2.6f) / 2, (GateZ + Front) / 2), new Vector3(1, Tier1 + 2.6f, Front - GateZ), StoneTint);
         s.Box(new Vector3(West - 0.45f, Tier1 + 0.1f, (CornerC.Y + Front) / 2), new Vector3(1.3f, 0.2f, Front - CornerC.Y), Coping);
         s.Box(new Vector3((CornerC.X + East) / 2, Tier1 + 0.1f, North - 0.45f), new Vector3(East - CornerC.X, 0.2f, 1.3f), Coping);
@@ -766,7 +769,7 @@ internal static class HubCity
         int uppers = kind switch { Kind.Stable => 0, Kind.Tower => 3 + rng.Next(2), Kind.Inn => 2, _ => 1 + rng.Next(2) + (rng.NextDouble() < 0.15 ? 1 : 0) };
         float g = kind == Kind.Stable ? 3.2f : G, top = g + uppers * U, jetty = stoneUp || uppers == 0 ? 0 : 0.25f;
         int cols = w > 5.5f ? 3 : 2;
-        var tint = Palette.Lerp(StoneTint, Palette.Hex(0xD5DAE1), (float)rng.NextDouble());
+        var tint = Palette.Lerp(StoneTint, Palette.Hex(0xD3CEC5), (float)rng.NextDouble());
         s.Box(new Vector3(0, g / 2, 0), new Vector3(w, g, d), tint, Coping);
         if (uppers > 0)
         {
@@ -869,7 +872,7 @@ internal static class HubCity
         var m = Matrix4x4.CreateTranslation(-piece.Origin) * Matrix4x4.CreateScale(w / piece.W, 1, d / piece.D)
               * Matrix4x4.CreateRotationY(yaw) * Matrix4x4.CreateTranslation(at);
         float R(float a, float b) => a + (float)rng.NextDouble() * (b - a);
-        var stone = Palette.Lerp(StoneTint, Palette.Hex(0xD5DAE1), R(0, 1));   // the city's cool stone, like the code buildings
+        var stone = Palette.Lerp(StoneTint, Palette.Hex(0xD3CEC5), R(0, 1));   // the city's stone, like the code buildings
         var roof = rng.NextDouble() < 0.04 ? Tile[rng.Next(Tile.Length)] : Slate[rng.Next(Slate.Length)];
         var cloth = Linen[1 + rng.Next(Linen.Length - 1)];
         var lit = new Dictionary<string, bool> { ["glass-a"] = rng.NextDouble() < litFront, ["glass-b"] = rng.NextDouble() < litFront, ["glass-back"] = rng.NextDouble() < litBack };

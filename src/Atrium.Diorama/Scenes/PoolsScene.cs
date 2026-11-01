@@ -16,19 +16,34 @@ namespace Atrium.Diorama.Scenes;
 /// The water clouds as a pool gets dirty and takes on its energy (gold for Light, indigo for Dark, a warm or cold cast
 /// for Heat). Click a tank to tend it on a working card; the holding crock, the druids' bag, the breeding ledger and the
 /// stool are furniture too. Every rule lives in <c>PoolsLocale</c>; this file only draws and calls it.
+/// A room kit that marks them (the Travertine Well, tools/blender/assets/pools_travertine.py) sets where the pools,
+/// furniture, water and noon beam go; anything it leaves out falls back to the built-in grotto's layout.
 /// </summary>
 public sealed partial class PoolsScene : InteriorScene
 {
     protected override string LocaleId => "pools";
 
     // Tank geometry, local to each tank (origin on the floor under its centre, front facing +Z).
-    // the pools are natural rock basins: water from FloorY to SurfY inside a mossy rim (local to each pool)
+    // the pools are natural rock basins: water from FloorY to SurfY inside a mossy rim (local to each pool). In a kit
+    // room RimY is the terrace top; the bowl's lip stands 4 cm proud of it, and the kit lantern (stood at RimY) sets
+    // its foot on the lip
     private const float FloorY = 0.1f, RimY = 0.78f, SurfY = 0.62f;
     // the underground river along the front, where the water leaves the grotto (the kit carves its channel)
     private const float RiverZ = 4.55f, RiverY = -0.22f, RiverW = 11.4f, RiverD = 1.45f;
     /// <summary>A pool's oval: big enough to hold the rectangle the creatures swim in.</summary>
     private static float PoolRx(float w) => w / 2 * 1.42f + 0.05f;
     private static float PoolRz(float d) => d / 2 * 1.42f + 0.05f;
+    /// <summary>The rectangle a kit bowl's oval holds (the inverse of <see cref="PoolRx"/> and <see cref="PoolRz"/>).</summary>
+    private static float PoolW(float rx) => (rx - 0.05f) * 2 / 1.42f;
+    private static float PoolD(float rz) => (rz - 0.05f) * 2 / 1.42f;
+    // a kit's bowls are built for the largest oval and scaled to each slot's
+    private const float BowlRx = 2.96f, BowlRz = 1.22f;
+    // water falls where a marked path drops more than this between two marks; elsewhere it runs level
+    private const float FallDrop = 0.2f;
+    // a level run's ribbon repeats the falls' flow pattern every so many metres (it shows foam beyond one span)
+    private const float FlowSpan = 1.2f;
+    // the noon beam's radius where it lands and at its top (the kit's beam part)
+    private const float BeamR0 = 0.75f, BeamR1 = 1.0f;
 
     /// <summary>
     /// Where the pools lie, in content order (front-end layout data): the first under the falls' cascade on a rock
@@ -43,9 +58,11 @@ public sealed partial class PoolsScene : InteriorScene
         (new Vector3(-0.2f, 0, 2.6f), 0.12f),
     };
 
+    // where the furniture stands without a kit that marks it (at-crock, at-bag, at-ledger, at-stool)
     private static readonly Vector3 CrockPos = new(-1.75f, 0, 2.65f);
     private static readonly Vector3 BagPos = new(4.05f, 0, 2.35f);
     private static readonly Vector3 LedgerPos = new(-4.35f, 0, -3.2f);
+    private const float LedgerTurn = 0.55f; // the ledger stand's turn, so the book faces the room
     private static readonly Vector3 StoolPos = new(1.25f, 0, 0.55f);
     private const string SpotHolding = "holding", SpotBag = "bag", SpotLedger = "ledger", SpotStool = "stool";
 
@@ -55,7 +72,10 @@ public sealed partial class PoolsScene : InteriorScene
         public int Index;
         public Vector3 Pos;
         public float Yaw, W, D;
-        public Model Stone, Surface;
+        public Part Stone;
+        public Model Surface;
+        /// <summary>Fits a kit bowl (built for the largest oval) to this pool's; identity for a built-in basin.</summary>
+        public Matrix4x4 StoneScale = Matrix4x4.Identity;
         public Matrix4x4 World = Matrix4x4.Identity;
         public float Murk = -1, FeedT = 99, CleanseT = 99, BubbleT, RippleT, SteamT;
         public Vector2 FeedAt;
@@ -105,10 +125,23 @@ public sealed partial class PoolsScene : InteriorScene
     private Tank? _trickleTank;
     private Vector3 _home;
     private float _homeDist;
+    private float _focusFloor = 1.0f;
+    private Vector3 _crockAt = CrockPos, _bagAt = BagPos, _ledgerAt = LedgerPos, _stoolAt = StoolPos, _candleAt;
+    // toward the sun: down through the crack above the falls, or the kit's oculus
+    private Vector3 _sunDir = Vector3.Normalize(new Vector3(0.15f, 0.85f, -0.5f));
+    private Vector3 _beamSpot, _dustRise = Vector3.UnitY;
+    private float _beamLen;
+    private readonly List<Matrix4x4> _dryBowls = new();
 
     private Part _decor, _ferns, _crock, _bag, _ledger, _stool, _rake;
+    private Part? _lantern, _dryBowl, _beam;
     private Model _fishBody, _fishTail, _snailShell, _snailFoot, _plantBlades, _plantMound;
     private Model _crystal, _orb, _pebble, _jar, _crockWater, _lanternGlow, _trickle, _spill, _river;
+    private Model? _outflow;
+    // the kit's level water (the brook's, runnel's and outflow's runs), drawn apart from their falls in a clear
+    // turquoise like a pool's shallows, so a stream riding high in its channel reads from the room's camera
+    private readonly List<Model> _runs = new();
+    private static readonly Color RunWater = Palette.Hex(0x5EC9CF, 242);
 
     private AxisResource LightAxis => S.Content.Axis(nameof(Energy.Light).ToLowerInvariant());
     private AxisResource HeatAxis => S.Content.Axis(nameof(Energy.Heat).ToLowerInvariant());
@@ -122,6 +155,21 @@ public sealed partial class PoolsScene : InteriorScene
         CamTarget = new Vector3(0.35f, 1.25f, -0.7f);
         CamYaw = 0.3f; CamPitch = 0.46f; CamDist = 13.4f; CamFov = 36;
         _home = CamTarget; _homeDist = CamDist;
+
+        // the kit's marks: where the furniture stands (at its height), and the opening the noon light comes down from
+        _crockAt = Marker("at-crock") ?? CrockPos;
+        _bagAt = Marker("at-bag") ?? BagPos;
+        _ledgerAt = Marker("at-ledger") ?? LedgerPos;
+        _stoolAt = Marker("at-stool") ?? StoolPos;
+        // the ledger's candle flame, turned with the stand (the kit's candle sits on a bracket a little further out)
+        _candleAt = _ledgerAt + Vector3.Transform(new Vector3(FromKit("ledger") ? 0.45f : 0.38f, 1.2f, 0.05f), Matrix4x4.CreateRotationY(LedgerTurn));
+        if (Marker("oculus") is { } oculus && Marker("beam-spot") is { } spot && Vector3.Distance(oculus, spot) > 0.1f)
+        {
+            _sunDir = _dustRise = Vector3.Normalize(oculus - spot);
+            _beamSpot = spot;
+            _beamLen = Vector3.Distance(oculus, spot);
+            _beam = KitPart("beam");
+        }
 
         var toon = R.Shaders.Toon;
         _decor = Prop("decor", BuildDecor);
@@ -148,29 +196,85 @@ public sealed partial class PoolsScene : InteriorScene
 
         LayoutTanks(toon);
 
-        AddSpot(SpotHolding, CrockPos + new Vector3(-0.8f, 0, -0.75f), CrockPos + new Vector3(0.95f, 1.1f, 0.75f),
+        AddSpot(SpotHolding, _crockAt + new Vector3(-0.8f, 0, -0.75f), _crockAt + new Vector3(0.95f, 1.1f, 0.75f),
             Cap(S.Content.Config.Pools.HoldingName), "");
-        AddSpot(SpotBag, BagPos + new Vector3(-0.55f, 0, -0.45f), BagPos + new Vector3(0.55f, 1.35f, 0.45f), "The druids' bag", "");
-        AddSpot(SpotLedger, LedgerPos + new Vector3(-0.5f, 0, -0.5f), LedgerPos + new Vector3(0.55f, 1.6f, 0.55f),
+        AddSpot(SpotBag, _bagAt + new Vector3(-0.55f, 0, -0.45f), _bagAt + new Vector3(0.55f, 1.35f, 0.45f), "The druids' bag", "");
+        AddSpot(SpotLedger, _ledgerAt + new Vector3(-0.5f, 0, -0.5f), _ledgerAt + new Vector3(0.55f, 1.6f, 0.55f),
             "The breeding ledger", "Every kind you've kept, and every pairing you've seen work.");
-        AddSpot(SpotStool, StoolPos + new Vector3(-0.38f, 0, -0.38f), StoolPos + new Vector3(0.38f, 0.62f, 0.38f),
+        AddSpot(SpotStool, _stoolAt + new Vector3(-0.38f, 0, -0.38f), _stoolAt + new Vector3(0.38f, 0.62f, 0.38f),
             "Sit and watch the water", "Let a little while pass by the tanks (Space).");
 
-        for (int i = 0; i < 26; i++) _dust.Add(new Vector3(Rand(-4.8f, 4.8f), Rand(1.2f, 4.6f), Rand(-4.8f, 2.5f)));
+        // dust in the air: inside the noon beam where the kit has one, else anywhere above the floor
+        for (int i = 0; i < 26; i++) _dust.Add(_beamLen > 0 ? InBeam() : new Vector3(Rand(-4.8f, 4.8f), Rand(1.2f, 4.6f), Rand(-4.8f, 2.5f)));
         SyncState();
+    }
+
+    /// <summary>A part only a kit supplies (there's no built-in stand-in), or null.</summary>
+    private Part? KitPart(string key) => FromKit(key) ? Prop(key, () => new MeshBuilder()) : null;
+
+    /// <summary>A path the kit marks with numbered empties (<c>brook-0</c>, <c>brook-1</c>, …), in order; empty if unmarked.</summary>
+    private List<Vector3> MarkerPath(string name)
+    {
+        var path = new List<Vector3>();
+        for (int i = 0; Marker($"{name}-{i}") is { } p; i++) path.Add(p);
+        return path;
+    }
+
+    /// <summary>
+    /// The kit's pool slots, in order: each bowl's base (<c>pool-N</c>, the water's centre 0.62 m below its surface),
+    /// its turn and its oval's half-axes (from <c>pool-N-x</c> and <c>pool-N-z</c>). Empty without them.
+    /// </summary>
+    private List<(Vector3 Pos, float Yaw, float Rx, float Rz)> KitSlots()
+    {
+        var slots = new List<(Vector3, float, float, float)>();
+        for (int i = 0; Marker($"pool-{i}") is { } at; i++)
+        {
+            if (Marker($"pool-{i}-x") is not { } ax || Marker($"pool-{i}-z") is not { } az) break;
+            var dx = ax - at; var dz = az - at;
+            slots.Add((at, MathF.Atan2(-dx.Z, dx.X), new Vector2(dx.X, dx.Z).Length(), new Vector2(dz.X, dz.Z).Length()));
+        }
+        return slots;
+    }
+
+    /// <summary>A random point in the noon beam's shaft, for a mote of dust.</summary>
+    private Vector3 InBeam()
+    {
+        float t = Rand(0.03f, 0.85f);
+        var side = Vector3.Normalize(Vector3.Cross(_dustRise, MathF.Abs(_dustRise.X) < 0.9f ? Vector3.UnitX : Vector3.UnitZ));
+        var up = Vector3.Cross(_dustRise, side);
+        float a = Rand(0, MathF.Tau), r = (BeamR0 + (BeamR1 - BeamR0) * t) * 0.85f * MathF.Sqrt(Rand(0, 1));
+        return _beamSpot + _dustRise * (_beamLen * t) + (side * MathF.Cos(a) + up * MathF.Sin(a)) * r;
     }
 
     private void LayoutTanks(Shader toon)
     {
         var views = S.Pools.Pools();
+        // a kit that marks its pool slots places and sizes the pools (capacity still rules how many can live in one);
+        // they step down a well there, so the focus may look well below the floor
+        var kit = KitSlots();
+        if (kit.Count > 0) _focusFloor = -2.5f;
+        Part? bowl = KitPart("bowl"), darkBowl = KitPart("bowl-dark");
+        _lantern = KitPart("lantern");
         for (int i = 0; i < views.Count; i++)
         {
             var p = views[i].Pool;
-            var slot = i < Slots.Length ? Slots[i] : (new Vector3(-3.6f + (i - Slots.Length) * 3.2f, 0, 4.2f), 0f);
-            float w = Math.Clamp(1.3f + 0.34f * p.Capacity, 2.3f, 4.1f);
-            float d = Math.Clamp(w * 0.4f, 1.3f, 1.65f);
-            var t = new Tank { Id = p.Id, Index = i, Pos = slot.Item1, Yaw = slot.Item2, W = w, D = d };
-            t.Stone = Own(BuildBasin(w, d, slot.Item1.Y, i).Model(toon));
+            Vector3 pos; float yaw, w, d;
+            if (i < kit.Count) (pos, yaw, w, d) = (kit[i].Pos, kit[i].Yaw, PoolW(kit[i].Rx), PoolD(kit[i].Rz));
+            else
+            {
+                int row = i - (kit.Count > 0 ? kit.Count : Slots.Length);
+                (pos, yaw) = row < 0 ? Slots[i] : (new Vector3(-3.6f + row * 3.2f, 0, 4.2f), 0f);
+                w = Math.Clamp(1.3f + 0.34f * p.Capacity, 2.3f, 4.1f);
+                d = Math.Clamp(w * 0.4f, 1.3f, 1.65f);
+            }
+            var t = new Tank { Id = p.Id, Index = i, Pos = pos, Yaw = yaw, W = w, D = d };
+            // the kit's travertine bowl (a shaded, boulder-ringed one for a Dark pool), else a built-in rock basin
+            if ((p.BaseEnergy.Light < 0 ? darkBowl ?? bowl : bowl) is { } b)
+            {
+                t.Stone = b;
+                t.StoneScale = Matrix4x4.CreateScale(PoolRx(w) / BowlRx, 1, PoolRz(d) / BowlRz);
+            }
+            else t.Stone = Own(BuildBasin(w, d, pos.Y, i, stake: _lantern is null).Model(toon));
             t.Surface = Own(WaterOval(PoolRx(w), PoolRz(d)).Model(R.Shaders.Water));
             t.World = Matrix4x4.CreateRotationY(t.Yaw) * Matrix4x4.CreateTranslation(t.Pos);
             t.FeedAt = new Vector2(0, 0);
@@ -189,22 +293,38 @@ public sealed partial class PoolsScene : InteriorScene
             AddSpot(t.Spot, min, max, Cap(p.Name), "");
             _lamps.Add((t.ToWorld(t.Lantern), 1f));
         }
-        _lamps.Add((LedgerPos + new Vector3(0.2f, 1.75f, 0.1f), 0.55f));
-        _lamps.Add((CrockPos + new Vector3(0.4f, 2.2f, 0.3f), 0.35f));
+        // marked slots with no pool in them hold a dry bowl
+        _dryBowl = KitPart("bowl-dry") ?? bowl;
+        for (int i = views.Count; i < kit.Count; i++)
+            _dryBowls.Add(Matrix4x4.CreateScale(kit[i].Rx / BowlRx, 1, kit[i].Rz / BowlRz) * Matrix4x4.CreateRotationY(kit[i].Yaw) * Matrix4x4.CreateTranslation(kit[i].Pos));
+        _lamps.Add((_ledgerAt + new Vector3(0.2f, 1.75f, 0.1f), 0.55f));
+        _lamps.Add((_crockAt + new Vector3(0.4f, 2.2f, 0.3f), 0.35f));
 
-        // the trickle: a thread of the falls, piped through the back wall, feeding the first tank
+        // the trickle: a thread of the falls, piped through the back wall (or down the kit's brook), feeding the first tank
         if (_tanks.Count > 0)
         {
             var t0 = _tanks[0];
             _trickleTank = t0;
-            var endLocal = new Vector3(-t0.W * 0.28f, SurfY, -t0.D / 2 + 0.22f);
-            _trickleEnd = t0.ToWorld(endLocal);
-            var from = new Vector3(_trickleEnd.X, 5.4f, -5.3f); // the crack high in the back wall
-            _trickle = Own(BuildTrickle(from, _trickleEnd).Model(R.Shaders.Falls));
+            var brook = MarkerPath("brook");
+            if (brook.Count > 1)
+            {
+                _trickleEnd = brook[^1];
+                _trickle = KitStream(brook, 0.22f, 0.22f);
+            }
+            else
+            {
+                var endLocal = new Vector3(-t0.W * 0.28f, SurfY, -t0.D / 2 + 0.22f);
+                _trickleEnd = t0.ToWorld(endLocal);
+                var from = new Vector3(_trickleEnd.X, 5.4f, -5.3f); // the crack high in the back wall
+                _trickle = Own(BuildTrickle(from, _trickleEnd).Model(R.Shaders.Falls));
+            }
         }
-        // the first pool spills over its lip into the second, and the water leaves along the front as a river
+        // the first pool spills over its lip into the second (down the kit's runnel where it cuts one), and the water
+        // leaves along the front as a river (or out under the kit's low arch)
         _spill = Own(new MeshBuilder().Model(toon));
-        if (_tanks.Count > 1)
+        var runnel = MarkerPath("runnel");
+        if (_tanks.Count > 1 && runnel.Count > 1) _spill = KitStream(runnel, 0.2f, 0.36f);
+        else if (_tanks.Count > 1)
         {
             var (a, b) = (_tanks[0], _tanks[1]);
             var dir = Vector3.Normalize(new Vector3(b.Pos.X - a.Pos.X, 0, b.Pos.Z - a.Pos.Z));
@@ -213,7 +333,9 @@ public sealed partial class PoolsScene : InteriorScene
             var land = b.Pos - dir * 0.9f + new Vector3(0, SurfY, 0);
             if (lip.Y > land.Y + 0.2f) _spill = Own(BuildTrickle(lip, land).Model(R.Shaders.Falls));
         }
-        _river = Own(WaterRect(RiverW, RiverD, 24, 3).Model(R.Shaders.Water));
+        var outflow = MarkerPath("outflow");
+        if (outflow.Count > 1) _outflow = KitStream(outflow, 0.34f, 0.5f);
+        else _river = Own(WaterRect(RiverW, RiverD, 24, 3).Model(R.Shaders.Water));
     }
 
     /// <summary>The grotto itself: flagstones, rough walls, arched greenhouse panes, ivy.</summary>
@@ -318,9 +440,10 @@ public sealed partial class PoolsScene : InteriorScene
 
     /// <summary>
     /// A natural pool: a dark bed, a ring of mossy rocks round the oval, a rock terrace under it if it's raised
-    /// (<paramref name="lift"/>), and a lantern on an iron stake at the back (where the pool's lamp light sits).
+    /// (<paramref name="lift"/>), and a lantern on an iron stake at the back (where the pool's lamp light sits) unless
+    /// the kit brings its own (<paramref name="stake"/> false).
     /// </summary>
-    private static MeshBuilder BuildBasin(float w, float d, float lift, int seed)
+    private static MeshBuilder BuildBasin(float w, float d, float lift, int seed, bool stake = true)
     {
         var m = new MeshBuilder();
         var rng = new Random(40 + seed);
@@ -351,6 +474,7 @@ public sealed partial class PoolsScene : InteriorScene
                     Palette.Mul(rock, 0.85f + R01() * 0.15f), 600 + seed * 7 + i, 0.2f, rockDark);
             }
         // the lantern on its stake
+        if (!stake) return m;
         var iron = Palette.Hex(0x3E3A3E);
         var lan = new Vector3(rx * 0.82f, 1.32f, -rz * 0.62f);
         m.Cylinder(new Vector3(lan.X, 0, lan.Z), 0.04f, 0.03f, lan.Y + 0.25f, 6, iron);
@@ -416,6 +540,127 @@ public sealed partial class PoolsScene : InteriorScene
             var s = Vector3.UnitX;
             m.TriUv(p0 - s * w0 / 2, p0 + s * w0 / 2, p1 + s * w1 / 2, new Vector2(0, t0), new Vector2(1, t0), new Vector2(1, t1), Color.White);
             m.TriUv(p0 - s * w0 / 2, p1 + s * w1 / 2, p1 - s * w1 / 2, new Vector2(0, t0), new Vector2(1, t1), new Vector2(0, t1), Color.White);
+        }
+        return m;
+    }
+
+    /// <summary>A kit path's water: its falls (returned) and its level runs (kept in <see cref="_runs"/>).</summary>
+    private Model KitStream(List<Vector3> path, float width, float runWidth)
+    {
+        _runs.Add(Own(BuildStream(path, width, runWidth, runs: true).Model(R.Shaders.Falls)));
+        return Own(BuildStream(path, width, runWidth, runs: false).Model(R.Shaders.Falls));
+    }
+
+    /// <summary>
+    /// Water along a path the kit marks: wherever it drops more than <see cref="FallDrop"/> from one mark to the next
+    /// it falls (<see cref="BuildFall"/>, <paramref name="width"/> wide), and wherever it runs level it's a ribbon
+    /// riding in its channel (<see cref="BuildRun"/>, <paramref name="runWidth"/> wide). One call builds either the
+    /// falls or the <paramref name="runs"/>, so each can be drawn in its own colour. Drawn with the falls shader.
+    /// </summary>
+    private MeshBuilder BuildStream(List<Vector3> path, float width, float runWidth, bool runs)
+    {
+        var m = new MeshBuilder();
+        var view = new Vector3(MathF.Sin(CamYaw) * MathF.Cos(CamPitch), MathF.Sin(CamPitch), MathF.Cos(CamYaw) * MathF.Cos(CamPitch));
+        bool Drops(int k) => path[k].Y - path[k + 1].Y > FallDrop;
+        for (int i = 0, j; i < path.Count - 1; i = j)
+        {
+            // the marks up to where the water changes from running to falling, or back
+            for (j = i + 1; j < path.Count - 1 && Drops(j) == Drops(i); j++) { }
+            var run = path.GetRange(i, j - i + 1);
+            if (Drops(i) != runs) m.Append(runs ? BuildRun(run, runWidth) : BuildFall(run, width, view));
+        }
+        return m;
+    }
+
+    /// <summary>
+    /// Water falling from the first mark to the last: between two it leaves level and drops ever faster, like the
+    /// trickle; through more it curves by each. It widens a little as it falls and turns its face to the room's camera
+    /// (<paramref name="view"/> points back toward it), so a drop that runs across the view never shows edge-on.
+    /// </summary>
+    private static MeshBuilder BuildFall(List<Vector3> run, float width, Vector3 view)
+    {
+        var m = new MeshBuilder();
+        var (from, to) = (run[0], run[^1]);
+        Vector3 At(float t)
+        {
+            if (run.Count == 2)
+            {
+                float ease = 1 - (1 - t) * (1 - t);
+                return new Vector3(from.X + (to.X - from.X) * ease, from.Y + (to.Y - from.Y) * t * t, from.Z + (to.Z - from.Z) * ease);
+            }
+            // a Catmull-Rom curve through the marks, held at the ends
+            float u = t * (run.Count - 1);
+            int k = Math.Min((int)u, run.Count - 2);
+            float f = u - k, f2 = f * f, f3 = f2 * f;
+            Vector3 p0 = run[Math.Max(k - 1, 0)], p1 = run[k], p2 = run[k + 1], p3 = run[Math.Min(k + 2, run.Count - 1)];
+            return 0.5f * (2 * p1 + (p2 - p0) * f + (2 * p0 - 5 * p1 + 4 * p2 - p3) * f2 + (3 * p1 - p0 - 3 * p2 + p3) * f3);
+        }
+        Vector3 Across(float t)
+        {
+            var s = Vector3.Cross(At(MathF.Min(1, t + 0.01f)) - At(MathF.Max(0, t - 0.01f)), view);
+            return s.LengthSquared() > 1e-10f ? Vector3.Normalize(s) : Vector3.Normalize(new Vector3(view.Z, 0, -view.X));
+        }
+        int n = 12 * (run.Count - 1);
+        for (int i = 0; i < n; i++)
+        {
+            float t0 = i / (float)n, t1 = (i + 1) / (float)n;
+            var p0 = At(t0); var p1 = At(t1);
+            var s0 = Across(t0) * (width * (1 + t0 * 0.7f) / 2);
+            var s1 = Across(t1) * (width * (1 + t1 * 0.7f) / 2);
+            m.TriUv(p0 - s0, p0 + s0, p1 + s1, new Vector2(0, t0), new Vector2(1, t0), new Vector2(1, t1), Color.White);
+            m.TriUv(p0 - s0, p1 + s1, p1 - s1, new Vector2(0, t0), new Vector2(1, t1), new Vector2(0, t1), Color.White);
+        }
+        return m;
+    }
+
+    /// <summary>
+    /// Water running level through marks: a narrow ribbon just above the channel floor, lying flat and turning with
+    /// the channel. The falls shader foams at both ends of a ribbon, so a run keeps to its calm middle and repeats the
+    /// flow there every <see cref="FlowSpan"/> metres or so.
+    /// </summary>
+    private static MeshBuilder BuildRun(List<Vector3> run, float width)
+    {
+        var m = new MeshBuilder();
+        // the distance along the run at each mark, and the way across the channel there (mitred at bends)
+        var along = new float[run.Count];
+        for (int k = 1; k < run.Count; k++) along[k] = along[k - 1] + Vector3.Distance(run[k - 1], run[k]);
+        float len = along[^1];
+        if (len < 0.01f) return m;
+        Vector3 Way(int k)
+        {
+            var d = new Vector3(run[k + 1].X - run[k].X, 0, run[k + 1].Z - run[k].Z);
+            return d.LengthSquared() > 1e-6f ? Vector3.Normalize(d) : Vector3.Zero;
+        }
+        var across = new Vector3[run.Count];
+        for (int k = 0; k < run.Count; k++)
+        {
+            var d = (k > 0 ? Way(k - 1) : Vector3.Zero) + (k < run.Count - 1 ? Way(k) : Vector3.Zero);
+            across[k] = d.LengthSquared() > 1e-6f ? Vector3.Normalize(new Vector3(d.Z, 0, -d.X)) : Vector3.UnitX;
+        }
+        (Vector3 P, Vector3 Half) At(float s)
+        {
+            int k = 0;
+            while (k < run.Count - 2 && along[k + 1] < s) k++;
+            float f = along[k + 1] > along[k] ? Math.Clamp((s - along[k]) / (along[k + 1] - along[k]), 0, 1) : 0;
+            var side = Vector3.Lerp(across[k], across[k + 1], f);
+            side = side.LengthSquared() > 1e-6f ? Vector3.Normalize(side) : across[k];
+            return (Vector3.Lerp(run[k], run[k + 1], f) + new Vector3(0, 0.015f, 0), side * (width / 2));
+        }
+        // stations along the run: every mark and every repeat of the flow, in order
+        int spans = Math.Max(1, (int)MathF.Round(len / FlowSpan));
+        float span = len / spans;
+        var stations = along.Concat(Enumerable.Range(1, spans - 1).Select(i => i * span)).Order().ToList();
+        // the shader's calm middle: it foams below 0.1 and above 0.62 along a ribbon
+        float V(float s, int c) => 0.13f + 0.44f * (s - c * span) / span;
+        for (int i = 0; i < stations.Count - 1; i++)
+        {
+            float s0 = stations[i], s1 = stations[i + 1];
+            if (s1 - s0 < 1e-4f) continue;
+            int c = Math.Min(spans - 1, (int)((s0 + s1) / 2 / span));
+            var (p0, a0) = At(s0); var (p1, a1) = At(s1);
+            float v0 = V(s0, c), v1 = V(s1, c);
+            m.TriUv(p0 - a0, p0 + a0, p1 + a1, new Vector2(0, v0), new Vector2(1, v0), new Vector2(1, v1), Color.White);
+            m.TriUv(p0 - a0, p1 + a1, p1 - a1, new Vector2(0, v0), new Vector2(1, v1), new Vector2(0, v1), Color.White);
         }
         return m;
     }
@@ -674,7 +919,7 @@ public sealed partial class PoolsScene : InteriorScene
                     for (int i = 0; i < (R.ReduceMotion ? 3 : 14); i++)
                         t.Bubbles.Add(new Bubble { P = c.P + new Vector3(Rand(-0.15f, 0.15f), Rand(-0.05f, 0.1f), Rand(-0.1f, 0.1f)), V = Rand(0.35f, 0.7f), Wob = Rand(0, 6), Size = Rand(0.04f, 0.08f) });
                 }
-                else App.Particles.Burst(CrockPos + new Vector3(0, 0.75f, 0), Palette.Foam, 14, 1.2f, 1f);
+                else App.Particles.Burst(_crockAt + new Vector3(0, 0.75f, 0), Palette.Foam, 14, 1.2f, 1f);
             }
         }
         c.Mood = lf.Mood;
@@ -756,11 +1001,13 @@ public sealed partial class PoolsScene : InteriorScene
             c.Phase += dt * motion;
             if (c.Pool is not null && _tankOf.TryGetValue(c.Pool, out var t)) Move(c, t, dt, motion);
         }
+        // dust drifts up (along the noon beam, where there is one) and starts again low down
         if (!R.ReduceMotion)
             for (int i = 0; i < _dust.Count; i++)
             {
-                var p = _dust[i] + new Vector3(MathF.Sin(_time * 0.21f + i) * 0.05f, 0.03f, MathF.Cos(_time * 0.17f + i * 2) * 0.04f) * dt * 3;
-                if (p.Y > 5f) p.Y = 1.2f;
+                var p = _dust[i] + (new Vector3(MathF.Sin(_time * 0.21f + i) * 0.05f, 0, MathF.Cos(_time * 0.17f + i * 2) * 0.04f) + _dustRise * 0.03f) * dt * 3;
+                if (_beamLen > 0) { if (Vector3.Dot(p - _beamSpot, _dustRise) > _beamLen * 0.85f) p -= _dustRise * (_beamLen * 0.82f); }
+                else if (p.Y > 5f) p.Y = 1.2f;
                 _dust[i] = p;
             }
 
@@ -959,8 +1206,8 @@ public sealed partial class PoolsScene : InteriorScene
         Vector3? subject = _card switch
         {
             CardKind.Pool when _tankOf.TryGetValue(_cardPool, out var t) => t.ToWorld(new Vector3(0, 1.0f, 0)),
-            CardKind.Holding => CrockPos + new Vector3(0, 0.6f, 0),
-            CardKind.Bag => BagPos + new Vector3(0, 0.7f, 0),
+            CardKind.Holding => _crockAt + new Vector3(0, 0.6f, 0),
+            CardKind.Bag => _bagAt + new Vector3(0, 0.7f, 0),
             _ => null,
         };
         var goal = _home; float dist = _homeDist;
@@ -969,7 +1216,7 @@ public sealed partial class PoolsScene : InteriorScene
             var right = new Vector3(MathF.Cos(CamYaw), 0, -MathF.Sin(CamYaw));
             dist = _homeDist - 2.2f;
             goal = s - right * 2.35f;
-            goal.Y = MathF.Max(1.0f, s.Y);
+            goal.Y = MathF.Max(_focusFloor, s.Y);
         }
         float rate = R.ReduceMotion ? 60 : 3.2f;
         CamTarget = Ease.Approach(CamTarget, goal, rate, dt);
@@ -980,8 +1227,9 @@ public sealed partial class PoolsScene : InteriorScene
     {
         base.Light();
         var l = R.Light;
-        l.SunDir = Vector3.Normalize(new Vector3(0.15f, 0.85f, -0.5f)); // down through the crack above the falls
-        l.Sun = Palette.Hex(0xF6DFAE);
+        l.SunDir = _sunDir;
+        // the kit's oculus sun strikes the flat terrace tops almost head-on, so it comes down a touch softer there
+        l.Sun = _beamLen > 0 ? Palette.Hex(0xE9D6AE) : Palette.Hex(0xF6DFAE);
         l.Sky = Palette.Lerp(l.Sky, Palette.Hex(0x7FA88C), 0.4f);
         l.Ground = Palette.Hex(0x4A4638);
         l.Night = 0.45f;
@@ -1004,15 +1252,20 @@ public sealed partial class PoolsScene : InteriorScene
         R.Draw(_ferns, Matrix4x4.Identity, Color.White, sway: 1.2f, outlineWidth: 1.0f);
 
         // furniture with hotspots
-        R.Draw(_crock, Lifted(SpotHolding, CrockPos), Color.White, highlight: Rim(SpotHolding), outlineWidth: 1.4f);
-        R.Draw(_bag, Lifted(SpotBag, BagPos) * Squash(SpotBag), Color.White, highlight: Rim(SpotBag), outlineWidth: 1.4f);
-        R.Draw(_ledger, Matrix4x4.CreateRotationY(0.55f) * Lifted(SpotLedger, LedgerPos), Color.White, highlight: Rim(SpotLedger), outlineWidth: 1.4f);
-        R.Draw(_stool, Lifted(SpotStool, StoolPos), Color.White, highlight: Rim(SpotStool), outlineWidth: 1.3f);
+        R.Draw(_crock, Lifted(SpotHolding, _crockAt), Color.White, highlight: Rim(SpotHolding), outlineWidth: 1.4f);
+        R.Draw(_bag, Lifted(SpotBag, _bagAt) * Squash(SpotBag), Color.White, highlight: Rim(SpotBag), outlineWidth: 1.4f);
+        R.Draw(_ledger, Matrix4x4.CreateRotationY(LedgerTurn) * Lifted(SpotLedger, _ledgerAt), Color.White, highlight: Rim(SpotLedger), outlineWidth: 1.4f);
+        R.Draw(_stool, Lifted(SpotStool, _stoolAt), Color.White, highlight: Rim(SpotStool), outlineWidth: 1.3f);
+        if (_dryBowl is { } dry)
+            foreach (var w in _dryBowls) R.Draw(dry, w, Color.White, outlineWidth: 1.4f);
 
         foreach (var tk in _tanks)
         {
             tk.World = Matrix4x4.CreateRotationY(tk.Yaw) * Matrix4x4.CreateTranslation(tk.Pos + new Vector3(0, SpotOf(tk.Spot).Lift.Value * 0.12f, 0));
-            R.Draw(tk.Stone, tk.World, Color.White, highlight: Rim(tk.Spot), outlineWidth: 1.4f);
+            R.Draw(tk.Stone, tk.StoneScale * tk.World, Color.White, highlight: Rim(tk.Spot), outlineWidth: 1.4f);
+            // the kit's lantern stands on the rim with its cage where the basin's stake would hold it
+            if (_lantern is { } lan)
+                R.Draw(lan, Matrix4x4.CreateTranslation(tk.Lantern.X, RimY, tk.Lantern.Z) * tk.World, Color.White, highlight: Rim(tk.Spot), outlineWidth: 1.2f);
             float flick = still ? 1 : 0.9f + 0.1f * MathF.Sin(t * 7.1f + tk.Index * 2.3f);
             R.Draw(_lanternGlow, Matrix4x4.CreateTranslation(tk.Lantern) * tk.World, Color.White, emissive: 0.9f * flick, outline: false);
             DrawLaid(tk);
@@ -1028,10 +1281,15 @@ public sealed partial class PoolsScene : InteriorScene
         var cam = Camera.Position;
         foreach (var tk in _tanks.OrderByDescending(x => Vector3.DistanceSquared(cam, x.ToWorld(new Vector3(0, 1, 0)))))
             DrawWaterOf(tk);
-        R.DrawWater(_crockWater, Matrix4x4.CreateTranslation(CrockPos + new Vector3(0, 0.6f, 0)), Palette.TealLight, Palette.Teal, 0.15f, 0.8f);
-        R.DrawWater(_river, Matrix4x4.CreateTranslation(0, RiverY, RiverZ), Palette.Hex(0x3F8A86), Palette.Hex(0x163C44), 0.2f, 0.9f);
+        R.DrawWater(_crockWater, Matrix4x4.CreateTranslation(_crockAt + new Vector3(0, 0.6f, 0)), Palette.TealLight, Palette.Teal, 0.15f, 0.8f);
+        foreach (var run in _runs)
+            if (run.MeshCount > 0) R.DrawFalls(run, Matrix4x4.Identity, RunWater);
+        if (_outflow is { } outflow) R.DrawFalls(outflow, Matrix4x4.Identity, Palette.Alpha(Palette.Hex(0xB9E2DC), 0.8f));
+        else R.DrawWater(_river, Matrix4x4.CreateTranslation(0, RiverY, RiverZ), Palette.Hex(0x3F8A86), Palette.Hex(0x163C44), 0.2f, 0.9f);
         if (_trickle.MeshCount > 0) R.DrawFalls(_trickle, Matrix4x4.Identity, Palette.Alpha(Palette.Hex(0xCFEDE8), 0.8f));
         if (_spill.MeshCount > 0) R.DrawFalls(_spill, Matrix4x4.Identity, Palette.Alpha(Palette.Hex(0xCFEDE8), 0.75f));
+        // the noon beam, laid softly over everything it passes through
+        if (_beam is { } beam) R.DrawAdditive(beam, Matrix4x4.Identity, Palette.Alpha(Palette.Hex(0xFFF1D2), 0.16f));
 
         // above the water: motes, ripples, the glow of lanterns, dust in the light
         foreach (var tk in _tanks)
@@ -1041,12 +1299,12 @@ public sealed partial class PoolsScene : InteriorScene
         }
         foreach (var (p, k) in _lamps.Take(_tanks.Count))
             R.Glow(p, 0.8f, Palette.Alpha(Palette.LanternHot, 0.55f));
-        R.Glow(LedgerPos + new Vector3(0.38f * MathF.Cos(-0.55f) , 1.2f, 0.05f), 0.32f, Palette.Alpha(Palette.LanternHot, still ? 0.7f : 0.6f + 0.15f * MathF.Sin(t * 9)));
+        R.Glow(_candleAt, 0.32f, Palette.Alpha(Palette.LanternHot, still ? 0.7f : 0.6f + 0.15f * MathF.Sin(t * 9)));
         for (int i = 0; i < _dust.Count; i++)
             R.Glow(_dust[i], 0.07f, Palette.Alpha(Palette.LanternHot, 0.22f + 0.12f * MathF.Sin(t * 0.9f + i)));
         // the bag breathes a little light when something waits in it
         if (S.Pools.DruidsBag.Any())
-            R.Glow(BagPos + new Vector3(0, 1.18f + SpotOf(SpotBag).Lift.Value, 0), 0.55f, Palette.Alpha(Palette.LanternHot, 0.3f + (still ? 0 : 0.12f * MathF.Sin(t * 1.6f))));
+            R.Glow(_bagAt + new Vector3(0, 1.18f + SpotOf(SpotBag).Lift.Value, 0), 0.55f, Palette.Alpha(Palette.LanternHot, 0.3f + (still ? 0 : 0.12f * MathF.Sin(t * 1.6f))));
     }
 
     private Matrix4x4 Lifted(string spot, Vector3 pos) => Matrix4x4.CreateTranslation(pos + new Vector3(0, SpotOf(spot).Lift.Value, 0));
@@ -1136,7 +1394,7 @@ public sealed partial class PoolsScene : InteriorScene
     {
         float time = R.ReduceMotion ? 0 : _time;
         var held = _critters.Values.Where(c => c.Pool is null).ToList();
-        var top = CrockPos + new Vector3(0, 0.56f + SpotOf(SpotHolding).Lift.Value, 0);
+        var top = _crockAt + new Vector3(0, 0.56f + SpotOf(SpotHolding).Lift.Value, 0);
         for (int i = 0; i < held.Count; i++)
         {
             var c = held[i];
@@ -1153,7 +1411,7 @@ public sealed partial class PoolsScene : InteriorScene
                     R.Draw(_fishTail, Matrix4x4.CreateRotationY(MathF.Sin(time * 6 + i) * 0.3f) * Matrix4x4.CreateTranslation(-0.17f, 0, 0) * w, col, outline: false);
                     break;
                 case LifeformKind.Snail:
-                    var sw = Matrix4x4.CreateRotationY(i) * Matrix4x4.CreateTranslation(CrockPos + new Vector3(MathF.Cos(i * 2.1f) * 0.58f, 0.66f, MathF.Sin(i * 2.1f) * 0.58f));
+                    var sw = Matrix4x4.CreateRotationY(i) * Matrix4x4.CreateTranslation(_crockAt + new Vector3(MathF.Cos(i * 2.1f) * 0.58f, 0.66f, MathF.Sin(i * 2.1f) * 0.58f));
                     R.Draw(_snailFoot, sw, Color.White, outlineWidth: 0.8f);
                     R.Draw(_snailShell, sw, col, emissive: 0.15f, outlineWidth: 0.8f);
                     break;

@@ -1,0 +1,524 @@
+{
+ "final": {
+  "rationale": "LEAD WITH THIS WHEN PRESENTING: every room frame in this round is the in-game camera (pitch 0.46, distance 13.4). From that camera the oculus is never in frame. It is implied by its beam entering at the top edge (about screen x 1265). Only view-up-not-in-game shows it, and that view is labelled as one the game cannot show.\n\nFREE WORK ALREADY DONE (0 credits). The critique asked for a to-scale plan, a to-scale section and a HUD check before any credits are spent. All three exist now, in art/reference/concepts/rooms-fresh/travertine-layout/:\n- blockout-camera.png and blockout-camera-cascade.png: Blender massing renders taken from the exact game camera, with flat colour-coded clay.\n- blockout-camera-hud.png: the HUD overlay, plus the computed pool points and focus spot.\n- plan.png: to scale, with hotspots, laid-object spots, lanterns, today's capacity ovals and the camera frustum.\n- section.png: to scale, from the HubCity constants.\n\nThe scripts are in the scratchpad (C:\\Users\\jrpry\\AppData\\Local\\Temp\\claude\\B--Projects-Atrium-custom\\a2dd308f-2277-4dfa-ab31-57a98c64c701\\scratchpad\\travertine\\):\n- layout.py: the shared numbers.\n- blockout_flat.py: the Blender render that was used.\n- diagrams.py, then render_svgs.ps1: plan, section, and a HUD overlay for any image.\nRun diagrams.py on every master and finish candidate and reject any that fails. Overlays of the three Travertine concepts are in the scratchpad's svg/ folder. They show each concept's upper-left mouth under the clock, title and tabs.\n\nTHE LAYOUT. These are the tested positions, nudged because the tested ovals overlapped in plan: the middle bowl would have hung up to 0.7 m over the bottom pool's back, where Hush-Moss grows. Pools are at full size (5.9 x 2.4 m).\n- Top (Sunward, pool 0): water +1.5 at (2.4, -3.6), screen (1056, 342), seen at 21 deg.\n- Middle (Spawning, pool 2): water 0 at (0, -1.2), screen (782, 532), 30 deg.\n- Bottom (Shade, pool 1): water -1.5 at (-3.0, 1.1), screen (430, 726), 36 deg. Its laid-object spot is at (379, 784), clear of the caption and the satchel bar.\n- One spare bowl (pool 3): water 0 at (6.4, -0.1), turned 90 deg, screen (1455, 704), 33 deg. It is clear of every hotspot. Pools 4 and up go in alcoves round the right wall, off the default frame, reached by tabs and focus. The room already has to extend there for focus close-ups.\n- Mouth: x 0.5 to 1.9 on the back wall, sill +2.4, crown +4.0. Screen (926-1052, 73-213), clear of all HUD.\n- Furniture is split. The druids' bag sits on the landing by the mouth, where Sanctum deliveries arrive (screen 803, 165). Ledger (3.8, -0.4), stool (2.7, 0.7) and crock (4.0, 1.45) share a 4.5 m ledge with no overlapping hotspots, at screen (1161, 530), (1015, 613) and (1166, 680). The crock is not at the front centre because that spot falls under the hover caption.\n\nTHE WORLD (section). The oculus sits in the scarp shelf at world (18.9, -1, -11.2), 2.4 m beyond the wall's outer face. The hub never shows it, so the hub needs no change. Room y 0 is world -7.5. From the hub's four steps, about 4.3 m more of stair (about 44 deg) runs down under the wall's footings, with the brook in a channel beside it.\n\nCODE CHANGES THIS LAYOUT NEEDS (so nobody approves a 'no code' route that needs code):\n1. Pool positions and yaw come from kit markers pool-0..n, replacing Slots. With a 90 deg yaw, pick the sign so the laid-object front faces -x, toward the camera.\n2. The spill follows a kit-supplied runnel path (bypass), or runs by height (cascade). As coded today, a straight pool 0 to pool 1 ribbon would pour across the Spawning Pond.\n3. The trickle starts at a mouth-brook marker instead of the crack at y 5.4.\n4. The river is replaced by the outflow under the left arch.\n5. The focus clamp (PoolsScene.cs:972) is lowered to about -2.\n6. SunDir changes to about (0.43, 0.89, -0.14) to match the beam, which is an additive mesh.\n7. Kit bowls with per-bowl parts replace the BuildBasin rims, so the hover rim and lift keep working.\n\nSTAGES.\n- Stage 1, run now: five layout masters, 11.5 credits. Then the free HUD check. Then pick one master.\n- Stage 2a, after the master pick: four finishes and one clay focus frame, 18 credits.\n- Stage 2b, after the finish pick: everything else in the winning finish, 22 credits.\nTotal 51.5 credits, one GPT job.\n\nMUST-FIXES APPLIED.\n1. Keyframe A is gone from the round. It is the finish of the set-aside rooms-round paint-overs (pools-a), so using it would loop back to them. The 'match the hub' finish uses corner-a instead, the hub's current corner target (iteration-3-log.md:428-435). Until the finish is picked, the stage-2b shots carry Nano A as a provisional style reference, to be swapped for the winning image. Props, the kit and the grids run only after the pick, so nothing is paid for twice.\n2. Masters. One Nano and the GPT run text-only. The GPT Travertine reference goes on the second Nano only, so its drift is visible. Two more Nano masters are added, built on the computed blockouts: the bypass route, and the brief's cascade (the critique's optional variant). Both have the same layout, so the water route is the only difference.\n3. The section is drawn to scale for free. One Nano render is built on that drawing, and the second variant is cut.\n\nSHOULD-FIXES.\n- Applied: the critique's camera wording, colour-coded clay, near-equal 2.4:1 ovals, a spare bowl placed by calculation, split furniture, the engine's true start state in every finish, two 2K images per finish, one realism sample labelled as needing a renderer change, a build-honest finish, the Sun-Lens steam-in-beam case with frost on a cream lip, a cream-backed energy grid with an unlit identical lantern, the residents row replacing the engine-drawn primitives, the kit pieces corrected, no baked glow and no water in the props, and the night frame moved to 2b as exploratory.\n- Kept against advice: the residents sheet keeps its clarity row. The finishes show only the 85% silt state, and clearing silt is the cozy loop's main tell.\n- Cut rather than reframed: view-threshold. The masters show the mouth at game scale, and the section render shows the descent.\n- Deferred: materials-travertine. Which surfaces need tiles is not known until the Blender blockout, and the existing post-pass makes tiles seamless.\n\nCUT: view-plan (drawn instead), finish-painterly-gpt, view-threshold, the section's second variant and the materials sheet.\n\nUPLOADS NEEDED: blockout-camera.png, blockout-camera-cascade.png, section.png, city-round/corner-a.jpg, city-round/night-a.jpg and textures/stoic-bark.png.",
+  "shots": [
+   {
+    "id": "master-text-nano",
+    "title": "Layout master, clay, text only (Nano)",
+    "purpose": "Stage 1. Nano's own reading of the layout brief with no image to copy. It is one of five candidate masters. Every stage-2 room frame repaints the chosen master, and it guides the Blender blockout. Run the free HUD overlay on it before choosing.",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "count": 1,
+    "stage": 1,
+    "references": [],
+    "prompt": "Matte clay model of a full-size sinkhole grotto with terraced rimstone pools. Seen from the front and a little to the right, back wall nearly square-on, looking down about 25 degrees; no tabletop, no base, no depth-of-field blur. The room fills the frame edge to edge; walls rise out of the top of the frame, no sky, no ceiling. Three oval pools, each about 2.4 times as long as wide, nearly equal, the middle one slightly smaller, step down toward the viewer: top pool upper right of centre against the back wall, middle pool dead centre, bottom pool lower left. Near lips stay low, so every bed shows. A slanting sunbeam enters from the top right edge onto the top pool. High on the back wall above the top pool's left end, a round-headed cave mouth no taller than a door: worn steps leave its left half and become a stair of thick roots down the left wall; a small brook falls from its right half into the top pool. A narrow runnel carries the top pool's overflow left and down past the middle pool into the bottom pool, which drains under a low arch in the left wall. A bag beside the mouth. On a ledge right of the middle pool: reading stand, stool on a mat, lidded crock. Far right, a fourth pool-sized bowl, dry. Cream travertine, pale grey walls, blue-grey rock round the bottom pool, brown roots, flat pale-turquoise water, light grey props. No people, no text.",
+    "credits": 2
+   },
+   {
+    "id": "master-ref-nano",
+    "title": "Layout master, clay, with the GPT Travertine for forms (Nano)",
+    "purpose": "Stage 1. The same text as master-text-nano plus the GPT Travertine image, so the designer can see how far that image pulls the layout. It is one of five candidate masters.",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "count": 1,
+    "stage": 1,
+    "references": [
+     {
+      "source": "c53395f5-9b3a-4e4e-b71a-9e766bee18a3",
+      "why": "Forms only: the rimstone terrace lips and dams and the root stair. Do NOT take its viewpoint, its sky opening at top centre, its upper-left cave mouth, its falls pouring from pool to pool, its tiny fish, its colours or its painterly finish."
+     }
+    ],
+    "prompt": "Matte clay model of a full-size sinkhole grotto with terraced rimstone pools. Seen from the front and a little to the right, back wall nearly square-on, looking down about 25 degrees; no tabletop, no base, no depth-of-field blur. The room fills the frame edge to edge; walls rise out of the top of the frame, no sky, no ceiling. Three oval pools, each about 2.4 times as long as wide, nearly equal, the middle one slightly smaller, step down toward the viewer: top pool upper right of centre against the back wall, middle pool dead centre, bottom pool lower left. Near lips stay low, so every bed shows. A slanting sunbeam enters from the top right edge onto the top pool. High on the back wall above the top pool's left end, a round-headed cave mouth no taller than a door: worn steps leave its left half and become a stair of thick roots down the left wall; a small brook falls from its right half into the top pool. A narrow runnel carries the top pool's overflow left and down past the middle pool into the bottom pool, which drains under a low arch in the left wall. A bag beside the mouth. On a ledge right of the middle pool: reading stand, stool on a mat, lidded crock. Far right, a fourth pool-sized bowl, dry. Cream travertine, pale grey walls, blue-grey rock round the bottom pool, brown roots, flat pale-turquoise water, light grey props. From the reference image take only its rimstone terrace forms and root stair; ignore its viewpoint, sky opening, cave mouth, falls, colours and finish. No people, no text.",
+    "credits": 2
+   },
+   {
+    "id": "master-text-gpt",
+    "title": "Layout master, clay, text only (GPT)",
+    "purpose": "Stage 1. A second model reading the same layout text, with no reference, so one model's habits do not fix the space. It is one of five candidate masters.",
+    "model": "gpt_image_2_5",
+    "resolution": "high",
+    "aspect_ratio": "16:9",
+    "count": 1,
+    "stage": 1,
+    "references": [],
+    "prompt": "Matte clay model of a full-size sinkhole grotto with terraced rimstone pools. Seen from the front and a little to the right, back wall nearly square-on, looking down about 25 degrees; no tabletop, no base, no depth-of-field blur. The room fills the frame edge to edge; walls rise out of the top of the frame, no sky, no ceiling. Three oval pools, each about 2.4 times as long as wide, nearly equal, the middle one slightly smaller, step down toward the viewer: top pool upper right of centre against the back wall, middle pool dead centre, bottom pool lower left. Near lips stay low, so every bed shows. A slanting sunbeam enters from the top right edge onto the top pool. High on the back wall above the top pool's left end, a round-headed cave mouth no taller than a door: worn steps leave its left half and become a stair of thick roots down the left wall; a small brook falls from its right half into the top pool. A narrow runnel carries the top pool's overflow left and down past the middle pool into the bottom pool, which drains under a low arch in the left wall. A bag beside the mouth. On a ledge right of the middle pool: reading stand, stool on a mat, lidded crock. Far right, a fourth pool-sized bowl, dry. Cream travertine, pale grey walls, blue-grey rock round the bottom pool, brown roots, flat pale-turquoise water, light grey props. No people, no text.",
+    "credits": 1.5
+   },
+   {
+    "id": "master-blockout-nano",
+    "title": "Layout master, clay, from the computed blockout (Nano)",
+    "purpose": "Stage 1. Turns the Blender blockout into a natural clay model. The blockout was rendered from the exact game camera with the tested pool heights, spare bowl, split furniture and the bypass runnel. It is the candidate most likely to pass the HUD check, so it runs as two variants. Every stage-2 room frame repaints the chosen master.",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "count": 2,
+    "stage": 1,
+    "references": [
+     {
+      "source": "art/reference/concepts/rooms-fresh/travertine-layout/blockout-camera.png",
+      "why": "Structure: camera, framing, and the position, size and height of every element, exactly. Do NOT keep its blocky geometry, its flat CG look or its sharp edges; these become natural rimstone, rock and roots."
+     }
+    ],
+    "prompt": "Turn the reference image, a rough colour-coded blockout of a grotto, into a finished matte clay model photographed with exactly the same camera. Keep its framing and every position, size and height: the three oval pools stepping down toward the viewer, the dry fourth bowl on the right, the round-headed cave mouth high on the back wall with its narrow landing and the bag beside it, the brook falling into the top pool, the runnel carrying overflow down the left side to the bottom pool, the root stair down the left wall, the low outflow arch at the far left, the slanting beam from the top right, the reading stand, stool and crock on the right-hand ledge, and the small lantern stakes. Replace the blocky shapes with natural forms: flowing rimstone lips and dams, banded flowstone on the terrace faces, rough rock walls, a few thick tapering roots gripping the left wall, a proper stool, a slanted stand with an open book, a fat lidded crock with a landing net, a canvas bag. Keep the colour code: cream travertine, pale grey walls, blue-grey rock round the bottom pool, brown roots, flat pale-turquoise water, light grey props, tan dry bed, pale translucent beam. Soft even light. No tabletop, no base, no blur. No people, no text.",
+    "credits": 4
+   },
+   {
+    "id": "master-cascade-nano",
+    "title": "Layout master, clay, cascade water route (Nano)",
+    "purpose": "Stage 1. The brief's top-to-middle-to-bottom cascade (Nano B and GPT) on the same computed layout as master-blockout-nano. The water route is the only difference, so the designer can settle that open question at the game camera. Choosing it means spill code by height and rewriting 'perfectly still'.",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "count": 1,
+    "stage": 1,
+    "references": [
+     {
+      "source": "art/reference/concepts/rooms-fresh/travertine-layout/blockout-camera-cascade.png",
+      "why": "Structure: camera, framing, and the position, size and height of every element, exactly, including the two spills. Do NOT keep its blocky geometry or flat CG look."
+     }
+    ],
+    "prompt": "Turn the reference image, a rough colour-coded blockout of a grotto, into a finished matte clay model photographed with exactly the same camera. Keep its framing and every position, size and height: the three oval pools stepping down toward the viewer, the dry fourth bowl on the right, the round-headed cave mouth high on the back wall with its narrow landing and the bag beside it, the brook falling into the top pool, the root stair down the left wall, the low outflow arch at the far left, the slanting beam from the top right, the reading stand, stool and crock on the right-hand ledge, and the small lantern stakes. Here the water cascades: a sheet spills from the top pool over a notch in its front lip into the back of the middle pool, and another spills from the middle pool's front-left lip into the bottom pool, which drains under the arch. No runnel. Replace the blocky shapes with natural forms: flowing rimstone lips and dams, banded flowstone, rough rock walls, a few thick tapering roots gripping the left wall, proper furniture. Keep the colour code: cream travertine, pale grey walls, blue-grey rock round the bottom pool, brown roots, flat pale-turquoise water, light grey props, tan dry bed, pale translucent beam. Soft even light. No tabletop, no base, no blur. No people, no text.",
+    "credits": 2
+   },
+   {
+    "id": "finish-hub-corner",
+    "title": "Finish A: the hub's corner finish (2a)",
+    "purpose": "Stage 2a finish comparison: should the room match the hub as it is being built now? It uses corner-a, the designer's texture and prop target for the corner, not keyframe A. Its text is identical to the other three finishes except the style line. Two images at 2K, so one unlucky render does not decide the finish.",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "count": 2,
+    "stage": 2,
+    "references": [
+     {
+      "source": "stage1:master-blockout-nano",
+      "why": "Composition, camera and every shape, exactly. Use whichever stage-1 master was chosen after the HUD check, including the cascade or a text-only one."
+     },
+     {
+      "source": "art/reference/concepts/city-round/corner-a.jpg",
+      "why": "Style only: clean ink line, soft painted cel colour, pale chalky stone, fresh greens. NOT its city, houses, tree, waterfall, cave mouth or high overhead layout."
+     }
+    ],
+    "prompt": "Repaint reference image 1 as a finished illustration, keeping its camera, framing and every shape and position exactly; change only the finish and add life. Reference image 2 is for style only; ignore its city, houses, tree and layout: clean confident ink line, soft painted cel colour in two or three value steps, pale chalky stone, fresh greens. Cream and apricot travertine with banded flowstone on the terrace faces, moss in the cracks, a few thick furrowed roots, ferns; the bottom pool's lip is dark, wet, mossy blue-grey rock; the wall behind the top pool is darker and wet. Noon: a slanting white-gold beam from the top right lands on the top pool, motes in it; elsewhere cool soft daylight; the cave mouth glows pale. The water exactly as the game begins: the top pool thick with pale silt, opaque olive-jade, a soft glow hovering above it, two orange-spotted fish and two butter-yellow snails only faintly seen on its bed; the middle pool nearly clear teal, perfectly still, one reed with a softly glowing tip; the bottom pool hazy indigo-slate, dark moss along the back of its bed, two small grey fish. No steam, no frost. Chunky fish, a ninth of a pool's length. A small iron lantern on a stake at each working pool. The spare bowl stays dry. Left third quiet. No people, no text.",
+    "credits": 4
+   },
+   {
+    "id": "finish-travertine-ink",
+    "title": "Finish B: the Travertine storybook's own finish (2a)",
+    "purpose": "Stage 2a finish comparison: the bright, clean-lined cel finish of the chosen Nano Travertine takes. It is close to what the toon shader and ink outline can build. Its text is identical to the other finishes except the style line. Two images at 2K.",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "count": 2,
+    "stage": 2,
+    "references": [
+     {
+      "source": "stage1:master-blockout-nano",
+      "why": "Composition, camera and every shape, exactly (whichever stage-1 master was chosen)."
+     },
+     {
+      "source": "f4dc208c-3bb3-4cc5-819b-d597e0e80b2a",
+      "why": "Style only (Travertine Nano A): clean even ink outlines, bright soft cel shading, luminous mineral turquoise. NOT its upward viewpoint, its sky opening at the top, its side cascades, its snails on the rims or its layout."
+     }
+    ],
+    "prompt": "Repaint reference image 1 as a finished illustration, keeping its camera, framing and every shape and position exactly; change only the finish and add life. Reference image 2 is for style only; ignore its viewpoint, sky opening, cascades and layout: clean confident ink outlines of even weight, bright soft cel shading, smooth flat fills, gentle highlights, luminous mineral colour. Cream and apricot travertine with banded flowstone on the terrace faces, moss in the cracks, a few thick furrowed roots, ferns; the bottom pool's lip is dark, wet, mossy blue-grey rock; the wall behind the top pool is darker and wet. Noon: a slanting white-gold beam from the top right lands on the top pool, motes in it; elsewhere cool soft daylight; the cave mouth glows pale. The water exactly as the game begins: the top pool thick with pale silt, opaque olive-jade, a soft glow hovering above it, two orange-spotted fish and two butter-yellow snails only faintly seen on its bed; the middle pool nearly clear teal, perfectly still, one reed with a softly glowing tip; the bottom pool hazy indigo-slate, dark moss along the back of its bed, two small grey fish. No steam, no frost. Chunky fish, a ninth of a pool's length. A small iron lantern on a stake at each working pool. The spare bowl stays dry. Left third quiet. No people, no text.",
+    "credits": 4
+   },
+   {
+    "id": "finish-painterly",
+    "title": "Finish C: painterly realism, needs a renderer change (2a)",
+    "purpose": "Stage 2a finish comparison: what 'a look and feel of realism' means for this room. It is labelled as unbuildable in the current renderer, because every mesh gets an ink outline and there are no shadows or reflections, so choosing it means a renderer change. It runs on Nano, the same model as the other finishes, so the model does not confound the choice. Two images at 2K.",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "count": 2,
+    "stage": 2,
+    "references": [
+     {
+      "source": "stage1:master-blockout-nano",
+      "why": "Composition, camera and every shape, exactly (whichever stage-1 master was chosen)."
+     },
+     {
+      "source": "c53395f5-9b3a-4e4e-b71a-9e766bee18a3",
+      "why": "Style only (Travertine GPT): painterly realism, textured travertine, light on water. NOT its sky opening, its upper-left mouth, its frost, its steam, its tiny fish or its layout."
+     }
+    ],
+    "prompt": "Repaint reference image 1 as a finished illustration, keeping its camera, framing and every shape and position exactly; change only the finish and add life. Reference image 2 is for style only; ignore its layout, sky opening, frost and steam: rich painterly realism, no ink outlines, soft visible brushwork, finely textured travertine, glints on the water, soft bounce light, a little depth haze, natural colour. Cream and apricot travertine with banded flowstone on the terrace faces, moss in the cracks, a few thick furrowed roots, ferns; the bottom pool's lip is dark, wet, mossy blue-grey rock; the wall behind the top pool is darker and wet. Noon: a slanting white-gold beam from the top right lands on the top pool, motes in it; elsewhere cool soft daylight; the cave mouth glows pale. The water exactly as the game begins: the top pool thick with pale silt, opaque olive-jade, a soft glow hovering above it, two orange-spotted fish and two butter-yellow snails only faintly seen on its bed; the middle pool nearly clear teal, perfectly still, one reed with a softly glowing tip; the bottom pool hazy indigo-slate, dark moss along the back of its bed, two small grey fish. No steam, no frost. Chunky fish, a ninth of a pool's length. A small iron lantern on a stake at each working pool. The spare bowl stays dry. Left third quiet. No people, no text.",
+    "credits": 4
+   },
+   {
+    "id": "finish-build-honest",
+    "title": "Finish D: what this renderer would actually draw (2a)",
+    "purpose": "Stage 2a finish comparison: the master as the Raylib toon pipeline would draw it. That means two flat light bands, an even inverted-hull ink outline on every mesh, no cast shadows, no reflections, flat oval water with a fresnel rim, and glows as sprites. The aspirational finishes are judged against what can actually ship. Two images at 2K.",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "count": 2,
+    "stage": 2,
+    "references": [
+     {
+      "source": "stage1:master-blockout-nano",
+      "why": "Composition, camera and every shape, exactly (whichever stage-1 master was chosen)."
+     }
+    ],
+    "prompt": "Repaint the reference image as a screenshot from a cozy real-time 3D game, keeping its camera, framing and every shape and position exactly. Render it the way a simple toon shader draws: every surface in just two flat light bands, lit and shaded, with no gradients; an even dark ink outline round every object; no cast shadows; no reflections; simple hand-painted textures on stone and bark; moderately low-poly shapes with smooth silhouettes. Cream and apricot travertine with flowstone bands painted on the terrace faces, a few thick roots, low moss, ferns; the bottom pool's lip dark blue-grey rock; the wall behind the top pool darker. The beam from the top right is a flat translucent pale-gold shaft with a few glowing dots in it. Water is flat ovals with a pale bright rim at their edges: the top pool opaque olive-jade with silt, a soft round glow sprite above it, two orange-spotted fish and two butter-yellow snails faint inside; the middle pool nearly clear teal and still, one reed with a glowing tip; the bottom pool hazy indigo-slate, dark moss at the back, two small grey fish. Small iron lanterns on stakes with soft round glows. The spare bowl dry. No steam, no frost. No people, no text.",
+    "credits": 4
+   },
+   {
+    "id": "focus-top-pool",
+    "title": "Focus camera on the top pool, clay (2a)",
+    "purpose": "Stage 2a. What the player sees while working: the camera eased to the top pool's card. The target is the subject minus 2.35 m along the camera's right vector, at distance 11.2. The subject lands at about screen (1091, 450), seen at about 27 deg, with the left 40% under the card. It tests whether the near lip hides laid objects and soak rings, and shows how far right the room must be built (about x 6.7 at this depth).",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "count": 1,
+    "stage": 2,
+    "references": [
+     {
+      "source": "stage1:master-blockout-nano",
+      "why": "The model, materials and arrangement (whichever stage-1 master was chosen). The camera moves closer in the same viewing direction; nothing is redesigned."
+     }
+    ],
+    "prompt": "The same matte colour-coded clay grotto as the reference image, same model and materials, with the camera moved in closer along the same direction of view, from the front and a little to the right, looking down about 27 degrees, as if a game had zoomed in to work on the top pool. The top pool now sits right of centre, a little above the middle of the frame, large and clear, its whole bed visible. On the front of its bed, just inside the near lip, three small objects lie in a row: a crystal, a round glass lens and a small jar, each fully visible over the low lip. The frame reaches past the top pool's right end to the rest of its terrace, the back end of the dry fourth bowl and the grotto's right-hand wall, which is solid rock all the way to the frame edge with no gap or void. The middle pool's back edge and the reading stand show at the lower edge. The left two fifths of the frame hold only calm plain wall, the root stair and roots, because a game panel will cover them. Soft even light. No tabletop, no base, no blur. No people, no text.",
+    "credits": 2
+   },
+   {
+    "id": "states-energy-grid",
+    "title": "Light x Heat grid on one bowl, worst-case backdrop (2b)",
+    "purpose": "Stage 2b, in the winning finish. The pool card's Light/Heat plane as nine water states. Light reads in the water (indigo to teal to gold-green, the bed dapple, the glow above) and Heat on the rim and air (steam versus frost, warm or cool shallows). The backdrop is pale cream travertine, with the noon beam behind the hot row, to test the cases the requirements flag: steam against the beam and pale stone, and frost on a cream lip. The lantern is unlit and identical in every panel, so its light cannot read as Heat.",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "count": 1,
+    "stage": 2,
+    "references": [
+     {
+      "source": "f4dc208c-3bb3-4cc5-819b-d597e0e80b2a",
+      "why": "PROVISIONAL style only; swap for the winning stage-2a finish image when it exists. Take line, flat colour and palette. NOT its grotto, sky opening, pools or layout."
+     }
+    ],
+    "prompt": "A grid of nine equal panels, three by three, thin dark gutters, no labels. Every panel shows the identical oval rimstone pool from the same high three-quarter angle, about 26 degrees down: a low rounded lip of cream travertine, a pale sandy bed, two chunky orange-spotted fish, one snail on the bed, and behind it the same pale cream-and-honey travertine wall. An unlit iron lantern on a stake stands at the back of every panel, identical everywhere. Only the water and the air above it change. Columns, left to right, dark to light: deep indigo-slate water over a dim bed; clear teal water; pale green-gold water with bright dappled light across the bed and a soft glow hovering above it. Rows, top to bottom, hot to cold: white steam curling up off the water, warm amber shallows, and a slanting white-gold sunbeam falling behind the steam; neither steam nor frost; feathery ice-blue frost crusting the cream lip and cool pale shallows. So the top-left panel is dark and steaming, the bottom-right bright and frosted, the centre plain teal. The reference image is for style only, not subject or layout: take its line, flat colour and palette. No people, no text.",
+    "credits": 2
+   },
+   {
+    "id": "states-residents",
+    "title": "Clarity, fish moods and the starting residents (2b)",
+    "purpose": "Stage 2b, in the winning finish. Shows the cleansing progression, which the finishes show at only one clarity. It also shows the fish moods (thriving glow, sulking low, plump with eggs) and the starting residents no other shot isolates: Hush-Moss along the back of the bed, butter-shelled Yellow-backed Snails on the bed (not the rims), the Lantern Reed's glowing tip, and sun-motes versus frost-motes. It drops the engine-drawn soak ring and object primitives.",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "count": 1,
+    "stage": 2,
+    "references": [
+     {
+      "source": "f4dc208c-3bb3-4cc5-819b-d597e0e80b2a",
+      "why": "PROVISIONAL style only; swap for the winning stage-2a finish image. Take line, flat colour and palette. NOT its subject, snails on rims or layout."
+     }
+    ],
+    "prompt": "A grid of nine equal panels, three by three, thin dark gutters, no labels. Each panel is a close view of one oval rimstone pool with a low cream-travertine lip, from a high three-quarter angle about 26 degrees down, against a dark mossy rock wall. Top row, how clear the water is, the same pool under a slanting noon sunbeam: thick with pale silt, opaque olive-jade, a soft glow above it, two fish only faint shadows; half cleared, milky jade, the fish half seen; crystal clear, every pebble sharp. Middle row, the fish's moods, chunky fish about a ninth of the pool's length: three orange-spotted fish swimming high with a faint warm glow; two dull, dark fish resting low on the bed, sulking; one plump, round-bellied fish carrying eggs beside a slim mate. Bottom row, the other residents: a dim indigo pool with soft dark moss along the back of its bed and two small grey fish; three butter-yellow snails grazing on the bed itself, not on the rim; a perfectly still pool with one reed whose tip glows like a candle seen through fog, small warm-gold motes and pale-blue motes hovering just above the water. The reference image is for style only: take its line, flat colour and palette; ignore its subject and layout. No people, no text.",
+    "credits": 2
+   },
+   {
+    "id": "states-room-tended",
+    "title": "Same frame mid-game: live states over the set (2b)",
+    "purpose": "Stage 2b, in the winning finish. Readability at real game scale; judge it scaled down to 1600x900. The states shown:\n- The likeliest mid-game sight: the Sun-Lens laid in the Sunward Basin (Light 5, Heat 2), steaming inside the beam, with a soak ring at the front of the most grazing bed.\n- Frost on a cream lip: the Spawning Pond with Shade-Salt and two frost-motes, Heat -3.\n- Live state contradicting the set: the root-shaded Shade Pool made bright.\n- The spare bowl filled as a fourth pool.\nTwo variants, so model luck is not mistaken for a design failure.",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "count": 2,
+    "stage": 2,
+    "references": [
+     {
+      "source": "stage1:master-blockout-nano",
+      "why": "Composition, camera and every shape, exactly (whichever stage-1 master was chosen). Only the dry right-hand bowl changes: it now holds water."
+     },
+     {
+      "source": "f4dc208c-3bb3-4cc5-819b-d597e0e80b2a",
+      "why": "PROVISIONAL style only; swap for the winning stage-2a finish image. NOT its viewpoint, sky opening or layout."
+     }
+    ],
+    "prompt": "Repaint reference image 1 as a finished illustration with the same camera, framing and every shape in place, later in the game, to test how live pool states read. Reference image 2 is for style only, not subject or layout. The top pool, in the noon sunbeam, has been cleared and warmed: bright pale green-gold water, a soft glow hovering above it, white steam rising off it and drifting up through the beam against the dark wet wall behind; a round glass lens lies at the front of its bed inside a ring of small lit dots. The middle pool has been chilled: clear teal water, feathery ice-blue frost crusting its cream lip, tiny pale-blue motes hovering just above it, small blue-grey crystals on its bed. The bottom pool, deep in root shade, has been brightened against its setting: pale gold-green water with dappled light across its bed, three fish glowing faintly, one plump with eggs. The dry bowl on the right now holds clear teal water as a fourth pool, with its own small lantern on a stake and two new fish. Butter-yellow snails on the beds, never on the rims. Chunky fish, a ninth of a pool's length. No people, no text.",
+    "credits": 4
+   },
+   {
+    "id": "light-night",
+    "title": "Same frame at night, exploratory (2b)",
+    "purpose": "Stage 2b, in the winning finish. Presented as exploratory, because rooms ignore the clock today. It belongs with the open questions on the clock-driven beam and the per-pool lanterns. With the beam gone, does warm light carried down (the lanterns, the ledger candle, the crock lamp) plus the pools' own glows (reed, motes, Light-emitting snails, thriving fish) carry the room?",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "count": 1,
+    "stage": 2,
+    "references": [
+     {
+      "source": "stage1:master-blockout-nano",
+      "why": "Composition, camera and every shape, exactly (whichever stage-1 master was chosen)."
+     },
+     {
+      "source": "f4dc208c-3bb3-4cc5-819b-d597e0e80b2a",
+      "why": "PROVISIONAL line and paint handling only; swap for the winning stage-2a finish image. NOT its viewpoint, daylight or layout."
+     },
+     {
+      "source": "art/reference/concepts/city-round/night-a.jpg",
+      "why": "Night colour only (the hub's lighting target): deep blue-indigo with warm lamps, never gloomy. NOT its city, wall, tree or overhead layout."
+     }
+    ],
+    "prompt": "Repaint reference image 1 as a finished night illustration, keeping its camera, framing and every shape exactly; change only the finish and the light. Reference image 2 gives only the line and paint handling; reference image 3 gives only the night colour, deep blue-indigo with warm lamplight; ignore both images' subjects and layouts. No sunbeam now: only a faint cool blue glow falls from the unseen opening high above onto the top pool, and the cave mouth is a dim blue doorway with one small warm lamp at the top of the steps beyond. Warm light is carried down: the small iron lantern on its stake at each pool is lit, pooling amber on its rim; a candle burns on the reading stand; a dim lamp glows by the crock. The pools give their own light: the middle pool's reed glows like a candle seen through fog, warm motes drift slowly above it, the top pool's two butter-yellow snails glow faintly on its bed, and thriving fish glow softly. The water keeps its colours: silted olive-jade at the top, clear teal in the middle, indigo-slate at the bottom. The walls sink into deep cool shade, never black; the left third stays quiet. Calm and safe. No people, no text.",
+    "credits": 2
+   },
+   {
+    "id": "kit-travertine",
+    "title": "Travertine kit sheet for Blender (2b)",
+    "purpose": "Stage 2b, in the winning finish. The kit pieces the build needs:\n- each bowl as its own part, so the hover rim and lift still work;\n- a dry bowl large enough for the full 5.9 x 2.4 m oval;\n- terrace dam faces with flowstone;\n- the mouth sill with steps and a brook channel;\n- the low outflow arch, landing and root-stair landing;\n- thick roots, no ink-noise strands.\nThere is no oculus rim (never in frame) and no frost crust (frost is live state).",
+    "model": "nano_banana_pro",
+    "resolution": "4k",
+    "aspect_ratio": "16:9",
+    "count": 1,
+    "stage": 2,
+    "references": [
+     {
+      "source": "stage1:master-blockout-nano",
+      "why": "Shapes of its pools, dams, mouth and roots only, so the kit matches the chosen master. NOT its composition."
+     },
+     {
+      "source": "f4dc208c-3bb3-4cc5-819b-d597e0e80b2a",
+      "why": "PROVISIONAL style only; swap for the winning stage-2a finish image. Line, flat colour, palette. NOT its subject."
+     },
+     {
+      "source": "art/reference/textures/stoic-bark.png",
+      "why": "Root bark only, so the grotto's roots read as Old Stoic's. Nothing else."
+     }
+    ],
+    "prompt": "A modular kit sheet for building a travertine grotto in 3D: about twelve separate pieces spaced in a loose grid on a plain warm-grey background, each isolated with a soft contact shadow, all from the same three-quarter view slightly above, at consistent scale, no labels. Pieces: a large oval rimstone pool bowl about 2.4 times as long as wide, shown alone, empty and dry with a pale mineral ring and a little leaf litter; the same bowl set into a terrace block, its rounded lip on top and a front dam face of banded flowstone dropping a full storey; a straight run of rimstone dam wall with one shallow spill notch; a slab of tall shaft wall with soft vertical flowstone drapes; a round-headed cave mouth no taller than a door, with a stone sill, worn steps rising into its left half and a narrow stone channel for a brook in its right half; a low round-headed outflow arch at floor level; a small stone landing; a short stair of three thick roots with flattened treads ending in a root landing; three thick roots tapering to blunt tips, no thin strands; moss mounds and two fern clumps. Reference image 1: only the shapes of its pools, mouth and roots. Reference image 2: only its line, flat colour and palette. Reference image 3: only the root bark. No people, no text.",
+    "credits": 4
+   },
+   {
+    "id": "kit-druid-props",
+    "title": "Druids' furniture and props sheet (2b)",
+    "purpose": "Stage 2b, in the winning finish. The game's required props for the Blender kit, at the sizes in pools_room.py: the holding crock with lid and net, the druids' bag (not a satchel), the ledger on its stand with a candle, the stool on a reed mat, two hand rakes, the pool lantern on its iron stake, the Stillkeeper's Sieve, the feed-crock shelf, a fern pot and a drain grate. It shows no glow at the bag's mouth, no water in the crock and no lit candle or lantern, because the game draws those live.",
+    "model": "nano_banana_pro",
+    "resolution": "4k",
+    "aspect_ratio": "16:9",
+    "count": 1,
+    "stage": 2,
+    "references": [
+     {
+      "source": "f4dc208c-3bb3-4cc5-819b-d597e0e80b2a",
+      "why": "PROVISIONAL style only; swap for the winning stage-2a finish image. Line, flat colour, palette. NOT its grotto, pools or composition."
+     }
+    ],
+    "prompt": "A prop sheet for a druids' grotto in a game: eleven separate objects spaced in a loose grid on a plain warm-grey background, each isolated with a soft contact shadow, all from the same three-quarter view slightly above, at consistent real-world scale, no labels. One: a fat glazed stoneware holding crock, knee-high and wide-mouthed, empty and dry inside, its wooden lid leaning against it, a long-handled landing net beside it. Two: a sturdy druids' bag of oiled canvas and leather, hip-high, drawstring mouth closed, embroidered oak leaves, no glow. Three: a slanted wooden reading stand holding an open ledger of blank cream pages, a green ink pot, a reed pen and an unlit candle on a small iron bracket. Four: a three-legged stool on a round woven reed mat. Five and six: two long-handled wooden hand rakes with short tines, one upright, one leaning. Seven: a small iron pool lantern hanging from a shepherd's-crook stake, unlit. Eight: a round wooden-rimmed sieve of fine brass mesh, empty. Nine: a plank shelf of small lidded feed crocks. Ten: a clay fern pot with a fern. Eleven: a small iron drain grate. The reference image is for style only: take its line, flat colour and palette; ignore its subject and layout. No people, no text.",
+    "credits": 4
+   },
+   {
+    "id": "section-cutaway",
+    "title": "Illustrated cutaway from the to-scale section (2b)",
+    "purpose": "Stage 2b, in the winning finish. A readable picture of the descent from the courtyard: the hub's door-high mouth in the water gate's foot, about 5 m of stair under the wall's footings, the well, and the oculus in the scarp shelf beyond the wall that the hub never shows. It is for the designer's oculus and hub-continuity decisions. The build guide is section.png itself, not this render.",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "count": 1,
+    "stage": 2,
+    "references": [
+     {
+      "source": "art/reference/concepts/rooms-fresh/travertine-layout/section.png",
+      "why": "Structure: every proportion, height and position in the to-scale section. Do NOT copy any of its text, numbers, tick marks, red and dashed guide lines, or its flat diagram look."
+     },
+     {
+      "source": "f4dc208c-3bb3-4cc5-819b-d597e0e80b2a",
+      "why": "PROVISIONAL style only; swap for the winning stage-2a finish image. NOT its viewpoint or layout."
+     }
+    ],
+    "prompt": "Turn reference image 1, a labelled technical cross-section, into an illustrated cutaway seen exactly side-on like a museum diorama cut in half, keeping every proportion, height and position it shows; ignore all its text, numbers, tick marks and coloured guide lines, and add none. On the left, a cobbled courtyard at ground level and the foot of a massive pale stone city wall with a tall round-headed arch recess, its rusted portcullis raised near the crown and a narrow stone gallery bridging it. At the wall's foot, a low mossy rock outcrop with a small door-high cave mouth, a stream running into it. From there a narrow stair tunnel drops steeply down beneath the wall's footings, the brook in a channel beside the steps, and comes out high in the side of a hidden cave. Inside, three cream travertine pools step down; the brook falls into the top one, and the bottom one drains into a low dark tunnel. Above, in the rock shelf beyond the wall, a round opening to the sky lets one slanting shaft of sun fall onto the top pool. Cut rock faces flat dark grey. Reference image 2 is for style only: its line, flat colour and palette. No people, no text.",
+    "credits": 2
+   },
+   {
+    "id": "view-up-not-in-game",
+    "title": "Looking up to the oculus (NOT IN GAME, run last)",
+    "purpose": "Stage 2b, run last, labelled 'not in game'. This is key art, and it informs open question 3 (what the oculus shows: sky plus a sliver of pale cut stone). The game camera can never show this view. Derive no kit pieces from it.",
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "aspect_ratio": "1:1",
+    "count": 1,
+    "stage": 2,
+    "references": [
+     {
+      "source": "stage1:master-blockout-nano",
+      "why": "Arrangement of pools, roots, stair, mouth and water route (whichever stage-1 master was chosen). The viewpoint changes to low and looking up."
+     },
+     {
+      "source": "f4dc208c-3bb3-4cc5-819b-d597e0e80b2a",
+      "why": "PROVISIONAL style only; swap for the winning stage-2a finish image. Take its line and colour. It also looks up, but take NOT its layout, its side cascades or its pools."
+     }
+    ],
+    "prompt": "The grotto from reference image 1, seen from a viewpoint the game never uses: standing low on the rim of the bottom pool, looking up and back across the terraces toward the sky. Keep its arrangement and its water route. Thick tree roots sweep down the left wall and become a stair of roots; the middle pool's cream rimstone dam rises just above; higher, the top pool's terrace face of banded flowstone; high in the back wall, a cave mouth no taller than a door, bright with daylight, worn steps on its left and a small brook spilling from its right into the top pool. Above it all the shaft rises and narrows to a round opening of pale sky, off to the upper right, fringed with ferns and one thick hanging root, a sliver of pale cut stone at its rim; a single shaft of white-gold noon sun slants through it onto the top pool, motes drifting in it. In the foreground, the bottom pool's dark, mossy blue-grey lip and hazy indigo-slate water, dark moss at the back of its bed, two small grey fish. Reference image 2 is for style only, not subject or layout. Quiet awe. No people, no text.",
+    "credits": 2
+   }
+  ],
+  "total_credits": 51.5,
+  "open_questions": [
+   "Finish: the hub's corner-a finish, the Travertine storybook's own finish, painterly realism (needs a renderer change: no ink outline, plus shadows and reflections) or the build-honest toon? Stage 2a answers this. Every stage-2b shot carries Nano A as a provisional style reference to be swapped for the winner.",
+   "Should keyframe A be retired as the interiors' style reference in favour of the city-round targets (corner-a, wide-c, night-a)? This round leaves it out because it is the finish of the set-aside rooms-round paint-overs.",
+   "Oculus: the proposal (section.png) puts it in the scarp shelf at world (18.9, -1, -11.2), 2.4 m beyond the wall's outer face, so the hub needs no change. Or should it be a courtyard well-head by the water gate, which is a hub change?",
+   "Descent: from the hub's four worn steps, about 4.3 m more of stair (about 44 deg) runs under the wall's footings to the room mouth (sill at world -5.1). Acceptable, or should the well be shallower?",
+   "Water route: the bypass runnel keeps the Spawning Pond 'perfectly still' but needs the spill to follow a kit path. The cascade (master-cascade-nano) needs the spill by height and a rewrite of 'perfectly still'. Which?",
+   "Camera: the shared camera stays, and the oculus is implied by its beam. Approve the code changes: lower the focus clamp (PoolsScene.cs:972) to about -2, and set SunDir to about (0.43, 0.89, -0.14) to match the beam from the top right. Or keep SunDir and lean the shaft back over the mouth instead?",
+   "Should the beam follow the world clock (light-night explores this), and should it dim when the top pool's live Light drops to 0 or below?",
+   "Should the per-pool lanterns and point lights stay? The finishes keep them, as the code builds them today.",
+   "Furniture: the druids' bag moves to the landing by the mouth, where Sanctum deliveries arrive. The holding crock moves from the front left to the right-hand ledge with the ledger and stool, because the front centre falls under the hover caption. Is that acceptable? Is it still the druids' bag (AGENTS.md open question 11)?",
+   "Spare bowls: one full-size dry bowl in frame for pool 3, with pools 4 and up in alcoves round the right wall, off the default frame and reached by tabs and focus. Pool positions and yaw would move from Slots to kit markers pool-0..n. Agree?",
+   "Snails stay on the bed, as the code draws them, in every prompt, not on the rims as in the concepts. Confirm.",
+   "Shade Pool colour: the content says 'green and tired', but the engine's start state is indigo-slate (Light -3 with Hush-Moss). Rewrite the prose, or tint the shader's dark end greener?",
+   "Text rewrites (the designer's prose):\n- pools.json:7, the Sunward Basin ('under the falls' spray... morning sun... lowest branch');\n- pools.json:18, the Sun-Grit silt find ('the falls have been dropping here for years');\n- pools.json:54, Sun-Grit ('from under the falls');\n- pools.json:60, Silver Silt ('the falls used to carry');\n- gold-nugget.json:13 and :52 ('beneath where Old Stoic's lowest branch leans', 'beneath the falls');\n- taxonomy.json:31 ('The pools beneath the falls');\n- locales.json:38 ('one small and still' is kept, and 'the falls' water rests on its way underground' still fits the brook).",
+   "The interior mouth is kept at the hub's door-high scale (1.4 x 1.6 m). Or should the hub's outcrop be enlarged?",
+   "The set-aside 2K pools textures in art/raw/rooms stay retired. New tiles wait until the blockout shows which surfaces need them. Confirm.",
+   "This round wrote new reference files into the repo, in art/reference/concepts/rooms-fresh/travertine-layout/: blockout-camera.png, blockout-camera-cascade.png, blockout-camera-hud.png, plan.png and section.png. Keep them there, and should the scratchpad scripts (layout.py, blockout_flat.py, diagrams.py, render_svgs.ps1) move into tools/?"
+  ]
+ },
+ "critique": {
+  "problems": [
+   {
+    "shot": "round",
+    "severity": "must-fix",
+    "problem": "Seven shots (both grids, the prop sheet, textures, tended, view-up and the kit, about 26 credits) default to keyframe A before the finish is chosen. Keyframe A is the style of the set-aside paint-overs: rooms-round/pools-a.jpg is already keyframe-A gouache at this camera, with stake lanterns, a stool on a mat, a crock and a bag. Finish A plus the keyframe-A state shots will recreate it, which is the affirmation loop the designer named. The fresh-takes round kept every keyframe out on purpose. Props, textures and the kit all depend on the finish, so if another finish wins they get paid for twice.",
+    "fix": "Re-stage the round. Stage 1: layout masters only, plus the free HUD-overlay check. Stage 2a: the finishes. Stage 2b runs after the finish is picked, with everything else in the winning finish: props, textures, kit, grids, tended, night and the section render. If anything has to run early, use the chosen Travertine images' own finish (Nano A/B) as the provisional style, not keyframe A."
+   },
+   {
+    "shot": "layout-clay-nano",
+    "severity": "must-fix",
+    "problem": "The only reference is the GPT Travertine image, and its composition contradicts what the prompt asks for: sky opening top-centre, mouth upper-left, a big middle pool, and the top pool pouring straight into the middle one. In a composition shot, that is the worst case for Nano's leakage. layout-clay-gpt, given its own model's image, will mostly redraw it. Every stage-2 frame inherits whatever the master gets wrong.",
+    "fix": "Run one Nano variant and the GPT variant text-only, as the fresh-takes round did. Keep the reference on the second Nano variant only, so the drift is visible and comparable before a master is chosen."
+   },
+   {
+    "shot": "layout-clay-nano",
+    "severity": "should-fix",
+    "problem": "'From high above its open front-right corner ... like a dollhouse' invites a 45-degree tabletop miniature, with a base and tilt-shift blur. The game's yaw is only 0.3 rad (17 deg), so the back wall reads almost square-on. 'Flat clay colours' gives the repaint and the blockout no way to tell water from stone. Pool sizes are unstated, so the brief's 'widest middle pool' can creep back in.",
+    "fix": "Use: 'a full-size room seen from the front and a little to the right, back wall nearly square-on, looking down about 25 degrees; no tabletop, no base, no depth-of-field blur'. Colour-code the clay: cream travertine, blue-grey shade rock, brown roots, flat pale-turquoise water, neutral props. Add: 'three ovals about 2.4 times as long as wide, nearly equal, the middle one slightly smaller'. Apply the same edits to layout-clay-gpt."
+   },
+   {
+    "shot": "layout-clay-nano",
+    "severity": "should-fix",
+    "problem": "The spare bowls. The back-left one, at about (587, 260), sits under the working card and just below the tab strip. A water plane there is seen at about 18 deg, under the 20-deg floor, and it is higher than the Sunward, which breaks the descending order. The right-wall one, at about (1395, 560), is about (5.9, 0.5, -1.6) in the room. Sized to hold the required 5.87 x 2.39 m oval, it overlaps the work ledge and runs under the top pool's right end. Unsized, Nano will draw small birdbaths that no pool can use.",
+    "fix": "Say every spare bowl is as large as the pools. Place them by calculation: water seen at 20 deg or more, outside screen x < 640, clear of the ledge hotspots, which probably means past x 6 on the right, where the room must extend for focus close-ups anyway. Or show one spare and leave its placement to the blockout's pool markers."
+   },
+   {
+    "shot": "layout-clay-nano",
+    "severity": "should-fix",
+    "problem": "The ledge holds four props within screen x 1020-1320, about 2.6 m at that depth (about 115 px/m). Their hotspots alone add up to about 4.7 m wide (crock 1.75, bag 1.1, ledger 1.05, stool 0.76), so the click boxes overlap and resolve to whichever is nearer.",
+    "fix": "Make the ledge about 6 m (screen x about 900-1550). Or split the furniture: ledger and stool on the ledge, the crock between the middle and bottom pools or at the foot of the stair, and the druids' bag near the mouth, where Sanctum deliveries arrive."
+   },
+   {
+    "shot": "view-section",
+    "severity": "must-fix",
+    "problem": "The heights contradict the hub. Just beyond the wall's outer face the ground is the scarp shelf at y -1 (HubCity.cs:424), and the hub mouth has only four shallow steps (about 0.2 m). A 'short tunnel' therefore leaves no room for a well 'about three storeys deep' with an oculus 'high above'. And with SunDir (0.15, 0.85, -0.5), a beam that lands on the back terrace has to come from an oculus over or behind the back wall, near the wall's footprint. An image model will paint a plausible section that quietly settles all of this wrongly, and the section is meant to be a build guide. Two variants double the cost.",
+    "fix": "First draw the section to scale for free (matplotlib or SVG) from the HubCity constants and the tested layout: courtyard 0, shelf -1, wall x 12.9-16.5, gate crown 7.2, gallery about 4, terraces +1.5/0/-1.5, frame top at the back wall about 4.7. Decide the descent (about 4-6 m of stair under the wall) or a courtyard well-head. Then, if a picture is still wanted, make one Nano render with that drawing as its structure reference. Cut the second variant."
+   },
+   {
+    "shot": "round",
+    "severity": "should-fix",
+    "problem": "The rationale says the runnel bypass means 'the spill still runs pool 0 to pool 1 as the code does'. It doesn't. PoolsScene.cs:207-214 draws a straight ribbon from pool 0's lip toward pool 1's centre. From (2.4, 1.5, -3.6) to (-2.9, -1.5, 0.4), that line passes through the middle pool's centre at (-0.3, 0, -1.0), so as coded the spill pours straight across the Spawning Pond.",
+    "fix": "Next to the master, list the code change: a spill path from kit markers, or a runnel the kit supplies. Then the designer isn't approving a 'no code change' route that needs code."
+   },
+   {
+    "shot": "finish-lamplit-ink",
+    "severity": "should-fix",
+    "problem": "All four finish prompts say 'water as the game begins', but the water they describe doesn't match the engine. Start energy is base plus emissions. Sunward is Light +3 / Heat +1, because each Yellow-backed Snail emits +1 Light, so it shows the glow above the surface (Light 2 or more) and a bright dappled bed even under 85% silt. Shade is Light -3 / Heat -1 because Hush-Moss emits -1, and WaterColours makes that indigo-slate, not 'green-slate'. Spawning is Light +1. The prompts leave out the two butter-shelled snails, the Hush-Moss and the Sunward glow. The finishes are justified as 'the player's real first view', and they aren't.",
+    "fix": "In all four finish prompts, describe the engine's start state: the Sunward silted olive-jade with a soft glow over it and two butter-yellow snails on the bed; the Shade indigo-slate with dark moss along the back of its bed; the Spawning near-teal with its glowing reed. Or record 'green-slate' as a decision to change the shader."
+   },
+   {
+    "shot": "finish-clean-storybook",
+    "severity": "should-fix",
+    "problem": "The finish comparison is one 4K image per finish, so per-image luck decides the finish: layout drift, or Nano A's in-frame oculus leaking in through the style reference. Both painterly variants ask for 'no ink outlines', which this renderer can't produce: every mesh gets an inverted-hull outline, and there are flat toon bands, no shadows and no reflections. Keyframe A is also not the hub's current target: the designer's later picks (corner-a, wide-a, night-a) are what the hub build follows.",
+    "fix": "Run two images per finish at 2K for the same credits. Keep one realism sample (Nano), labelled as needing a renderer change. Give Finish A corner-a as its style reference, or add corner-a alongside keyframe A. Add a build-honest finish (see missing shots)."
+   },
+   {
+    "shot": "states-room-tended",
+    "severity": "should-fix",
+    "problem": "It tests only the contradiction case. The most likely mid-game state is the Sun-Lens laid in the Sunward Basin: +2/+1 on top of Light 3 / Heat 1 gives Light 5 / Heat 2, with steam rising inside the noon beam. That is exactly where the GPT concept lost its steam, and no shot tests it.",
+    "fix": "Have the top pool steam inside the beam; darken its water too if the contradiction test is kept. Test frost on a cream lip on the newly filled fourth bowl or the middle pool, and keep the bottom pool bright. Judge fish readability on the image scaled down to 1600x900."
+   },
+   {
+    "shot": "states-energy-grid",
+    "severity": "should-fix",
+    "problem": "All nine panels sit against a dark mossy wall, the case where steam and frost read easily. So the grid can't show the risks the requirements name: steam against the beam or pale stone, and frost on cream. Every panel also has a lantern whose warm light will read as Heat. 4K is more than ~900 px panels need.",
+    "fix": "Use a cream travertine backdrop, with the noon beam crossing the top-row (hot) panels. Make the lantern unlit, or identical in every panel. Run at 2K."
+   },
+   {
+    "shot": "states-clarity-creatures",
+    "severity": "should-fix",
+    "problem": "The bottom row paints things the engine draws itself: the soak ring of 16 dots (Nano can't count them reliably) and the crystal, orb, jar and pebble primitives. The clarity row repeats the finishes' start state. Meanwhile the starting plants and snails appear in no shot.",
+    "fix": "Replace those panels with Hush-Moss along the back of the bed, the Lantern Reed's glowing tip, butter-shelled Yellow-backed Snails grazing the bed, and sun-motes vs frost-motes. Run at 2K."
+   },
+   {
+    "shot": "kit-travertine",
+    "severity": "should-fix",
+    "problem": "It asks for an oculus rim, which is never in frame, so building it is wasted. It asks for a frost-crusted lip, but frost is live state (Heat -2 or less, PoolsScene.cs:1280), so baking it in breaks 'live state beats architecture'. It leaves out pieces the build needs: each bowl as its own part, so the hover rim and lift still work; the mouth's sill with steps and brook; the low outflow arch; a landing for the root stair.",
+    "fix": "Drop the oculus rim and the frost crust. Add those pieces, including one dry bowl large enough for the full oval. Run it after the finish is picked."
+   },
+   {
+    "shot": "kit-druid-props",
+    "severity": "should-fix",
+    "problem": "'A faint glow at its mouth' on the bag bakes in a live state: the mouth glows only while something waits inside (PoolsScene.cs:1048-1049). The crock's water is a disc the game draws itself. And the sheet's style is fixed before the finish is chosen.",
+    "fix": "Ask for no glow and no water. Run it in stage 2b, in the winning finish."
+   },
+   {
+    "shot": "materials-travertine",
+    "severity": "should-fix",
+    "problem": "The quadrants of a 2x2 sheet won't tile; they need the courtyard_textures.py post-pass anyway. 'Mineral sparkle' and 'fine crystals' can't survive two toon bands. The two references pull opposite ways (GPT realism vs keyframe-A gouache). Which surfaces even need textures isn't known until the blockout.",
+    "fix": "Defer until after the finish pick and the blockout. Use one style reference (the winning finish), drop the sparkle, and make the tiles seamless with the existing post-process."
+   },
+   {
+    "shot": "view-threshold",
+    "severity": "should-fix",
+    "problem": "The sightline is impossible: a 1.4 x 1.6 m mouth at the end of a tunnel at least 3.6 m long shows a bright slot, not the footbridge, lamp post, portcullis teeth, falls and trunk. To fit them in, Nano will enlarge the mouth, which defeats the test. 'Unlit' contradicts pools.py (the lamp is lit once the pools open, and the player is inside) and the night shot's lit lamp. The brook flows into the grotto, toward the viewer, not 'running away'. corner-a shows neither the water-gate arch nor the portcullis. The master already shows the mouth at game scale.",
+    "fix": "Cut it. Or reframe it as the inner tunnel mouth: steps, the brook sliding over the sill, a bright slot of daylight, and the lamp lit."
+   },
+   {
+    "shot": "round",
+    "severity": "should-fix",
+    "problem": "There is no check of candidates against the HUD before picking a master or a finish, although the layout argument rests on clearances.",
+    "fix": "For free, overlay on every master and finish at 1600x900: the clock (20, 16, 320x90), the title band (y 108-194), the tabs (y 200-238, x 30-600), the corner buttons, the toasts (x 1160-1580), the caption (bottom edge at y 764), the satchel bar (y 808-892) and the card (28, 214, 600x572), plus the computed pool points. Reject any candidate that fails."
+   },
+   {
+    "shot": "light-night",
+    "severity": "nice",
+    "problem": "Its style reference (night-a) differs from the tended shot's (keyframe A), so stage 2 mixes house styles. Rooms ignore the clock today, so this frame explores a feature that doesn't exist yet.",
+    "fix": "Run it in stage 2b, in the winning finish, and present it as exploratory, tied to the lanterns and clock open questions."
+   },
+   {
+    "shot": "view-up-from-shade",
+    "severity": "nice",
+    "problem": "It shows what the game camera never will. It helps only as key art and for open question 3 (what is seen through the oculus), and could sell the designer a view the game doesn't deliver.",
+    "fix": "Keep it at 2K, run it last, and label it 'not in game'. Derive no kit pieces from it."
+   },
+   {
+    "shot": "round",
+    "severity": "nice",
+    "problem": "The text-rewrite list misses more prose that ties the Sunward to the falls. Sun-Grit: 'Warm golden grit from under the falls'. Its silt find: 'the falls have been dropping here for years'. Silver Silt: 'the falls used to carry'.",
+    "fix": "Add them to the designer's rewrite list."
+   },
+   {
+    "shot": "round",
+    "severity": "nice",
+    "problem": "The whole of stage 2 assumes the shared camera. Under it, the oculus (the hero of all three chosen images) and the 'quiet awe' of looking up are never visible in game. That sits buried among the open questions.",
+    "fix": "Lead the round's presentation with it, next to the chosen master: 'this is the in-game frame; the oculus is implied by its beam'."
+   }
+  ],
+  "missing_shots": [
+   "Focus-camera frame: what the player sees while working. Target = subject - right*2.35, distance 11.2, left 40% kept plain for the card. Frame the top pool and the druids' bag. It shows the room's right side out to x of about 8, past the current kit's 5.6 edge, and whether the near lip hides laid objects and soak rings at that angle. Nano edit or outpaint from the chosen master, 2 credits.",
+   "Build-honest finish: the master as this renderer would actually draw it, with two flat light bands, an even inverted-hull ink outline on every mesh, no cast shadows, no reflections, flat oval water with a fresnel rim, and particle steam. It sets what the engine can build beside the aspirational finishes. 2 x 2K.",
+   "0 credits: a to-scale plan and section drawn from the tested layout and the HubCity constants (courtyard 0, scarp shelf -1, wall x 12.9-16.5), plus a HUD-overlay pass on every candidate image.",
+   "The Sunward steaming inside the noon beam (the Sun-Lens state, Light 5 / Heat 2), the likeliest mid-game sight and the case the GPT concept lost. Fold it into states-room-tended.",
+   "The starting plants and snails: Hush-Moss along the Shade bed, the Lantern Reed's glowing tip, butter-shelled Yellow-backed Snails on the bed (not the rims). Fold them into the creature sheet.",
+   "Optional: one master variant with the brief's top -> middle -> bottom cascade, so the designer sees the water-route open question at the game camera rather than only the runnel bypass."
+  ],
+  "cut_shots": [
+   "view-plan (2 cr): an orthographic top-down plan from a perspective master is a known weak point. Nano will reinvent the layout, and the exact coordinates already exist, so draw the plan for free from the numbers.",
+   "finish-painterly-gpt (1.5 cr): GPT tends to recompose rather than repaint, so layout drift confounds the finish comparison. Realism without ink can't be built in this renderer, and one Nano realism sample answers the question.",
+   "view-threshold as written (2 cr): the sightline through a 1.4 x 1.6 m mouth at the end of a tunnel at least 3.6 m long is impossible. The lamp state and brook direction are wrong, and corner-a has no arch or portcullis. The master already shows the mouth at game scale.",
+   "view-section's second variant (2 cr): at most one render, made only after a to-scale section has settled the tunnel descent and where the oculus is."
+  ]
+ }
+}

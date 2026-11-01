@@ -1,6 +1,6 @@
 {
   "_about": "Provenance for every art file (iteration-3 art bible, 'Provenance and licensing'). Generated files: tool, model, job id, credits, references, sha256. Derived files: the script that made them from which inputs. Raw generations stay in the Higgsfield library under their job ids. Licence terms for the tools were not yet reviewed (decision D7).",
-  "updated": "2026-10-29",
+  "updated": "2026-11-01",
   "generated": [
     {
       "file": "art/reference/sheets/library-sheet.png",
@@ -502,6 +502,959 @@
         "corner-a paint-over (ef453d13)"
       ],
       "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-round/library-a.jpg",
+      "sha256": "fa0ceecefe1758038674875d816aa18a990d4d0cbff0bca314398096a54d8561",
+      "kind": "paint-over of the library interior (target for its room kit rebuild)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "aafc0014-84a6-4662-91a3-845c49095cee",
+      "credits": 4,
+      "references": [
+        "room capture (4ff3623b)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-round/library-b.jpg",
+      "sha256": "f277d623b509a5d51687ad2d3895223cd163f0bbe5f2e6c3d86cb3b096597c25",
+      "kind": "paint-over of the library interior (target for its room kit rebuild)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "68dce58e-509f-4815-a7b2-521470463b88",
+      "credits": 4,
+      "references": [
+        "room capture (4ff3623b)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-round/apothecary-a.jpg",
+      "sha256": "8f3f745c31f889e8a03a6ea0e15a71dda541c5215c28a4c4b11f55e621639a2b",
+      "kind": "paint-over of the apothecary interior (target for its room kit rebuild)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "2f6ca127-3084-4c2c-9149-464806ab7bb9",
+      "credits": 4,
+      "references": [
+        "room capture (ef7b7b55)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-round/apothecary-b.jpg",
+      "sha256": "c6984f99ed111f02703073667885ea09a2aca6cafba7aa81f81f437852b76dfb",
+      "kind": "paint-over of the apothecary interior (target for its room kit rebuild)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "09497f78-f89a-4cbc-a58b-d4e064a8de1f",
+      "credits": 4,
+      "references": [
+        "room capture (ef7b7b55)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-round/pools-a.jpg",
+      "sha256": "8040a88833e04aef96b0b4156439a1589dd12960ce962476b7239ed825371383",
+      "kind": "paint-over of the pools interior (target for its room kit rebuild)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "394218ac-6fda-4529-9ec4-82941496b80a",
+      "credits": 4,
+      "references": [
+        "room capture (f58c76c2)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-round/pools-b.jpg",
+      "sha256": "7eff68fa83d02528c4447dec46c2ed774bc83f43b5d4a56a91421f2bf14459c3",
+      "kind": "paint-over of the pools interior (target for its room kit rebuild)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "52259b9c-d12b-4bef-8ad1-5264d30f9a71",
+      "credits": 4,
+      "references": [
+        "room capture (f58c76c2)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-round/sanctum-a.jpg",
+      "sha256": "de0b226609346bbe72ba323467eaad7bc73965d0d835864634dc0dca8c74a2ae",
+      "kind": "paint-over of the sanctum interior (target for its room kit rebuild)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "d598e18e-bbb4-462c-a78c-73d6c839847c",
+      "credits": 4,
+      "references": [
+        "room capture (77bee3aa)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-round/sanctum-b.jpg",
+      "sha256": "660dcf76c09b266402d8c4b034655ac1aba9b326730d4ef5d58846bf0ad2af0a",
+      "kind": "paint-over of the sanctum interior (target for its room kit rebuild)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9; stored as quality-92 JPG",
+      "job": "f2422cb0-fd44-4623-afcd-182f6bc23721",
+      "credits": 4,
+      "references": [
+        "room capture (77bee3aa)",
+        "keyframe A (0d7ca74e)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/rooms/library-wall.png",
+      "sha256": "b0c7da2f11ea4112f360d01b1011d88de8ccd02b684a5f77ed3ba85c361864be",
+      "kind": "tileable painted texture: cool grey limestone ashlar interior wall",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1",
+      "job": "9e485f9d-5133-43c8-b2fd-f56fcdb8d336",
+      "credits": 2,
+      "references": [
+        "masonry.png (330fed5a), style"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/rooms/library-floor.png",
+      "sha256": "ff43c1f80d6b65ad93f5f327d1f4d2501ec24086186d2843df606bc75c3f7090",
+      "kind": "tileable painted texture: old oak floorboards",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1",
+      "job": "e46050b2-d3a0-4d43-bbe8-4c5338579522",
+      "credits": 2,
+      "references": [
+        "masonry.png (330fed5a), style"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/rooms/apothecary-wall.png",
+      "sha256": "fe9a49b6a3adafc5982eb2c53fd923a759c1fcaeccf56aa97d0fe84b9568ba57",
+      "kind": "tileable painted texture: warm limewashed plaster",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1",
+      "job": "bab3f5eb-f4f4-484f-bc1b-d8c1e31a1df7",
+      "credits": 2,
+      "references": [
+        "masonry.png (330fed5a), style"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/rooms/apothecary-floor.png",
+      "sha256": "cfc0ba063cc8b25e4bc8b1d8ae97fb2de040d7958c38d649a7380ec439b02f63",
+      "kind": "tileable painted texture: wide honey floorboards, herb stains",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1",
+      "job": "a506a099-e9bf-4ff3-a014-05b465a008e2",
+      "credits": 2,
+      "references": [
+        "masonry.png (330fed5a), style"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/rooms/pools-rock.png",
+      "sha256": "bc8cdd7ab13e4781fde523339f41f8ffaa3aeea8fd794eedb19720ac7f09b900",
+      "kind": "tileable painted texture: damp layered grotto limestone, moss, wet streaks, ferns",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1",
+      "job": "bda6749e-356f-4bf8-b855-b449109c2194",
+      "credits": 2,
+      "references": [
+        "corner-wall.png (6788a5a4), style"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/rooms/pools-ground.png",
+      "sha256": "78315e16e2dfb1e6dba9e747f0aac1fecf69a296fe2fff770c7f357cacc40bd0",
+      "kind": "tileable painted texture: damp grotto floor: earth, pebbles, moss",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1",
+      "job": "9c3583a3-3401-4ba0-a0c1-5e9b03d5a6e4",
+      "credits": 2,
+      "references": [
+        "corner-paving.png (a86ebdbc), style"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/rooms/sanctum-wall.png",
+      "sha256": "b0e39e73694eaff1a9892a87c06dd699c4cdcbdb77625375ddcc21e384d90a4b",
+      "kind": "tileable painted texture: warm honey sandstone ashlar",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1",
+      "job": "5c296582-dba8-411e-b2cb-f053c8a51f67",
+      "credits": 2,
+      "references": [
+        "city-ashlar.png (7733efc7), style"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/raw/rooms/sanctum-floor.png",
+      "sha256": "f0495b3e13bdff247d2d6aefff974a025cd284cb6bb5faea6d7bade8c93b6607",
+      "kind": "tileable painted texture: old grey-blue flagstones, chalk dust",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1",
+      "job": "01acb617-8d48-463f-8618-cded672776cc",
+      "credits": 2,
+      "references": [
+        "city-paving.png (d3b5aa3c), style"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-bathhouse-nano-a.jpg",
+      "sha256": "f1de1c28e119910ab3c3e66ccbe83a37cbba6b7a789c58e34f00cd7e3545a6cb",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"The Drowned Bathhouse\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "9a4ff983-1781-49f6-ab3b-a687f0ccf24b",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-bathhouse-nano-b.jpg",
+      "sha256": "5df47e8e78888f033c39956b9db49738e1b4cb066729aece74a6dabb4932197d",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"The Drowned Bathhouse\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "805a813e-928a-4bbe-95d0-f4dc8c3c1628",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-travertine-nano-a.jpg",
+      "sha256": "56ec0f3a20956a41c334ded26e9b5e6473c617205a651479fb20c1dfee001cec",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"The Travertine Well\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "f4dc208c-3bb3-4cc5-819b-d597e0e80b2a",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-travertine-nano-b.jpg",
+      "sha256": "bff9bbe7f8036ee23e563a74f20629dbefcc7f68ddfb3575538bb1dee8c18e82",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"The Travertine Well\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "85eeb408-a4e0-4170-bf1e-bf6dc76301b1",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-glow-hollow-nano-a.jpg",
+      "sha256": "a4d90ffcf4298e3f42a8ba9c6d0779cf92c71eb8aa4961732a66a96a21ecd848",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"The Glow Hollow\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "5f252f07-216a-458f-9b54-eda407b9b779",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-glow-hollow-nano-b.jpg",
+      "sha256": "a5d1de2632318f21f8511d42f285aea9579a070a7c57db2c8e95c09acc39a5ed",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"The Glow Hollow\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "7d7ce3aa-d595-41be-8fe4-639c0f0d28d7",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-cutaway-nano-a.jpg",
+      "sha256": "391154386af7fedfc69ea930e9cb0d7882b8310d7a97985d431297c3038f3c83",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"Beneath the Wall, Cut Open\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "43635b17-89ec-43ab-aa1e-7b6703f9a63e",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-cutaway-nano-b.jpg",
+      "sha256": "b5cf63a1c6ea2e914a9766acd9e81d15e1c9faec2c02ddfc0c025ae0d8a1a0c5",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"Beneath the Wall, Cut Open\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "c340985f-22ba-4a09-ac6b-43e3323f65a2",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-river-gate-nano-a.jpg",
+      "sha256": "bfbd7b9e0c43c9c238bf8a31979c674ec97d3460e9e1b1a8e399701969bd5ad4",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"The River Gate at Dawn\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "af86c049-4a72-4323-94e7-f4de87d25a30",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-river-gate-nano-b.jpg",
+      "sha256": "6f5e6aac5e7ba108392abe3cc1b2e0304ea2f6368b3bb4ff042f68cceadcc6b0",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"The River Gate at Dawn\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "d47f1bcf-107b-4998-9109-d16f2d3ca298",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-bathhouse-gpt.jpg",
+      "sha256": "88bfa431e84ac5408efbc599b5e5d33c0bd4545d8aa7c2f88dcce334139a37dc",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"The Drowned Bathhouse\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "7c83f7ba-f9e5-4bd7-a797-08896bc15e17",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-travertine-gpt.jpg",
+      "sha256": "2fd09e01c8dafd4dffcabb9c2e73513fc63fb755f83d25a481798e5fb713d716",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"The Travertine Well\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "c53395f5-9b3a-4e4e-b71a-9e766bee18a3",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-glow-hollow-gpt.jpg",
+      "sha256": "5b9835fe6c31abca4a77c3819a030828467af7422cb6a52f268b767bc2e5e49d",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"The Glow Hollow\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "6f29423d-ffbc-441c-bd0f-e8f0d4615962",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-cutaway-gpt.jpg",
+      "sha256": "a3f6544c3b516a0f791aa94f03f36f84eb1fc266c09e019c2a83cc99e5b28703",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"Beneath the Wall, Cut Open\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "766157ff-09ec-44e6-9221-2cc1c496093b",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/pools-river-gate-gpt.jpg",
+      "sha256": "ac25063749f8c8546c1af357cfe911947092412ac9216a6f81d9d36911d36a3b",
+      "kind": "blind concept of the grotto (Spirit Pools) interior: \"The River Gate at Dawn\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "37da57c1-5229-4f49-9027-8583e8ddff38",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/apothecary-hearth-nano.jpg",
+      "sha256": "17962c043a9dfad23ccf7a9ec1f35e6b0f7eb0f246901a1e7846a72bb7c2b10f",
+      "kind": "blind concept of the apothecary interior: \"Hearth Under the Rafters\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "e1dff23b-a42a-4ef3-97ae-fc40bf56b37a",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/apothecary-glasshouse-nano.jpg",
+      "sha256": "d96a133e65b8ad668b243abbc3a2d81bbb6c2505c51161d3f3818b9ac99e3ec9",
+      "kind": "blind concept of the apothecary interior: \"Glasshouse Against the Wall\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "bc2cc8c6-b0a1-4735-9041-9217d03782bd",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/apothecary-still-room-nano.jpg",
+      "sha256": "3e4a0b9fd7bedfd49b38d53c49cfdce876977dc6e14ff38b968ef18c3ed6fde5",
+      "kind": "blind concept of the apothecary interior: \"Noon Shaft Still-Room\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "ffd9d590-9383-4313-afb8-344a73473815",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/library-amphitheatre-nano.jpg",
+      "sha256": "5c96dbf33ec31fcf940a3c5f5a084a9948468f2bffb20692f8c1d0c94153bc5f",
+      "kind": "blind concept of the library interior: \"The Book Amphitheatre\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "54574119-85a2-4a3a-a087-75443aa1415c",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/library-attic-nano.jpg",
+      "sha256": "24e5d236b2627f009908d7a52846a698b9498d4b2cf17b8bfcb0039a2f14db62",
+      "kind": "blind concept of the library interior: \"Under the Blue Roof\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "962b3307-9b08-4bf2-9066-5fdc6caf8bc8",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/library-sorting-office-nano.jpg",
+      "sha256": "6a25b4a4ad9b48a4a34d90489bc2088718fa266646f9bf26e70c721785593b1d",
+      "kind": "blind concept of the library interior: \"The Sorting Office\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "887732ec-1a8e-4431-92b5-dc2fbb4c1703",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/sanctum-bath-dome-nano.jpg",
+      "sha256": "2afbb19f38e17d58c3ce1d1573d942ffee93d185a113637db8959c6c57e26776",
+      "kind": "blind concept of the sanctum interior: \"The Old Bathhouse Dome\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "9fa1d759-93d6-43c3-ad2a-c7b41225713e",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/sanctum-stacked-tower-nano.jpg",
+      "sha256": "a12e4db7a5eaba03468480b2a927f9a8f87063d1a8814e2b24b081f1ec8cf9f1",
+      "kind": "blind concept of the sanctum interior: \"The Lamplit Stacked Tower\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "23e00132-0248-4685-98c9-61887d018dbe",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/sanctum-spiral-nano.jpg",
+      "sha256": "33ec7d803e9d287cc534227c80053cff5cde7f4c498fbd6d8cca342be288739a",
+      "kind": "blind concept of the sanctum interior: \"The Spiral of Findings\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "68ab5cfb-921e-48d4-a673-12aac0041820",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/apothecary-hearth-gpt.jpg",
+      "sha256": "c0b80e82010401d2d824dee0555e8203accd0feafcbc6393302d633ac9252757",
+      "kind": "blind concept of the apothecary interior: \"Hearth Under the Rafters\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "bda39119-ebe4-4f69-9cb4-faff083bcca0",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/apothecary-glasshouse-gpt.jpg",
+      "sha256": "fe5318da7e579043266b97e6d9f8458f485b09824ad60c6a32de99810c0ed895",
+      "kind": "blind concept of the apothecary interior: \"Glasshouse Against the Wall\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "8f14763b-846d-4976-a2d1-f3a15e30e4a8",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/apothecary-still-room-gpt.jpg",
+      "sha256": "5d92794ec4159e50147b1a2384d3bf097b43e0077e80f2cabb7f43805689df8c",
+      "kind": "blind concept of the apothecary interior: \"Noon Shaft Still-Room\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "e51b5383-ca77-48a0-9317-09b88b61704c",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/library-amphitheatre-gpt.jpg",
+      "sha256": "12d2b82e940818f1bd4c1c71d51632fd3fce6bde342e5917e6698f7b1434c945",
+      "kind": "blind concept of the library interior: \"The Book Amphitheatre\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "4f46ca3c-082d-4e23-ad3e-2e92fbfcd789",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/library-attic-gpt.jpg",
+      "sha256": "be62e1311c2f86638b542df7377d8281f94f6e55fa746315a223e068be8f1146",
+      "kind": "blind concept of the library interior: \"Under the Blue Roof\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "2285dc05-24c7-4bba-a25a-97a6f8d55a74",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/library-sorting-office-gpt.jpg",
+      "sha256": "4fc68b43086a546d324500a68322382de9320cd9ea0911ae729b41cdb1daead9",
+      "kind": "blind concept of the library interior: \"The Sorting Office\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "25e88b51-1812-4fe0-814f-40e3e1f76a2a",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/sanctum-bath-dome-gpt.jpg",
+      "sha256": "459f4ab180d144d59492069a77d0dd16228351717fa3d5f1a533d9a704e60522",
+      "kind": "blind concept of the sanctum interior: \"The Old Bathhouse Dome\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "9c4fe7e3-3c2d-4c48-95eb-20895ceac185",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/sanctum-stacked-tower-gpt.jpg",
+      "sha256": "fb1889f880f822efd8ca78aa3860a6d02f6efa65c4eddcfe67b003d0fadbeb85",
+      "kind": "blind concept of the sanctum interior: \"The Lamplit Stacked Tower\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "7f7efacb-a714-4806-8eaf-c01e14f27dd3",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/sanctum-spiral-gpt.jpg",
+      "sha256": "ea02976b4708aa86e59e3b00c5f90555754afda68dd74123b9c10fa22b350b3d",
+      "kind": "blind concept of the sanctum interior: \"The Spiral of Findings\" (fresh-takes round, no reference image)",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "bf0853d1-7e36-48af-92a4-c642990bb3a6",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt from art/reference/concepts/rooms-fresh/briefs.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/master-text-nano.jpg",
+      "sha256": "8f0962bd4007888f81da8661c6cff25edc8d26207bf654cbe11017fd92a83730",
+      "kind": "Travertine Well grotto development: layout master, clay, text only",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "91b5473d-f93b-4952-a059-f92bd280a7ed",
+      "credits": 2,
+      "references": [
+        "none: text only, prompt in art/reference/concepts/rooms-fresh/travertine/round.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/master-ref-nano.jpg",
+      "sha256": "139f5a6aff437c583a626c5749e04b98e884a94946d67ea9ebd4e195d6b22ab9",
+      "kind": "Travertine Well grotto development: layout master, clay, with the GPT Travertine for forms",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "d601bdec-6687-4241-b2ff-0e73b4a3d651",
+      "credits": 2,
+      "references": [
+        "pools-travertine-gpt (c53395f5), forms only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/master-text-gpt.jpg",
+      "sha256": "2339e4f98c173398bc5844275870a9de15f5461cf884a014bf5bb18b705efe4b",
+      "kind": "Travertine Well grotto development: layout master, clay, text only",
+      "tool": "Higgsfield plugin",
+      "model": "gpt_image_2_5, high quality, 16:9 (1344 x 752); stored as quality-90 JPG",
+      "job": "d33665ed-d7f7-4472-ba7e-7649547b0892",
+      "credits": 1.5,
+      "references": [
+        "none: text only, prompt in art/reference/concepts/rooms-fresh/travertine/round.json"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/master-blockout-nano-a.jpg",
+      "sha256": "47aff0fe0a0c419290db5b042845356d5106bdc3f9347fab0f6b33da23b8a273",
+      "kind": "Travertine Well grotto development: layout master, clay, from the game-camera blockout (the base for the finishes)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "f7354030-2ce1-4c95-92d5-d3dfd29c13ba",
+      "credits": 2,
+      "references": [
+        "blockout-camera.png (uploaded 6201ab64)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/master-blockout-nano-b.jpg",
+      "sha256": "740bcdba9aa1900a37c34f23f27f633d54f181f2a16067d9ecfc94e08da4b601",
+      "kind": "Travertine Well grotto development: layout master, clay, from the game-camera blockout (barely changed it; unused)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "96d9bad0-acaa-464a-9e89-24cba5468863",
+      "credits": 2,
+      "references": [
+        "blockout-camera.png (uploaded 6201ab64)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/master-cascade-nano.jpg",
+      "sha256": "354b1533e4e9584fee29676bca3c7e44fa3ee25c092b510646b33b371d40c5d7",
+      "kind": "Travertine Well grotto development: layout master, clay, cascade water route",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "bb7b46e7-835d-4073-98f5-4ac2fdebb179",
+      "credits": 2,
+      "references": [
+        "blockout-camera-cascade.png (uploaded 58e7fd1a)"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/finish-hub-corner-a.jpg",
+      "sha256": "0f5560f2a169b1022022dd4b175e4d3a70b39d999e6d3cb4379f51b606ac41fb",
+      "kind": "Travertine Well grotto development: finish A: the hub corner's finish",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "147bae70-acde-4e04-be7e-60a201fd89a8",
+      "credits": 2,
+      "references": [
+        "master-blockout-nano-a (f7354030), layout",
+        "city-round/corner-a.jpg (uploaded a822945f), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/finish-hub-corner-b.jpg",
+      "sha256": "54fd7201491ad3e1e96588db721a2bf60e9a1d67fa74bd3f6c24068ee5a1199c",
+      "kind": "Travertine Well grotto development: finish A: the hub corner's finish",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "2a725b34-b8cb-4dbe-9867-f53be7b27730",
+      "credits": 2,
+      "references": [
+        "master-blockout-nano-a (f7354030), layout",
+        "city-round/corner-a.jpg (uploaded a822945f), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/finish-travertine-ink-a.jpg",
+      "sha256": "3601d96f20da45f1211882362ce7ab465b9661c40f6c2fb18476793334a5b169",
+      "kind": "Travertine Well grotto development: finish B: the Travertine storybook ink",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "22028182-aba1-4b36-8040-9c08736e933d",
+      "credits": 2,
+      "references": [
+        "master-blockout-nano-a (f7354030), layout",
+        "pools-travertine-nano-a (f4dc208c), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/finish-travertine-ink-b.jpg",
+      "sha256": "e1d637f1bfd2ddd74cd96eec96f5cb693d70d519cfd42540e4860a086604d58f",
+      "kind": "Travertine Well grotto development: finish B: the Travertine storybook ink",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "e802a426-f8de-4bed-a8d3-9311ce466848",
+      "credits": 2,
+      "references": [
+        "master-blockout-nano-a (f7354030), layout",
+        "pools-travertine-nano-a (f4dc208c), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/finish-painterly-a.jpg",
+      "sha256": "f21b1db2b97c9e2b89f61d7e75af00aea4f226c4195d9804d447e812a4f1bde8",
+      "kind": "Travertine Well grotto development: finish C: painterly realism (needs a renderer change)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "302e9005-5215-4f2b-9ec7-b17e3a304009",
+      "credits": 2,
+      "references": [
+        "master-blockout-nano-a (f7354030), layout",
+        "pools-travertine-gpt (c53395f5), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/finish-painterly-b.jpg",
+      "sha256": "e95f9c76bd7b224d8a2b25425323c0f92123222a26c7b50f054785a01a9bbe54",
+      "kind": "Travertine Well grotto development: finish C: painterly realism (needs a renderer change)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "9d0b680b-234a-44c7-b2bd-82253abd0395",
+      "credits": 2,
+      "references": [
+        "master-blockout-nano-a (f7354030), layout",
+        "pools-travertine-gpt (c53395f5), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/finish-build-honest-a.jpg",
+      "sha256": "b2ed57da91145ee24e3ade23e641a975fde3c10cecfaff3e843c9cdc86eb3341",
+      "kind": "Travertine Well grotto development: finish D: what the toon renderer would draw",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "341981f4-19b9-4b08-badd-287aa08c64ae",
+      "credits": 2,
+      "references": [
+        "master-blockout-nano-a (f7354030), layout"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/finish-build-honest-b.jpg",
+      "sha256": "145f4a896a78a7ff5ddca3cfc7a7c5f88afaf5a857b353c3aa566c8525a2e1d8",
+      "kind": "Travertine Well grotto development: finish D: what the toon renderer would draw",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "247d0746-aaac-45a1-8148-c6e8669db40e",
+      "credits": 2,
+      "references": [
+        "master-blockout-nano-a (f7354030), layout"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/focus-top-pool.jpg",
+      "sha256": "c729129965acb2523945e781875c2d152d9e7f036f02be21f9d2823752132342",
+      "kind": "Travertine Well grotto development: the focus camera on the top pool, clay (failed: drained the pool and set the objects on its rim)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "40e069ae-75a5-4306-b461-35e679fa0f2b",
+      "credits": 2,
+      "references": [
+        "master-blockout-nano-a (f7354030), layout"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/states-energy-grid.jpg",
+      "sha256": "3b3d2a39a8eb2e9c79fc916aaaf6cdb3ae23303c8f80268b6f84d85f821f15ca",
+      "kind": "Travertine Well grotto development: Light x Heat grid of nine water states on one bowl",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "9cee2ca9-6817-4c35-8bb6-68f304e75505",
+      "credits": 2,
+      "references": [
+        "finish-travertine-ink-a (22028182), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/states-residents.jpg",
+      "sha256": "d828b7c6b5b98ab2c76712b87c078398e2be5bd896e28520f0449363cfd89cae",
+      "kind": "Travertine Well grotto development: clarity, fish moods and the starting residents",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "36532f23-16f5-4779-8382-404fca817307",
+      "credits": 2,
+      "references": [
+        "finish-travertine-ink-a (22028182), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/states-room-tended-a.jpg",
+      "sha256": "c4a4483adf6a4d0fe2592ba5e7b38cd726b7995299521c0bec132905e3891ba5",
+      "kind": "Travertine Well grotto development: the room later in the game: live pool states over the set",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "1f8afe18-f5d6-4b05-8959-4f07c1ba794c",
+      "credits": 2,
+      "references": [
+        "finish-travertine-ink-a (22028182), finish and layout"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/states-room-tended-b.jpg",
+      "sha256": "e7d99b13350abc9bd15226cc93f099908ce74d9ebf30d7012326c2b24858126d",
+      "kind": "Travertine Well grotto development: the room later in the game: live pool states over the set",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "b9ed832a-92b3-4275-a662-6d82ee0bb8cb",
+      "credits": 2,
+      "references": [
+        "finish-travertine-ink-a (22028182), finish and layout"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/light-night.jpg",
+      "sha256": "181087cee50bfc130e69ae62d4c115eb9644b819ba71a959daee167379ac3f59",
+      "kind": "Travertine Well grotto development: the room at night (exploratory)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 16:9 (2752 x 1536); stored as quality-90 JPG",
+      "job": "ece6cc12-6c4e-4b89-abef-be226c275687",
+      "credits": 2,
+      "references": [
+        "finish-travertine-ink-a (22028182), finish and layout",
+        "city-round/night-a.jpg (uploaded eb3a222f), night colour only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/kit-travertine.jpg",
+      "sha256": "94d5c1e19710dfcefb999f51d5919eef59c64c06249ff5ddd4eb3370c3ea3e36",
+      "kind": "Travertine Well grotto development: travertine kit sheet for the Blender build",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9 (5504 x 3072); stored as quality-90 JPG",
+      "job": "7ca0f06e-63a0-4218-a458-55ce3ab0284d",
+      "credits": 4,
+      "references": [
+        "finish-travertine-ink-a (22028182), style, mouth and roots",
+        "master-text-gpt (d33665ed), rimstone forms only",
+        "textures/stoic-bark.png (uploaded 7525ef08), bark only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/kit-druid-props.jpg",
+      "sha256": "4a76941736102e4496df9cc22c05f3764f46e88050e64eb4de386494df20739d",
+      "kind": "Travertine Well grotto development: the druids' furniture and props sheet",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 4K, 16:9 (5504 x 3072); stored as quality-90 JPG",
+      "job": "090dec6a-362d-4366-892a-cd6d1888749c",
+      "credits": 4,
+      "references": [
+        "finish-travertine-ink-a (22028182), style only"
+      ],
+      "approved_by": null
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/view-up-not-in-game.jpg",
+      "sha256": "4e789a84421f18f7c51569cbebe03ed520f504db009ca13968d1e5f202a87d54",
+      "kind": "Travertine Well grotto development: key art looking up to the opening (a view the game never shows)",
+      "tool": "Higgsfield plugin",
+      "model": "nano_banana_pro (served as nano_banana_2), 2K, 1:1 (2048 x 2048); stored as quality-90 JPG",
+      "job": "c34b39bb-1c04-4bab-b044-2ee371bc29e5",
+      "credits": 2,
+      "references": [
+        "finish-travertine-ink-a (22028182), finish and layout"
+      ],
+      "approved_by": null
     }
   ],
   "derived": [
@@ -622,10 +1575,15 @@
     },
     {
       "file": "art/models/pools-room.glb",
-      "sha256": "47c17e9e583e00b789e299335aeb095b50e437f177b328795883da0e2b35dec9",
-      "made_by": "tools/blender/assets/pools_grotto.py (via pools_room.py) (Blender 5.2.3, headless)",
+      "sha256": "c3db218c8bd604a3c9037b48f3da7a61d31cbe3e3da9ccfa409b69b0c52463ff",
+      "made_by": "tools/blender/assets/pools_travertine.py (shell, markers) + travertine_props.py (bowls, lantern, props, decor items) + travertine_layout.py (numbers), via pools_room.py (Blender 5.2.3, headless)",
       "from": [
-        "art/reference/concepts/pools-grotto-concept.png",
+        "art/reference/concepts/rooms-fresh/travertine/finish-travertine-ink-a.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/kit-travertine.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/kit-druid-props.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/master-text-gpt.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/master-blockout-nano-a.jpg",
+        "art/reference/concepts/rooms-fresh/travertine-layout/section.png",
         "art/reference/sheets/pools-room-sheet.png",
         "art/reference/textures/stoic-bark.png"
       ],
@@ -747,6 +1705,272 @@
         "art/reference/concepts/city-round/night-a.jpg"
       ],
       "human_edits": "none yet"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/sheets/apothecary.jpg",
+      "sha256": "aa00b638b6179959e8981e31f2ed1cc9a7ab5ebf7ad593dcdc188c5e43713d58",
+      "made_by": "contact sheet for choosing (System.Drawing script in the session scratchpad; labelled tiles, the grotto's with the brief's idea)",
+      "from": [
+        "art/reference/concepts/rooms-fresh/apothecary-hearth-nano.jpg",
+        "art/reference/concepts/rooms-fresh/apothecary-glasshouse-nano.jpg",
+        "art/reference/concepts/rooms-fresh/apothecary-still-room-nano.jpg",
+        "art/reference/concepts/rooms-fresh/apothecary-hearth-gpt.jpg",
+        "art/reference/concepts/rooms-fresh/apothecary-glasshouse-gpt.jpg",
+        "art/reference/concepts/rooms-fresh/apothecary-still-room-gpt.jpg"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/sheets/grotto-1-bathhouse.jpg",
+      "sha256": "eecf8938db2fb59e6351d6a2953739883db300c72745f6fd46eca800ae67b6d7",
+      "made_by": "contact sheet for choosing (System.Drawing script in the session scratchpad; labelled tiles, the grotto's with the brief's idea)",
+      "from": [
+        "art/reference/concepts/rooms-fresh/pools-bathhouse-nano-a.jpg",
+        "art/reference/concepts/rooms-fresh/pools-bathhouse-nano-b.jpg",
+        "art/reference/concepts/rooms-fresh/pools-bathhouse-gpt.jpg"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/sheets/grotto-2-travertine.jpg",
+      "sha256": "96cbf776b77f1ebd377b8bdb7881b6ddac21056f64c0ce1e470d96dc1884a3b9",
+      "made_by": "contact sheet for choosing (System.Drawing script in the session scratchpad; labelled tiles, the grotto's with the brief's idea)",
+      "from": [
+        "art/reference/concepts/rooms-fresh/pools-travertine-nano-a.jpg",
+        "art/reference/concepts/rooms-fresh/pools-travertine-nano-b.jpg",
+        "art/reference/concepts/rooms-fresh/pools-travertine-gpt.jpg"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/sheets/grotto-3-glow-hollow.jpg",
+      "sha256": "ec8dd44954f06ce81f26f3804f7f1c8a7bed8a35441037318168c48d866d66d4",
+      "made_by": "contact sheet for choosing (System.Drawing script in the session scratchpad; labelled tiles, the grotto's with the brief's idea)",
+      "from": [
+        "art/reference/concepts/rooms-fresh/pools-glow-hollow-nano-a.jpg",
+        "art/reference/concepts/rooms-fresh/pools-glow-hollow-nano-b.jpg",
+        "art/reference/concepts/rooms-fresh/pools-glow-hollow-gpt.jpg"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/sheets/grotto-4-cutaway.jpg",
+      "sha256": "35d07aecc24573606010b4203f4e30fd7b0423947f7c02477ac254ac76cbe7f9",
+      "made_by": "contact sheet for choosing (System.Drawing script in the session scratchpad; labelled tiles, the grotto's with the brief's idea)",
+      "from": [
+        "art/reference/concepts/rooms-fresh/pools-cutaway-nano-a.jpg",
+        "art/reference/concepts/rooms-fresh/pools-cutaway-nano-b.jpg",
+        "art/reference/concepts/rooms-fresh/pools-cutaway-gpt.jpg"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/sheets/grotto-5-river-gate.jpg",
+      "sha256": "d703db3b3f827faab97fa1f76b93e0dd0f46e66bd04e96cb57df7f7e2bf3a62f",
+      "made_by": "contact sheet for choosing (System.Drawing script in the session scratchpad; labelled tiles, the grotto's with the brief's idea)",
+      "from": [
+        "art/reference/concepts/rooms-fresh/pools-river-gate-nano-a.jpg",
+        "art/reference/concepts/rooms-fresh/pools-river-gate-nano-b.jpg",
+        "art/reference/concepts/rooms-fresh/pools-river-gate-gpt.jpg"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/sheets/library.jpg",
+      "sha256": "6afc9962f73a6e79b7d94fd66765e2132fe98f8b8c6204919dce55519015ea05",
+      "made_by": "contact sheet for choosing (System.Drawing script in the session scratchpad; labelled tiles, the grotto's with the brief's idea)",
+      "from": [
+        "art/reference/concepts/rooms-fresh/library-amphitheatre-nano.jpg",
+        "art/reference/concepts/rooms-fresh/library-attic-nano.jpg",
+        "art/reference/concepts/rooms-fresh/library-sorting-office-nano.jpg",
+        "art/reference/concepts/rooms-fresh/library-amphitheatre-gpt.jpg",
+        "art/reference/concepts/rooms-fresh/library-attic-gpt.jpg",
+        "art/reference/concepts/rooms-fresh/library-sorting-office-gpt.jpg"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/sheets/sanctum.jpg",
+      "sha256": "691c77b22710c07463c0c91adc1e2c806d402a48e9c12d15813ceac197425449",
+      "made_by": "contact sheet for choosing (System.Drawing script in the session scratchpad; labelled tiles, the grotto's with the brief's idea)",
+      "from": [
+        "art/reference/concepts/rooms-fresh/sanctum-bath-dome-nano.jpg",
+        "art/reference/concepts/rooms-fresh/sanctum-stacked-tower-nano.jpg",
+        "art/reference/concepts/rooms-fresh/sanctum-spiral-nano.jpg",
+        "art/reference/concepts/rooms-fresh/sanctum-bath-dome-gpt.jpg",
+        "art/reference/concepts/rooms-fresh/sanctum-stacked-tower-gpt.jpg",
+        "art/reference/concepts/rooms-fresh/sanctum-spiral-gpt.jpg"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/briefs.json",
+      "sha256": "b5129eb4235f8362138b76099448da596e9ac2198d91db7bbd3d04aa30a671ca",
+      "made_by": "workflow 'interior-fresh-takes': four art directors, each blind to the current art, wrote divergent briefs per room",
+      "from": [
+        "AGENTS.md",
+        "docs/design/iteration-3-art-bible.md"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine-layout/blockout-camera.png",
+      "sha256": "134049aecdcae17abe66a2b7022ad70005e0b5c7c7b6b3ae2e6a993eca1e4bab",
+      "made_by": "Blender massing render from the exact pools-room camera (scratchpad travertine/blockout_flat.py, layout.py)",
+      "from": [
+        "src/Atrium.Diorama/Scenes/PoolsScene.cs",
+        "content/pools/pools.json"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine-layout/blockout-camera-cascade.png",
+      "sha256": "770c480cbf6aa2b72be82a08490e82a702397a4f3e79d3e01bebdbc7296e65f6",
+      "made_by": "the same blockout with the cascade water route",
+      "from": [
+        "src/Atrium.Diorama/Scenes/PoolsScene.cs"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine-layout/blockout-camera-hud.png",
+      "sha256": "56d1a9402f042b6860fecbd0cbcb03fc2ea159285f9e95c33f2457fb3eeebfa9",
+      "made_by": "the blockout with the game's HUD rectangles, pool points and focus spot drawn over it (scratchpad travertine/diagrams.py)",
+      "from": [
+        "art/reference/concepts/rooms-fresh/travertine-layout/blockout-camera.png",
+        "src/Atrium.Diorama/UI/Hud.cs",
+        "src/Atrium.Diorama/Scenes/InteriorScene.cs"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine-layout/plan.png",
+      "sha256": "21e8a10eb864a93c2bb24f63f24c221ccb5ec8c110b9f512ab4ecc550bd63510",
+      "made_by": "to-scale plan from the tested projections (scratchpad travertine/diagrams.py, rendered with headless Edge)",
+      "from": [
+        "src/Atrium.Diorama/Scenes/PoolsScene.cs"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine-layout/section.png",
+      "sha256": "59da543799129b4bac8e66bd1937f25e644bff93bf9e6f17f0c4f7ce936f825a",
+      "made_by": "to-scale section from the courtyard down to the pools, from the HubCity constants (scratchpad travertine/diagrams.py)",
+      "from": [
+        "src/Atrium.Diorama/Scenes/HubCity.cs",
+        "tools/blender/assets/wall_kit.py"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/sheets/layout-masters.jpg",
+      "sha256": "13e02b24ae6c08d2a8f0639e95e4bf8fd815b1c579213ccb801909f542402ecb",
+      "made_by": "contact sheet for choosing (scratchpad sheet.ps1)",
+      "from": [
+        "art/reference/concepts/rooms-fresh/travertine/master-text-nano.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/master-ref-nano.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/master-text-gpt.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/master-blockout-nano-a.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/master-cascade-nano.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/focus-top-pool.jpg"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/sheets/finishes.jpg",
+      "sha256": "9f19da6e034d11c1786206b132223a0202497f19f16c63971e4df6163254814c",
+      "made_by": "contact sheet for choosing (scratchpad sheet.ps1)",
+      "from": [
+        "art/reference/concepts/rooms-fresh/travertine/finish-hub-corner-a.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/finish-hub-corner-b.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/finish-travertine-ink-a.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/finish-travertine-ink-b.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/finish-painterly-a.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/finish-painterly-b.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/finish-build-honest-a.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/finish-build-honest-b.jpg"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/round.json",
+      "sha256": "57e705227413b4096df77dc298c94e21300d3c08df55b0f4338acf9694b4a3e6",
+      "made_by": "workflow 'travertine-well-brief': requirements from code and content, an art director's shot list, an adversarial critique and the revised list",
+      "from": [
+        "art/reference/concepts/rooms-fresh/briefs.json",
+        "src/Atrium.Diorama/Scenes/PoolsScene.cs"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/sheets/finish-b-room.jpg",
+      "sha256": "98091b3a103cbc6a24688e8b3100556d5e2600c2271b862fdda55e4ce6146b9c",
+      "made_by": "contact sheet for review (scratchpad sheet.ps1)",
+      "from": [
+        "art/reference/concepts/rooms-fresh/travertine/finish-travertine-ink-a.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/states-room-tended-a.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/states-room-tended-b.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/light-night.jpg"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/sheets/finish-b-states.jpg",
+      "sha256": "15b65836f71a3d9bd69e4a45235a1ae8cb4309788d6d8ede0367c5a92c8c8d47",
+      "made_by": "contact sheet for review (scratchpad sheet.ps1)",
+      "from": [
+        "art/reference/concepts/rooms-fresh/travertine/states-energy-grid.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/states-residents.jpg"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/review-2b.json",
+      "sha256": "e7db89b4b650eb62d0cc396591c225287bf721afa0874a886c56299b2b56356c",
+      "made_by": "workflow 'travertine-2b-review': game-readability and buildability reviews of the stage-2b images",
+      "from": [
+        "art/reference/concepts/rooms-fresh/travertine/states-energy-grid.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/states-residents.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/states-room-tended-a.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/states-room-tended-b.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/light-night.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/kit-travertine.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/kit-druid-props.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/view-up-not-in-game.jpg"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/sheets/finish-b-build.jpg",
+      "sha256": "6c19205c6986d908bb060a9fd2d4367351496cdba1cc7aee479e1801e1486cc6",
+      "made_by": "contact sheet for review (scratchpad sheet.ps1)",
+      "from": [
+        "art/reference/concepts/rooms-fresh/travertine/kit-travertine.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/kit-druid-props.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/states-energy-grid.jpg",
+        "art/reference/concepts/rooms-fresh/travertine/view-up-not-in-game.jpg"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/in-game/kit-1-room.jpg",
+      "sha256": "e6dd2b913c097174769f84648940a8cddb57d887f45aa7f03f1ce2e66dbf9795",
+      "made_by": "in-game capture of the pools room with the first Travertine kit (default camera, UI off) (AtriumDiorama --capture)",
+      "from": [
+        "art/models/pools-room.glb",
+        "src/Atrium.Diorama/Scenes/PoolsScene.cs"
+      ],
+      "human_edits": "none"
+    },
+    {
+      "file": "art/reference/concepts/rooms-fresh/travertine/in-game/kit-1-focus-sheet.jpg",
+      "sha256": "ed40c156327162d9e3412098d2c4ff3b32c88755a9ebd619ad0d16c6ffb060ba",
+      "made_by": "contact sheet of in-game captures: the room with the HUD, and the focus camera on the Sunward Basin, the Shade Pool and the holding crock (AtriumDiorama --capture)",
+      "from": [
+        "art/models/pools-room.glb",
+        "src/Atrium.Diorama/Scenes/PoolsScene.cs"
+      ],
+      "human_edits": "none"
     }
   ],
   "discarded": [
@@ -769,6 +1993,11 @@
       "job": "4168f1ca-bcf3-403c-b2b2-e7b7885013c3",
       "credits": 4,
       "why": "white-city kit sheet B: lower half smeared into fog, painted text on a sign, a banner too close to a known film emblem"
+    },
+    {
+      "job": "a8e2806d-bdde-4571-aeab-a2f4b1d1a742",
+      "credits": 2,
+      "why": "Travertine section cutaway: inverted the descent (pools about 6 m above the courtyard, the stair climbing up into the cave); travertine-layout/section.png stays the guide"
     }
   ]
 }

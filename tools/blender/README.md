@@ -124,6 +124,30 @@ Each room can also draw a kit: `models/<locale>-room.glb`, built by `assets/<loc
 Room sheets are cheap. One GPT Image 2.5 image (low quality, 1K, 0.25 credits) holds all of a room's
 furniture, plus floor and wall patches.
 
+### The Spirit Pools room (the Travertine Well)
+
+`build.py -- pools-room` runs `pools_room.build()`, which hands over to `assets/pools_travertine.py` (the older
+grotto, `pools_grotto.py`, is kept). Every number comes from `assets/travertine_layout.py`: pool slots, terrace
+edges, the mouth, the runnel and outflow paths, prop and decor spots. It is plain Python, so
+`python travertine_layout.py` prints where things land on the game camera. `pools_travertine.py` builds the room and
+the markers. `assets/travertine_props.py` builds the bowls, the lantern, the druids' things and the small decor. If
+that module is missing, pools_room's props stand in. Stone, moss and floor are painted procedurally. The roots use
+`stoic-bark.png`.
+
+| part | frame | what |
+|---|---|---|
+| `shell` | room | terraces (tops 1.66 / 0.16 / −1.34) with banded flowstone dam faces, the landing (2.4), grey-blue drape walls, the cave mouth (ring, treads up its left half, the brook's ramp and spout lip on the right, daylight at the top), the low outflow arch, the wet floor, the dry runnel and outflow channels, the right-wall alcoves, roots, the root stair, and a hole in the terrace top at each slot (the lip's outer oval, scaled to the slot) |
+| `decor` | room | moss drapes over the dam edges, moss mounds, pebbles, plus `decor_items`: fern pots, sieve, feed shelf, grate, second rake |
+| `ferns` | room | wild fern clumps, and the potted ferns (drawn with sway) |
+| `beam` | room | the noon beam, an open tapered shaft from `oculus` to `beam-spot` (drawn additively) |
+| `bowl`, `bowl-dark`, `bowl-dry` | pool-local | built for a 2.96 × 1.22 water oval, origin 0.62 m below the water; the game scales them per slot |
+| `lantern`, `crock`, `bag`, `ledger`, `stool`, `rake` | own origin | as in the built-in props |
+
+Markers (empties, game coordinates): `pool-N`, `pool-N-x`, `pool-N-z` for slots 0–5 (base, long-axis end, front-axis
+end, which give position, yaw, rx and rz); `at-crock`, `at-bag`, `at-ledger`, `at-stool`; the water paths
+`brook-*`, `runnel-*` and `outflow-*`; and `oculus` and `beam-spot`. PoolsScene falls back to its own layout for
+any part or marker that is missing.
+
 To split a turnaround sheet into same-scale views (for a multi-view lift), describe the views in `sheets.json`
 and run `split_views.py` the same way as `build.py`, passing the sheet's file name.
 

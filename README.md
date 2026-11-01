@@ -2,7 +2,7 @@
 
 *A cozy puzzle game about tending a forgotten courtyard, and slowly working out the secrets that turn up in it.*
 
-**Genre:** Cozy · Puzzle / Deduction  **Engine:** C# / .NET 8, engine-agnostic (Godot-ready)  **Status:** first playable: Chapter One
+**Genre:** Cozy · Puzzle / Deduction  **Engine:** C# / .NET 10, engine-agnostic (Godot-ready)  **Status:** first playable: Chapter One
 
 ![Atrium overview sheet: an isometric courtyard with the tree at the centre and four numbered locales around it, with cards describing each locale, the house rules, a clue-by-locale grid, and the gold nugget essence diagram](docs/design/overview-draft.png)
 
@@ -16,7 +16,7 @@ This folder holds the design brief ([AGENTS.md](AGENTS.md)) and the playable bui
 
 ## Play it
 
-You need the [.NET 8 SDK or newer](https://dotnet.microsoft.com/download). From this folder, the 3D game:
+You need the [.NET 10 SDK or newer](https://dotnet.microsoft.com/download). From this folder, the 3D game:
 
 ```bash
 dotnet run --project src/Atrium.Diorama
@@ -248,7 +248,7 @@ The first playable covers all eight steps at "spike" depth with placeholder pres
 | Piece | State |
 |---|---|
 | [AGENTS.md](AGENTS.md) | The design and engineering brief: invariants, architecture, open questions. It's the source of truth. |
-| [src/Atrium.Core/](src/Atrium.Core/) | The whole game, engine-agnostic (.NET 8). It has: content schemas, a loader and a load-time validator; the evidence → gate → synthesis spine; the essence/remnant registry and Reconstitution Circle; the world-clock; the four minigames; story progression; and save/load. |
+| [src/Atrium.Core/](src/Atrium.Core/) | The whole game, engine-agnostic (.NET 10). It has: content schemas, a loader and a load-time validator; the evidence → gate → synthesis spine; the essence/remnant registry and Reconstitution Circle; the world-clock; the four minigames; story progression; and save/load. |
 | [src/Atrium.Terminal/](src/Atrium.Terminal/) | A standalone, full-screen terminal front end. It only presents the game; every rule lives in the core. |
 | [src/Atrium.Diorama/](src/Atrium.Diorama/) | Iteration 2: a standalone 3D front end on raylib (Raylib-cs). It has a cel-shaded courtyard diorama with a day/night cycle, four furnished 3D rooms with parchment working cards, synthesised music and sounds, and a scripted screenshot mode. It only presents the game; every rule lives in the core. See [docs/design/iteration-2-diorama.md](docs/design/iteration-2-diorama.md). |
 | [content/](content/) | All designer data: taxonomy, 4 locales, 42 tomes (one Markdown file each), 30 Apothecary discoveries, 10 lifeforms with breeding genetics, 3 pools, 6 tools, 5 clue-objects, 12 story beats, and the fixed courtyard scene. |

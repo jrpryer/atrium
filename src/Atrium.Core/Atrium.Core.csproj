@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <!-- Engine-agnostic game core: content schemas, loader, validation, runtime services, locale simulations.
-       No engine or UI dependencies, so it can be referenced from Godot 4.x C# (net8.0) or any other .NET host. -->
+       No engine or UI dependencies, so it can be referenced from Godot 4.x C# (a net10.0 Godot project) or any other .NET host. -->
   <PropertyGroup>
     <RootNamespace>Atrium.Core</RootNamespace>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>

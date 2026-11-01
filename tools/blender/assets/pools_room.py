@@ -1011,9 +1011,9 @@ def build_rake(M, root):
 
 
 def build(kit):
-    """The room the game uses: the hidden grotto (pools_grotto.py), with this file's crock, bag, ledger, stool and rake."""
-    from assets import pools_grotto
-    return pools_grotto.build(kit)
+    """The room the game uses: the Travertine Well (pools_travertine.py; the grotto, pools_grotto.py, before it)."""
+    from assets import pools_travertine
+    return pools_travertine.build(kit)
 
 
 def build_stone_room(kit):

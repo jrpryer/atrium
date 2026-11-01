@@ -38,10 +38,10 @@ internal static class HubCorner
             foreach (var (role, mesh, colour) in piece.Meshes)
                 switch (role)
                 {
-                    case "stone" when name.StartsWith("flags-"): p.Flags.AppendMesh(mesh, m, Color.White); break;
-                    case "stone": p.Stone.AppendMesh(mesh, m, Color.White); break;
+                    case "stone" when name.StartsWith("flags-"): p.Flags.AppendMesh(mesh, m, HubCity.StoneTint); break;
+                    case "stone": p.Stone.AppendMesh(mesh, m, HubCity.StoneTint); break;
                     case "water": p.Puddles.AppendMesh(mesh, m, Color.White); break;
-                    case "trickle": p.Rivulets.AppendMesh(mesh, m, Color.White, q => new Vector2(q.X + q.Z, -q.Y) * 1.5f); break;
+                    case "trickle": p.Rivulets.AppendMesh(mesh, m, Color.White, q => new Vector2(0.5f, 0.3f + Math.Clamp((4 - q.Y) / 16, 0, 0.3f))); break;
                     default: p.Upper.AppendMesh(mesh, m, colour); break;
                 }
         }

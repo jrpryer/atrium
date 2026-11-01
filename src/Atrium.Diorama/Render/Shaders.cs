@@ -274,20 +274,25 @@ public sealed class Shaders : IDisposable
         in vec2 uv; in vec3 fragPos;
         uniform vec4 colDiffuse;
         out vec4 finalColor;
-        float hash(float n) { return fract(sin(n) * 43758.5453); }
-        float vnoise(float x) { float i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f); return mix(hash(i), hash(i + 1.0), f); }
+        float hash2(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+        float noise2(vec2 p) {
+            vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+            return mix(mix(hash2(i), hash2(i + vec2(1.0, 0.0)), f.x), mix(hash2(i + vec2(0.0, 1.0)), hash2(i + vec2(1.0, 1.0)), f.x), f.y);
+        }
         void main() {
-            // soft streaks that vary smoothly across the sheet and race down it, churning white toward its foot
-            float x = uv.x * 7.0;
-            float speed = 0.55 + vnoise(x) * 0.35;
-            float s = fract(uv.y * 3.0 - time * speed + vnoise(x + 11.0) * 2.0);
-            float streak = smoothstep(0.0, 0.3, s) * smoothstep(1.0, 0.45, s);
-            float edge = smoothstep(0.0, 0.25, uv.x) * smoothstep(1.0, 0.75, uv.x);
-            float foam = smoothstep(0.55, 1.0, uv.y);
-            vec3 c = mix(colDiffuse.rgb, vec3(0.96, 0.99, 0.98), clamp(streak * 0.55 + foam * 0.6, 0.0, 1.0));
+            // one translucent body of water (deeper at its edges, clearer through its middle) with broad, cel-edged
+            // highlights flowing down it, a white lip where it breaks over the edge and churn at its foot
+            float across = 1.0 - abs(uv.x * 2.0 - 1.0);
+            vec2 q = vec2(uv.x * 3.0, uv.y * 2.4 - time * 1.1);
+            float n = noise2(q) * 0.65 + noise2(q * 2.3 + 7.0) * 0.35;
+            float band = smoothstep(0.52, 0.6, n);
+            float foam = smoothstep(0.62, 0.96, uv.y) + smoothstep(0.1, 0.0, uv.y) * 0.8;
+            vec3 deep = colDiffuse.rgb * vec3(0.62, 0.8, 0.86);
+            vec3 c = mix(deep, colDiffuse.rgb, smoothstep(0.0, 0.7, across));
+            c = mix(c, vec3(0.97, 1.0, 0.99), clamp(band * 0.7 + foam, 0.0, 1.0));
             c *= mix(groundColor, skyColor, 0.6) * 0.5 + sunColor * 0.6;
-            float a = edge * (0.55 + streak * 0.3 + foam * 0.25) * colDiffuse.a;
-            finalColor = vec4(fog(c, fragPos), a);
+            float a = smoothstep(0.0, 0.35, across) * (0.72 + band * 0.2 + foam * 0.2) * colDiffuse.a;
+            finalColor = vec4(fog(c, fragPos), clamp(a, 0.0, 1.0));
         }
         """;
 

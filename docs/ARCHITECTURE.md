@@ -1,6 +1,6 @@
 # Architecture
 
-Atrium is a plain C# / .NET 8 solution with no engine dependency. All the game rules live in one library;
+Atrium is a plain C# / .NET 10 solution with no engine dependency. All the game rules live in one library;
 front ends only present them.
 
 ```
@@ -11,8 +11,12 @@ Atrium.slnx
 └─ content/                designer-authored data: JSON + one Markdown file per tome
 ```
 
-`Atrium.Core` targets `net8.0` (the runtime Godot 4.4–4.6 C# uses) and references nothing outside the base
-class library. Godot, Unity, MonoGame, or a future graphical front end can reference it unchanged.
+`Atrium.Core` targets `net10.0` and references nothing outside the base class library. Godot, Unity, MonoGame,
+or a future graphical front end can reference it unchanged, as long as that host targets `net10.0` too. Godot
+C# projects default to `net8.0`, so a Godot front end raises its own `TargetFramework` to match. That works:
+`tools/godot-smoke` (a net10.0 Godot project referencing the core) ran in Godot 4.7.2 on .NET 10.0.14, loading
+and validating the content, playing 600 ticks and round-tripping a save. The whole solution moved from .NET 8
+to .NET 10 on 2026-11-01.
 
 ## Layers
 
@@ -122,7 +126,8 @@ given with `--saves`. Offline progress on load is a tunable (`offlineProgress`: 
 
 ## Porting to Godot later
 
-1. Reference `Atrium.Core` from the Godot C# project (both use `net8.0`).
+1. Reference `Atrium.Core` from the Godot C# project, with the Godot project's `TargetFramework` raised to
+   `net10.0` to match the core (`tools/godot-smoke/AtriumGodotSmoke.csproj` is a working example).
 2. Implement `IContentSource` over `res://content` with `FileAccess`/`DirAccess` (about 20 lines), or keep
    the content folder on disk.
 3. Build a Godot scene per locale that calls the same `GameSession` methods the terminal views call. Each

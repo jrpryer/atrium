@@ -49,8 +49,14 @@ public sealed class Renderer : IDisposable
         Raylib.BeginTextureMode(_target);
         Raylib.ClearBackground(backdrop);
         if (SkyTop is { } top) Raylib.DrawRectangleGradientV(0, 0, w, h, top, backdrop);
+        // raylib's default near plane (0.01 m) leaves about a centimetre of depth precision 45 m away, so decals,
+        // puddles and window glass flickered against their surfaces; nothing is ever drawn closer than this
+        Rlgl.SetClipPlanes(NearPlane, FarPlane);
         Raylib.BeginMode3D(cam);
     }
+
+    /// <summary>The camera's clip planes (metres).</summary>
+    public const double NearPlane = 0.4, FarPlane = 450;
 
     public void End3D()
     {
@@ -109,7 +115,7 @@ public sealed class Renderer : IDisposable
         }
     }
 
-    public unsafe void DrawWater(Model m, Matrix4x4 world, Color shallow, Color deep, float murk = 0, float alpha = 0.92f)
+    public unsafe void DrawWater(Model m, Matrix4x4 world, Color shallow, Color deep, float murk = 0, float alpha = 0.92f, float swell = 1)
     {
         var s = Shaders;
         m.Transform = Matrix4x4.Transpose(world);
@@ -117,7 +123,7 @@ public sealed class Renderer : IDisposable
         s.Set(s.Water, "deepColor", Palette.V4(deep));
         s.Set(s.Water, "murk", murk);
         s.Set(s.Water, "sparkle", ReduceMotion ? 0.3f : 1f);
-        s.Set(s.Water, "swell", ReduceMotion ? 0.2f : 1f);
+        s.Set(s.Water, "swell", (ReduceMotion ? 0.2f : 1f) * swell);
         Raylib.DrawModel(m, Vector3.Zero, 1, Palette.Alpha(shallow, alpha));
     }
 
