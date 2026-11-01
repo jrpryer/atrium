@@ -9,7 +9,7 @@ at what a thing should look like; they're bad at clean, game-ready geometry. So 
 | 2. Organic assets only: a rough 3D lift from the sheet's views, used as **measurements** (Old Stoic ships its lift, refined; see below) | Higgsfield (Tripo H3.1 multi-view) | `art/raw/<asset>/` |
 | 3. Tileable textures for surfaces that repeat (bark, leaves, stone) | Higgsfield | `art/reference/textures/` |
 | 4. The model, built in parts by a script | Blender 5.2, run headless | `art/models/<asset>.glb` + `art/previews/` |
-| 5. A check in the game's own renderer, then a place in the courtyard | `AtriumDiorama --view`, then `hub.models` in `src/Atrium.Diorama/Assets/visuals.json` | — |
+| 5. A check in Godot, which imports the model in place, then a place in a scene | the asset viewer and the headless check (`godot/Viewer`, `godot/Check`; see [In Godot](#in-godot)) | — |
 
 Every generation is recorded (tool, model, job id, credits, verdict) in
 [docs/design/iteration-3-log.md](../../docs/design/iteration-3-log.md).
@@ -25,14 +25,70 @@ Blender 5.2 is used headless; nothing is installed into it. From the repository 
 Swap `library` for `lamp_post` or `old_stoic`. Each run writes the model to `art/models/` and front, right, back and
 three-quarter previews to `art/previews/`, and prints an `ASSET` line with each part's vertex and triangle counts.
 
-To see a model the way the game draws it (cel bands and ink, through the import step; Tab shows the file as it
-is):
+To see a rebuilt model in Godot, reimport and run the check, then open the viewer (from the repository root,
+after `dotnet build Atrium.slnx`; the viewer's keys are in the [README](../../README.md#the-godot-project)):
 
 ```bash
-dotnet run --project src/Atrium.Diorama -- --view art/models/library.glb
+G="/c/Program Files/Godot/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe"
+"$G" --headless --path . --import
+"$G" --headless --path . --scene res://godot/Check/Check.tscn; echo $?
+"$G" --path .
 ```
 
+The viewer shows the file as imported, under plain lights: the cel bands and ink aren't in Godot yet. The raylib
+diorama's `--view` (`dotnet run --project src/Atrium.Diorama -- --view art/models/library.glb`) drew them, and is
+on the `standalone-diorama` branch.
+
+## In Godot
+
+On the `godot` branch the repository root is a Godot 4.7 .NET project, and Godot imports `art/models/*.glb` in
+place: there's no copy step. Each model's import settings live in its `.import` file beside it, which is kept in
+git. What the import showed:
+
+- **Parts and markers arrive by name.** Every part comes in as a `MeshInstance3D` and every marker (empty) as a
+  plain `Node3D` with no children, each under its glTF name. The check compares every model node for node with
+  its glTF and finds the same nodes. Godot names the scene's root `<stem>2` and puts the kit's own root empty,
+  `<stem>`, under it.
+- **Godot's name suffixes are turned off** (`nodes/use_name_suffixes=false` on every model). With them on, Godot reads
+  suffixes on node names (after `-`, `_` or `$`, in any case): `-noimp` drops the node, and `-col`, `-convcol`,
+  `-colonly`, `-convcolonly`, `-occ`, `-occonly`, `-navmesh`, `-rigid`, `-vehicle` and `-wheel` turn it into a
+  collider, occluder, navmesh or physics body. `-loop` and `-cycle` mark animations, and `-alpha` and `-vcol` act
+  on material names. Kit parts are `<piece>_<role>`, so a role named `col`, `occ` or `wheel` would have quietly
+  become one. No current name ends in a suffix, and the check
+  scans for them anyway; still, keep those words out of part, role, marker and material names.
+- **Colours arrive as authored.** Every material shows `linear_to_srgb(baseColorFactor)` within 1.5/255, so the
+  sRGB swatch colours in the scripts are the colours Godot shows (city-stone, linear 0.848, shows as 0.93).
+- **Emission is linear too.** glTF's `emissiveFactor` is linear, so the kits pass `emissive=kit.srgb_to_linear(col)`
+  like their base colours. The city and wall kits' lamps once passed the sRGB colour and showed paler in Godot
+  ((1.000, 0.916, 0.722) instead of (1.000, 0.820, 0.480)); that was fixed on 2026-11-01 and both kits rebuilt.
+  The pools room's daylight emission was already linear.
+- **Textures stay in the `.glb`.** They import as Basis Universal with mipmaps (`gltf/embedded_image_handling=2`),
+  except in `apothecary-room.glb`. Godot 4.7.2 can't decode mip level 4 of its two thin frame swatches,
+  `apothecary-room-frame-up` (24×270) and `apothecary-room-frame-along` (270×24), so that model's textures are
+  extracted instead (`=1`) into `art/models/apothecary-room_*.png`, which are git-ignored and remade on every
+  import. Changing those two swatches' sizes in `assets/apothecary_room.py` and rebuilding is the other route;
+  the model can then go back to `2` (its `.import` file and the `ImageHandling` dictionary in
+  `godot/Check/Check.cs`).
+- **Almost everything is double-sided.** Every material except Old Stoic's is exported double-sided (Blender's
+  backface culling is off on them), so Godot draws them with culling disabled. That contradicts the convention
+  below that the game culls back faces. Whether the kits should export with backface culling on, or the game's
+  cel/ink material should set the cull mode, is undecided.
+- **Scale and facing hold.** Metres, at root scale 1.0: the lamp post is 3.36 m, the library 13.75 m with its
+  chimney, the rooms 6.75 to 13.34 m. Fronts face +Z: `door-point` z is positive on all four houses (+3.70 library,
+  +3.60 apothecary, +2.20 pools, +3.67 sanctum), and the city kit's `inn-3` faces +Z too.
+- **The pools room's beam** imports as an ordinary opaque material; drawing it additively is left to the Pools
+  scene.
+- **The check holds each model's contract:** the parts and markers it must have, and for the kits their piece and
+  role lists (the `Contract` records in `godot/Check/Check.cs`). A kit that gains a piece, role or marker needs
+  its contract updated there, or the check fails.
+- `art/models/textures/` (the intermediate PNGs the `.glb` files embed), `art/previews/`, `art/raw/` and
+  `art/reference/` each have a `.gdignore`, so Godot doesn't import them.
+
 ## In the game
+
+This section describes how the raylib diorama (iteration 2, kept on the `standalone-diorama` branch) uses the
+models; that code isn't on the `godot` branch. The part and marker names below are the contract the Godot scenes
+will read too.
 
 The diorama copies `art/models/*.glb` next to the game (`models/`). A courtyard piece uses its model when
 `hub.models` in `src/Atrium.Diorama/Assets/visuals.json` lists it with a scale (courtyard units per metre):
@@ -176,9 +232,10 @@ and run `split_views.py` the same way as `build.py`, passing the sheet's file na
   it upside down; the Library's door and windows were flipped until the fix.
 - **Colour.** Painted colour comes from sheet swatches, sheet decals (doors, windows) or generated tileable
   textures. Nothing is lit in the texture: the game's cel shader does the light.
-- **Normals.** Every closed part faces outward (`solid=True`): the game culls back faces.
-- **Engine limits.** Under 65,535 vertices per part (raylib's index limit). Textures embed as PNG, because this
-  raylib build can't read JPEG.
+- **Normals.** Every closed part faces outward (`solid=True`): the game culls back faces. (The materials are
+  exported double-sided, though, so Godot doesn't yet; see [In Godot](#in-godot).)
+- **Engine limits.** Under 65,535 vertices per part (raylib's index limit, from the diorama). Textures embed as
+  PNG, because that raylib build can't read JPEG.
 - **Lean.** Built things lean a degree or two ("never plumb"); Old Stoic leans about 12° out over the pools.
 
 ## Lessons so far

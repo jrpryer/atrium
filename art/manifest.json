@@ -1656,7 +1656,7 @@
     },
     {
       "file": "art/models/city-kit.glb",
-      "sha256": "e9bca9d3af412bb4ad4db53d1fd17d51afbd8fa3e4005a33b4fec423fd4766e3",
+      "sha256": "b168f08e9419d52fdd234585cdf5fcd445011c4dacd42277b42d4d20e365e399",
       "made_by": "tools/blender/assets/city_kit.py (Blender 5.2.3, headless)",
       "from": [
         "art/reference/concepts/city-round/city-kit-a.jpg",
@@ -1696,7 +1696,7 @@
     },
     {
       "file": "art/models/wall-kit.glb",
-      "sha256": "eaab38d0f04ed0889d8193e858ce6e320831f079dcbe541f7c9fd3b90e998be3",
+      "sha256": "b473633c6097969a6b174d0d7d8aad956ab2abd1c01b8ad9c4fb971a3ff90f64",
       "made_by": "tools/blender/assets/wall_kit.py (Blender 5.2.3, headless)",
       "from": [
         "art/reference/concepts/city-round/city-kit-a.jpg",

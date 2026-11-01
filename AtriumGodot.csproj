@@ -1,0 +1,17 @@
+<Project Sdk="Godot.NET.Sdk/4.7.2">
+  <!-- The Godot 4.7 .NET front end. Godot requires this file next to project.godot (dotnet/project/solution_directory
+       only moves the .sln), so it sits at the repository root; its C# lives in godot/ and nothing else is compiled
+       (src/, tests/ and tools/ are their own projects). Builds into .godot/mono/temp/bin/, where Godot loads it. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>AtriumGodot</RootNamespace>
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="godot/**/*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="src/Atrium.Core/Atrium.Core.csproj" />
+  </ItemGroup>
+</Project>

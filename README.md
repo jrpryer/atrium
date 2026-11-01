@@ -2,13 +2,13 @@
 
 *A cozy puzzle game about tending a forgotten courtyard, and slowly working out the secrets that turn up in it.*
 
-**Genre:** Cozy · Puzzle / Deduction  **Engine:** C# / .NET 10, engine-agnostic (Godot-ready)  **Status:** first playable: Chapter One
+**Genre:** Cozy · Puzzle / Deduction  **Engine:** C# / .NET 10 core; Godot 4.7 (.NET) front end in progress  **Status:** first playable: Chapter One (terminal)
 
 ![Atrium overview sheet: an isometric courtyard with the tree at the centre and four numbered locales around it, with cards describing each locale, the house rules, a clue-by-locale grid, and the gold nugget essence diagram](docs/design/overview-draft.png)
 
 *The overview sheet, as a rough mockup. Design sheets live in [docs/design/](docs/design/).*
 
-This folder holds the design brief ([AGENTS.md](AGENTS.md)) and the playable builds. The game is an engine-agnostic C# core with two front ends: a standalone terminal game (iteration 1) and a standalone 3D "lantern-lit diorama" (iteration 2, on the `standalone-diorama` branch). Both have all four minigames, five clue-objects and 42 tomes. See [Play it](#play-it) and [What exists today](#what-exists-today).
+This folder holds the design brief ([AGENTS.md](AGENTS.md)) and the playable builds. The game is an engine-agnostic C# core with a standalone terminal front end (iteration 1), which has all four minigames, five clue-objects and 42 tomes. This folder is also the Godot 4.7 .NET project the game is moving to. So far that project imports the art and loads the core; it has no gameplay scenes yet. An earlier 3D front end, the "lantern-lit diorama" (iteration 2, on raylib), is kept on the `standalone-diorama` branch. See [Play it](#play-it) and [What exists today](#what-exists-today).
 
 > Proper nouns below (Stairfall, the Slowsilver, Old Stoic, the Stillkeepers and so on) come from the prototypes and are placeholders until the designer approves them.
 
@@ -16,18 +16,7 @@ This folder holds the design brief ([AGENTS.md](AGENTS.md)) and the playable bui
 
 ## Play it
 
-You need the [.NET 10 SDK or newer](https://dotnet.microsoft.com/download). From this folder, the 3D game:
-
-```bash
-dotnet run --project src/Atrium.Diorama
-```
-
-It opens a window on a small courtyard diorama. Right-drag (or `A`/`D`) to look around, scroll to zoom, and
-click a house to go in. `J` opens the journal, `Space` sits by the water, `P` pauses the clock and `Esc` goes
-back. All the art and sound are generated in code; the only bundled asset is the EB Garamond font (OFL). See
-[docs/design/iteration-2-diorama.md](docs/design/iteration-2-diorama.md) for the art, audio and "juice" choices.
-
-Or the terminal game:
+You need the [.NET 10 SDK or newer](https://dotnet.microsoft.com/download). From this folder, the terminal game:
 
 ```bash
 dotnet run --project src/Atrium.Terminal
@@ -35,7 +24,7 @@ dotnet run --project src/Atrium.Terminal
 
 The game opens full-screen in your terminal. Every option is a single keypress. `Esc` or `X` goes back, and
 `,` / `.` turn pages. Windows Terminal, or any terminal with 24-bit colour, looks best. Make the window
-about 100×40 or larger. Saves go to `%APPDATA%\Atrium\saves` automatically, and both front ends share them.
+about 100×40 or larger. Saves go to `%APPDATA%\Atrium\saves` automatically.
 
 To check designer content after editing anything in [content/](content/):
 
@@ -46,11 +35,65 @@ dotnet run --project src/Atrium.Terminal -- --validate
 To run the tests, including a full scripted playthrough of Chapter One:
 
 ```bash
-dotnet test
+dotnet test tests/Atrium.Core.Tests
 ```
 
-For writing content, see [docs/CONTENT_GUIDE.md](docs/CONTENT_GUIDE.md). For how it's built and how it
-ports to Godot, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). For what this iteration decided and what
+Name the test project: a bare `dotnet test` in this folder now stops with an error, because the folder holds both
+`Atrium.slnx` and the Godot project's `AtriumGodot.csproj`.
+
+### The Godot project
+
+This folder is also a Godot 4.7 project, written in C# only (no GDScript). So far it covers the assets and the
+core: it loads the game's content through `Atrium.Core`, imports every model in [art/models/](art/models/) and
+every texture in [art/textures/](art/textures/), and shows them in a viewer. There are no gameplay scenes yet; to
+play, use the terminal game.
+
+You need the **.NET** build of Godot 4.7.2 (the standard build can't run C#) and the .NET 10 SDK. Open
+`project.godot` in the Godot 4.7.2 .NET editor and press F5. The editor builds the C# itself, through
+`Atrium.slnx`. The first time you open the project, Godot imports every model and texture, which takes a little
+while.
+
+The viewer shows one model at a time, lit and framed, with a list of its parts and markers, its size, and a line
+summing up the content the core loaded.
+
+| Key | Does |
+|---|---|
+| `←` / `→` (or `Page Up` / `Page Down`) | previous / next model, or texture |
+| `↑` / `↓` | step through a kit's pieces one at a time, and back to the whole model |
+| `M` | show or hide the markers (orange spheres with their names) |
+| `Tab` or `T` | switch between models and textures; each texture is shown beside a 2×2 repeat, to check that it tiles |
+| `R` | reset the camera |
+| left-drag, wheel | orbit, zoom |
+| `Esc` | quit |
+
+From the command line (Git Bash, from this folder), build first; only the editor builds on its own. Set `G` to
+wherever Godot is installed:
+
+```bash
+G="/c/Program Files/Godot/Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64_console.exe"
+dotnet build Atrium.slnx
+"$G" --path .                                                            # the viewer
+"$G" --headless --path . --scene res://godot/Check/Check.tscn; echo $?   # the check
+```
+
+The check runs without a window. It loads the content through the core, plays a session and round-trips its
+save, checks that every model arrives node for node and colour for colour as it was exported, and checks that
+every texture imported with the right settings. It prints a report ending in `PASS` or `FAIL` and exits 0 (pass),
+1 (failures) or 2 (the check itself broke). Today it passes with 2 warnings, both about the lamp colours in the
+city and wall kits. [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#the-godot-project) has the other commands and
+what each part of the project does.
+
+The raylib diorama (iteration 2) isn't on this branch. It's kept on `standalone-diorama` as a reference:
+
+```bash
+git switch standalone-diorama
+dotnet run --project src/Atrium.Diorama
+```
+
+Its art, audio and "juice" choices are in [docs/design/iteration-2-diorama.md](docs/design/iteration-2-diorama.md).
+
+For writing content, see [docs/CONTENT_GUIDE.md](docs/CONTENT_GUIDE.md). For how it's built, including the
+Godot project, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). For what this iteration decided and what
 it left open, see [docs/design/iteration-1.md](docs/design/iteration-1.md).
 
 ---
@@ -250,13 +293,15 @@ The first playable covers all eight steps at "spike" depth with placeholder pres
 | [AGENTS.md](AGENTS.md) | The design and engineering brief: invariants, architecture, open questions. It's the source of truth. |
 | [src/Atrium.Core/](src/Atrium.Core/) | The whole game, engine-agnostic (.NET 10). It has: content schemas, a loader and a load-time validator; the evidence → gate → synthesis spine; the essence/remnant registry and Reconstitution Circle; the world-clock; the four minigames; story progression; and save/load. |
 | [src/Atrium.Terminal/](src/Atrium.Terminal/) | A standalone, full-screen terminal front end. It only presents the game; every rule lives in the core. |
-| [src/Atrium.Diorama/](src/Atrium.Diorama/) | Iteration 2: a standalone 3D front end on raylib (Raylib-cs). It has a cel-shaded courtyard diorama with a day/night cycle, four furnished 3D rooms with parchment working cards, synthesised music and sounds, and a scripted screenshot mode. It only presents the game; every rule lives in the core. See [docs/design/iteration-2-diorama.md](docs/design/iteration-2-diorama.md). |
+| `project.godot`, `AtriumGodot.csproj`, [godot/](godot/) | The Godot 4.7 .NET front end, with this folder as the Godot project. So far it has a `Game` autoload that loads the content through the core, an asset viewer, and a headless check. No gameplay scenes yet. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#the-godot-project). |
+| [art/](art/) | The models (`art/models/*.glb`, built by script in Blender; see [tools/blender/README.md](tools/blender/README.md)) and the tileable textures (`art/textures/`). Godot imports both in place. |
 | [content/](content/) | All designer data: taxonomy, 4 locales, 42 tomes (one Markdown file each), 30 Apothecary discoveries, 10 lifeforms with breeding genetics, 3 pools, 6 tools, 5 clue-objects, 12 story beats, and the fixed courtyard scene. |
 | [tests/](tests/) | 35 tests: validator rules, invariants, each minigame on its own, saves, and a complete Chapter One playthrough. |
 | [docs/](docs/) | [Architecture](docs/ARCHITECTURE.md), [content guide](docs/CONTENT_GUIDE.md), and design notes ([iteration 1](docs/design/iteration-1.md), [world bible](docs/design/world-bible.md), [tome manifest](docs/design/tome-manifest.md), [spoiler walkthrough](docs/design/chapter-one-walkthrough.md)). |
 
 The Milanote board, the four browser prototypes and the Godot/Maaack scaffold described in earlier
-revisions of this README aren't part of this folder.
+revisions of this README aren't part of this folder. The raylib diorama (iteration 2) is on the
+`standalone-diorama` branch.
 
 **Chapter One, "The Unkept Vow"**, uses five clue-objects: the pressed leaf, the gold nugget, the cold
 stone, the black pearl and a great iron key. Together they open the Spirit Pools and wake the Reconstitution

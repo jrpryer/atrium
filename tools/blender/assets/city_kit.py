@@ -275,7 +275,7 @@ def build_pieces(kit, root, materials):
 
 def build(kit):
     root = kit.root("city-kit")
-    materials = {role: kit.material("city-" + role, color=kit.srgb_to_linear(col), emissive=col if role == "lamp" else None)
+    materials = {role: kit.material("city-" + role, color=kit.srgb_to_linear(col), emissive=kit.srgb_to_linear(col) if role == "lamp" else None)
                  for role, col in COLOURS.items()}
     build_pieces(kit, root, materials)
     return root, 16

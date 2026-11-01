@@ -5,3 +5,9 @@ obj/
 *.user
 saves/
 TestResults/
+# Godot: the import cache and C# build output. *.import sidecars and *.uid files are kept (they belong in git).
+.godot/
+# Textures Godot extracts from a .glb on import (gltf/embedded_image_handling=1, used by apothecary-room.glb only;
+# the reason is in godot/Check/Check.cs, ImageHandling). The .glb is their source, so neither they nor their sidecars are kept.
+art/models/*.png
+art/models/*.png.import

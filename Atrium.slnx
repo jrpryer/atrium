@@ -1,7 +1,9 @@
 <Solution>
+  <Folder Name="/godot/">
+    <Project Path="AtriumGodot.csproj" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/Atrium.Core/Atrium.Core.csproj" />
-    <Project Path="src/Atrium.Diorama/Atrium.Diorama.csproj" />
     <Project Path="src/Atrium.Terminal/Atrium.Terminal.csproj" />
   </Folder>
   <Folder Name="/tests/">

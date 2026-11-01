@@ -238,7 +238,7 @@ def water_gate(p):
 
 def build(kit):
     root = kit.root("wall-kit")
-    materials = {role: kit.material("wall-" + role, color=kit.srgb_to_linear(col), emissive=col if role == "lamp" else None) for role, col in COLOURS.items()}
+    materials = {role: kit.material("wall-" + role, color=kit.srgb_to_linear(col), emissive=kit.srgb_to_linear(col) if role == "lamp" else None) for role, col in COLOURS.items()}
     makers = {
         "wall-bay": lambda p: wall_bay(p, True), "wall-bay-plain": lambda p: wall_bay(p, False),
         "tower-crown": tower_crown, "tower-roof": tower_roof, "tower-band": tower_band,

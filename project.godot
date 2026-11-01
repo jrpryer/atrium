@@ -1,0 +1,33 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Atrium"
+config/description="A cozy deduction game in a forgotten corner of a tiered city. Godot 4.7 .NET front end over src/Atrium.Core."
+run/main_scene="res://godot/Viewer/Viewer.tscn"
+config/features=PackedStringArray("4.7", "C#")
+
+[autoload]
+
+Game="*res://godot/Core/Game.cs"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[dotnet]
+
+project/assembly_name="AtriumGodot"
+
+[rendering]
+
+anti_aliasing/quality/msaa_3d=1
